@@ -1,6 +1,6 @@
 # Jimuel Lopez — Personal Portfolio
 
-A responsive professional portfolio for Jimuel Baldelovar Lopez, Safety Officer II and beginner web and app developer. HTML content with a Vite production build, React, TypeScript, Tailwind utilities, and Framer Motion. Includes lime-to-army-green gradient styling, button shine and press effects, project card hover effects, keyboard-accessible expandable details, and a responsive mobile navigation menu. Honors reduced-motion preferences.
+A responsive professional portfolio for Jimuel Baldelovar Lopez, Safety Officer II and web and app developer. HTML content with a Vite production build, React, TypeScript, Tailwind utilities, and Framer Motion. Includes lime-to-army-green gradient styling, button shine and press effects, project card hover effects, keyboard-accessible expandable details, and a responsive mobile navigation menu. Honors reduced-motion preferences.
 
 ## Preview
 
@@ -8,7 +8,7 @@ Open `index.html` in a browser. A professional system font stack renders without
 
 ## Content
 
-- Professional profile and beginner developer journey
+- Professional profile and developer journey
 - All 11 roles from the supplied résumé, with earlier experience expandable
 - Safety training, education (IT college undergraduate), languages, and professional strengths
 - Safety On The Go: Android editions and offline safety workflows
@@ -41,3 +41,4 @@ Reviewed all seven content sections at 320, 390, 700, 768, 1024, 1280, and 1440 
 ## Development
 
 Install dependencies with npm ci. Run npm run dev for the local website, npm run lint for code checks, npm run format:check for formatting, and npm run build for production output in dist. The GitHub workflow builds and deploys dist. See REVIEW.md and effects.json for the interaction system.
+
