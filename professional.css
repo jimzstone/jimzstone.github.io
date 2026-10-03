@@ -3901,3 +3901,17 @@ summary {
 #tools .development-setup li.example-open .package-example { visibility: visible; }
 @media (hover: hover) and (pointer: fine) { #tools .development-setup li:hover .package-example { visibility: visible; } }
 
+/* Avoid mobile repaint flashes from fixed backgrounds and backdrop layers. */
+@media (hover: none), (pointer: coarse) {
+  body {
+    background-attachment: scroll;
+  }
+  header {
+    background: #eff6e5;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .scroll-fade {
+    translate: none;
+  }
+}
