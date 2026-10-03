@@ -3137,3 +3137,37 @@ h4 {
   }
 }
 
+#contact .contact-services a,
+#contact .contact-services button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 10px;
+  border: 1px solid #c9e69c35;
+  border-radius: 7px;
+  background: #c9e69c0b;
+  color: #edf5e3;
+  font:
+    12px/1.5 'Segoe UI',
+    Arial,
+    sans-serif;
+  cursor: pointer;
+}
+#contact .contact-services a:hover,
+#contact .contact-services button:hover {
+  background: #c9e69c20;
+}
+#contact .contact-services button:focus-visible {
+  outline: 2px solid #c9f17d;
+  outline-offset: 3px;
+}
+#contact .wechat-status {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #c9e69c;
+  margin: 8px 0 0;
+}
+#contact .wechat-status:empty {
+  display: none;
+}
+

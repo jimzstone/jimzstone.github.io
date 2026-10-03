@@ -372,3 +372,16 @@ document.querySelectorAll('a.contact-card').forEach((card) => {
   motion.addEventListener('change', reset);
   contactPointer.addEventListener('change', reset);
 });
+
+const wechatCopy = document.querySelector('.wechat-copy');
+wechatCopy?.addEventListener('click', async () => {
+  const status = document.querySelector('.wechat-status');
+  try {
+    await navigator.clipboard.writeText('mingzstone');
+    status.textContent =
+      'WeChat ID copied. Search mingzstone in WeChat to add me.';
+  } catch {
+    status.textContent = 'Search mingzstone in WeChat to add me.';
+  }
+});
+
