@@ -1,6 +1,6 @@
 # Jimuel Lopez — Personal Portfolio
 
-A responsive professional portfolio for Jimuel Baldelovar Lopez, Safety Officer II and beginner web and app developer. Plain HTML, CSS, and JavaScript: no build step required. Includes lime-to-army-green gradient styling, button shine and press effects, project card hover effects, keyboard-accessible expandable details, and a responsive mobile navigation menu. Honors reduced-motion preferences.
+A responsive professional portfolio for Jimuel Baldelovar Lopez, Safety Officer II and beginner web and app developer. HTML content with a Vite production build, React, TypeScript, Tailwind utilities, and Framer Motion. Includes lime-to-army-green gradient styling, button shine and press effects, project card hover effects, keyboard-accessible expandable details, and a responsive mobile navigation menu. Honors reduced-motion preferences.
 
 ## Preview
 
@@ -18,7 +18,7 @@ Open `index.html` in a browser. A professional system font stack renders without
 - Tools I Use: 13 cards covering development, office, design, and technical support
 - Original 900 × 900 résumé portrait, displayed without rotation or enlargement
 
-Professional details were transcribed and summarized from Jimuel_Lopez_Professional_Resume_Revision_6.pdf. Project descriptions were derived from local project documentation. Decorative interface illustrations are not screenshots or live measurements. GitHub username and repository links remain unprovided. Contact information uses the résumé's email, phone numbers, Facebook, and Telegram. References' contact details, birth date, civil status, religion, and physical characteristics are not included in the public portfolio. The original résumé is not bundled as a public download.
+Professional details were transcribed and summarized from Jimuel_Lopez_Professional_Resume_Revision_6.pdf. Project descriptions were derived from local project documentation. Decorative interface illustrations are not screenshots or live measurements. GitHub account: jimzstone. Portfolio repository: jimzstone/jimzstone.github.io. Contact information uses the résumé's email, phone numbers, Facebook, and Telegram. References' contact details, birth date, civil status, religion, and physical characteristics are not included in the public portfolio. The original résumé is not bundled as a public download.
 
 ## Personalize
 
@@ -32,8 +32,12 @@ Edit `index.html` to update your content and add your GitHub repository URLs, de
 4. Run **Actions → Publish portfolio → Run workflow**, or push a change to `main`. The included workflow publishes only the website and its assets.
 5. After a successful deployment, the portfolio will be available at `https://jimzstone.github.io/`.
 
-All local asset links are relative, so either repository layout works. This delivery has not been uploaded or published to GitHub.
+All local asset links are relative, so either repository layout works. Published at https://jimzstone.github.io/.
 
 ## Review
 
 Reviewed all seven content sections at 320, 390, 700, 768, 1024, 1280, and 1440 pixel widths. Checked images, local anchors, all expandable details, mobile menu dismissal, browser errors, and reduced-motion behavior. External contact destinations are linked but no messages or calls were sent. The ZIP contains the complete website and original portrait; review screenshots and helper scripts are excluded.
+
+## Development
+
+Install dependencies with npm ci. Run npm run dev for the local website, npm run lint for code checks, npm run format:check for formatting, and npm run build for production output in dist. The GitHub workflow builds and deploys dist. See REVIEW.md and effects.json for the interaction system.

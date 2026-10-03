@@ -1,0 +1,12 @@
+{
+  "reveal": {
+    "duration": 0.5,
+    "distance": 16,
+    "stagger": 0.035,
+    "maxDelay": 0.14
+  },
+  "navigation": { "duration": 0.22 },
+  "filter": { "duration": 0.3 },
+  "pointer": { "distance": 4 },
+  "respectReducedMotion": true
+}

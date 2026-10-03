@@ -1,4 +1,5 @@
-GSAP + ScrollTrigger: bundled locally; https://gsap.com/standard-license/
-Anime.js: bundled locally; https://github.com/juliangarnier/anime (MIT). Original bundle copyright notices retained.
-Motion 13.5.0: configured via documented CDN loader; local download and runtime could not be verified because CDN DNS resolution failed. Native menu-animation fallback remains available.
-GSAP handles text reveals and ScrollTrigger tracks progress; Anime.js handles button ripples; Motion handles mobile-menu animation when available.
+GSAP + ScrollTrigger: local vendor bundles; https://gsap.com/standard-license/
+Anime.js: local bundle, MIT; https://github.com/juliangarnier/anime
+Framer Motion: installed npm dependency, bundled locally by Vite; React project-filter transitions.
+Native Web Animations: mobile-menu and project visibility transitions.
+Effects are configured in effects.json and honor reduced-motion preferences. No remote animation CDN is required.
