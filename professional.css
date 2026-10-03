@@ -3217,3 +3217,73 @@ h4 {
   }
 }
 
+#education .credential-column {
+  align-items: start;
+}
+.training-details {
+  margin-top: 14px;
+}
+.training-details summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  list-style: none;
+  padding: 10px 12px;
+  background: #eaf1de;
+  border: 1px solid #bdcea3;
+  border-radius: 7px;
+  color: #314621;
+  font:
+    600 12px/1.5 'Segoe UI',
+    Arial,
+    sans-serif;
+  transition: background 0.25s;
+}
+.training-details summary::-webkit-details-marker {
+  display: none;
+}
+.training-details summary:hover {
+  background: #dcebbf;
+}
+.training-details summary:focus-visible {
+  outline: 2px solid #6f922d;
+  outline-offset: 3px;
+}
+.training-details summary span {
+  font-size: 18px;
+  line-height: 1;
+  transition: transform 0.25s;
+}
+.training-details[open] summary span {
+  transform: rotate(45deg);
+}
+.training-details > div {
+  padding: 10px 2px 0;
+}
+#education .training-details p {
+  margin: 8px 0;
+  font-size: 12px;
+}
+.training-details p strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #314621;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .training-details[open] > div {
+    animation: training-open 0.25s ease-out;
+  }
+}
+@keyframes training-open {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
