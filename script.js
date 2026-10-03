@@ -110,7 +110,7 @@ function update() {
     const leaving = (rect.bottom - visibleTop) / fadeZone;
     const amount = element.matches(':focus-within')
       ? 1
-      : Math.max(0.12, Math.min(1, entering, leaving));
+      : Math.max(0.45, Math.min(1, entering, leaving));
     element.classList.add('scroll-fade');
     element.style.setProperty('--scroll-opacity', String(amount));
     element.style.setProperty('--scroll-offset', `${(1 - amount) * 12}px`);
@@ -143,6 +143,7 @@ function stopNavigation(completed = false) {
 }
 
 function scrollToSection(target) {
+  cancelAnimationFrame(expandFrame);
   cancelAnimationFrame(scrollFrame);
   navigating = true;
   navigationTarget = target;
@@ -371,8 +372,8 @@ setupCards.forEach((card) => {
 });
 
 // Animate user-triggered expansion even when automatic motion is reduced.
+let expandFrame = 0;
 document.querySelectorAll('details').forEach((detail) => {
-  let expandFrame = 0;
   detail.addEventListener('toggle', () => {
     cancelAnimationFrame(expandFrame);
     detail.classList.remove('expansion-playing');
@@ -455,4 +456,10 @@ cvDownload?.addEventListener('click', (event) => {
     cvDownload.click();
   }, 1000);
 });
+
+['wheel', 'touchstart'].forEach((type) =>
+  window.addEventListener(type, () => cancelAnimationFrame(expandFrame), {
+    passive: true,
+  }),
+);
 

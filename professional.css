@@ -3876,3 +3876,28 @@ section.section-arriving {
   }
 }
 
+/* Final review: consistent type, quieter panels, and readable examples. */
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+button,
+summary {
+  font-family: inherit;
+}
+#tools .package-example {
+  line-height: 1.8;
+}
+#tools .development-setup li {
+  box-shadow: none;
+}
+#education .credential-column article {
+  scroll-margin-top: 130px;
+}
+.section-arriving {
+  animation-fill-mode: none !important;
+}
+
+#tools .development-setup li .package-example { visibility: hidden; }
+#tools .development-setup li.example-open .package-example { visibility: visible; }
+@media (hover: hover) and (pointer: fine) { #tools .development-setup li:hover .package-example { visibility: visible; } }
+
