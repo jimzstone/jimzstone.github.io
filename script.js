@@ -118,3 +118,32 @@ schedule();
 if (window.ScrollTrigger) {
   ScrollTrigger.create({start:0,end:'max',onUpdate:self=>header.style.setProperty('--reading-progress',self.progress)});
 }
+
+// Fine-pointer accents remain independent of scroll-reveal transforms.
+const contactPointer = matchMedia('(hover: hover) and (pointer: fine)');
+document.querySelectorAll('a.contact-card').forEach(card => {
+  let pointerFrame = 0;
+  const reset = () => {
+    cancelAnimationFrame(pointerFrame);
+    card.style.removeProperty('--icon-x');
+    card.style.removeProperty('--icon-y');
+    card.style.removeProperty('--contact-x');
+    card.style.removeProperty('--contact-y');
+  };
+  card.addEventListener('pointermove', event => {
+    if (motion.matches || !contactPointer.matches) return;
+    cancelAnimationFrame(pointerFrame);
+    const x = event.clientX, y = event.clientY;
+    pointerFrame = requestAnimationFrame(() => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--contact-x', (x - rect.left) + 'px');
+      card.style.setProperty('--contact-y', (y - rect.top) + 'px');
+      card.style.setProperty('--icon-x', (((x - rect.left) / rect.width - .5) * 4) + 'px');
+      card.style.setProperty('--icon-y', (((y - rect.top) / rect.height - .5) * 4) + 'px');
+    });
+  }, {passive:true});
+  card.addEventListener('pointerleave', reset);
+  card.addEventListener('pointercancel', reset);
+  motion.addEventListener('change', reset);
+  contactPointer.addEventListener('change', reset);
+});

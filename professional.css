@@ -33,18 +33,22 @@ header::after{content:'';position:absolute;left:0;bottom:0;width:100%;height:2px
 /* Navigation remains usable if JavaScript is unavailable. */
 @media(max-width:700px){html:not(.js) header{flex-wrap:wrap;gap:14px}html:not(.js) .menu-toggle{display:none}html:not(.js) nav{display:flex;position:static;flex-direction:row;flex-wrap:wrap;width:100%;padding:0;max-height:none;box-shadow:none;border:0}html:not(.js) nav .nav-contact{display:inline-block}}
 
-/* Contact cards: readable details, local SVG icons and gentle interaction. */
-.contact .contact-grid{max-width:920px;gap:16px;padding-top:28px;align-items:stretch}
-.contact-grid .contact-card{position:relative;display:flex;align-items:flex-start;gap:16px;min-width:0;padding:24px;border:1px solid #c3dda32b;border-radius:18px;background:linear-gradient(135deg,#ffffff0b,#ffffff03);box-shadow:0 4px 16px #0000000a;color:#f6faef;overflow:hidden;transition:border-color .3s,background-color .3s,box-shadow .3s}
-.contact-grid .contact-symbol{display:grid;place-items:center;flex:0 0 48px;width:48px;height:48px;margin:0;border:1px solid #d3ecac35;border-radius:14px;color:#d4efab;background:#c8ee7910;transition:transform .3s,background-color .3s;letter-spacing:0}
-.contact-symbol svg{width:24px;height:24px}
-.contact-card-copy{min-width:0;flex:1}.contact-grid .contact-label{font-size:10px;letter-spacing:1.4px;color:#c4dba6;margin:0 0 8px;line-height:1.5}
-.contact-card strong{display:block;font-size:15px;font-weight:600;line-height:1.65;overflow-wrap:anywhere}
-.contact-grid .contact-arrow{font-size:20px;letter-spacing:0;color:#cdeaa2;margin:0;transition:transform .3s}
-.contact-grid .contact-services{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px}
-.contact-grid .contact-services span{display:inline-flex;align-items:center;gap:5px;font-size:11px;letter-spacing:0;margin:0;color:#dce8cf}
-.contact-services img{width:16px;height:16px;filter:brightness(0) invert(1);opacity:.85}
-.contact-card::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 30%,#e1f8bc0e 50%,transparent 70%);transform:translateX(-110%);transition:transform .7s ease}
-@media(hover:hover){.contact-grid a.contact-card:hover{border-color:#c9ed7975;background-color:#ffffff05;color:#fff;box-shadow:0 10px 30px #00000018}.contact-card:hover::after{transform:translateX(110%)}.contact-card:hover .contact-symbol{transform:translateY(-2px) rotate(-5deg);background:#c8ee7920}.contact-card:hover .contact-arrow{transform:translate(3px,-3px)}}
-@media(max-width:700px){.contact .contact-grid{grid-template-columns:1fr;gap:12px}.contact-grid .contact-card{padding:20px;gap:14px}.contact-card strong{font-size:14px}}
-@media(prefers-reduced-motion:reduce){.contact-card::after{display:none}.contact-card:hover .contact-symbol,.contact-card:hover .contact-arrow{transform:none}}
+
+/* Contact directory: quiet surfaces, strong hierarchy, precise interaction. */
+.contact .contact-grid{max-width:920px;gap:0 32px;padding-top:0;margin-top:36px;align-items:stretch;border-top:1px solid #c5d7b537}
+.contact-grid .contact-card{position:relative;display:flex;align-items:flex-start;gap:18px;min-width:0;padding:28px 4px 26px;border:0;border-bottom:1px solid #c5d7b537;border-radius:0;background:none;box-shadow:none;color:#f6faef;isolation:isolate;transition:background-color .3s ease}
+.contact-card::before{content:'';position:absolute;left:0;bottom:-1px;right:0;height:1px;background:#c9ee87;transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.22,1,.36,1)}
+.contact-card::after{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(160px circle at var(--contact-x,50%) var(--contact-y,50%),#d0eb9a0b,transparent);opacity:0;transform:none;transition:opacity .3s}
+.contact-grid .contact-symbol{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;margin:2px 0 0;border:0;border-radius:50%;color:#c9e69c;background:#d3e5b709;letter-spacing:0;transform:translate(var(--icon-x,0px),var(--icon-y,0px));transition:transform .22s ease-out,background-color .3s}
+.contact-symbol svg{width:22px;height:22px}.contact-card-copy{min-width:0;flex:1}
+.contact-grid .contact-label{font-size:10px;font-weight:500;letter-spacing:1.6px;color:#bed0a8;margin:0 0 7px;line-height:1.5}
+.contact-card strong{display:block;font-size:16px;font-weight:500;line-height:1.55;letter-spacing:-.15px;overflow-wrap:anywhere}
+.contact-grid .contact-arrow{display:grid;place-items:center;flex:0 0 28px;width:28px;height:28px;margin:10px 0 0;border-radius:50%;font-size:20px;letter-spacing:0;color:#cdeaa2;transition:transform .35s cubic-bezier(.22,1,.36,1),background-color .3s}
+.contact-grid .contact-services{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px}
+.contact-grid .contact-services span{display:inline-flex;align-items:center;gap:6px;font-size:11px;letter-spacing:0;margin:0;color:#d5dfca}
+.contact-services img{width:15px;height:15px;filter:brightness(0) invert(1);opacity:.75}
+.contact-grid .contact-card:focus-visible{outline:2px solid #c9ee87;outline-offset:6px}
+.contact-card:focus-visible::before{transform:scaleX(1)}.contact-card:focus-visible .contact-arrow{transform:rotate(45deg);background:#d3e5b712}
+@media(hover:hover) and (pointer:fine){.contact-grid a.contact-card:hover{color:#fff;background:none;box-shadow:none}.contact-card:hover::before{transform:scaleX(1)}.contact-card:hover::after{opacity:1;transform:none}.contact-card:hover .contact-symbol{background:#d3e5b715}.contact-card:hover .contact-arrow{transform:rotate(45deg);background:#d3e5b712}}
+@media(max-width:700px){.contact .contact-grid{grid-template-columns:1fr;gap:0;margin-top:28px}.contact-grid .contact-card{padding:24px 2px;gap:14px}.contact-card strong{font-size:15px}}
+@media(prefers-reduced-motion:reduce){.contact-card::after{display:none}.contact-grid .contact-symbol,.contact-card:hover .contact-arrow,.contact-card:focus-visible .contact-arrow{transform:none}}
