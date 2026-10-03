@@ -9,7 +9,7 @@ const sections = [...document.querySelectorAll('section[id]')];
 const links = [...navigation.querySelectorAll('a')];
 const animations = new Map();
 const shown = new WeakSet();
-const targets = [...document.querySelectorAll('.hero h1, .hero .intro, .hero .actions, .section h2, .section .eyebrow, .about-copy > p, .profile-label, .small-note, .section-heading > p, .project-info > h3, .project-info > p, .tool-card > div, .tool-group-heading, .skill-list > div, .credential-column article, .timeline-item > div, .contact > p, .contact-actions')];
+const targets = [...document.querySelectorAll('.hero h1, .hero .intro, .hero .actions, .section h2, .section .eyebrow, .about-copy > p, .profile-label, .small-note, .section-heading > p, .project-info > h3, .project-info > p, .tool-card > div, .tool-group-heading, .skill-list > div, .credential-column article, .timeline-item > div, .contact > p, .contact-actions, .contact-card')];
 let framePending = false;
 let navigationTimer;
 let navigating = false;
