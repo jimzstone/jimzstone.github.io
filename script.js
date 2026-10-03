@@ -420,3 +420,31 @@ document.querySelectorAll('.code-example-toggle').forEach((button) => {
   });
 });
 
+const cvDownload = document.querySelector('.cv-download');
+cvDownload?.addEventListener('click', (event) => {
+  if (cvDownload.dataset.ready === 'true') {
+    delete cvDownload.dataset.ready;
+    return;
+  }
+  event.preventDefault();
+  if (cvDownload.classList.contains('cv-loading')) return;
+  cvDownload.classList.add('cv-loading');
+  cvDownload.setAttribute('aria-disabled', 'true');
+  cvDownload.setAttribute('aria-live', 'polite');
+  let remaining = 3;
+  cvDownload.textContent = `Preparing CV · ${remaining}s`;
+  const countdown = setInterval(() => {
+    remaining--;
+    if (remaining > 0) {
+      cvDownload.textContent = `Preparing CV · ${remaining}s`;
+      return;
+    }
+    clearInterval(countdown);
+    cvDownload.classList.remove('cv-loading');
+    cvDownload.removeAttribute('aria-disabled');
+    cvDownload.textContent = 'Download My CV';
+    cvDownload.dataset.ready = 'true';
+    cvDownload.click();
+  }, 1000);
+});
+

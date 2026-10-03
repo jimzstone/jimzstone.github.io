@@ -3750,7 +3750,42 @@ details.expansion-playing[open] > :not(summary) {
 }
 
 @media (max-width: 360px) {
-  #navigation a { font-size: 9px; padding: 8px 4px; }
-  #navigation .nav-contact { font-size: 9px; padding: 8px 5px; }
+  #navigation a {
+    font-size: 9px;
+    padding: 8px 4px;
+  }
+  #navigation .nav-contact {
+    font-size: 9px;
+    padding: 8px 5px;
+  }
+}
+
+.cv-download {
+  position: relative;
+  overflow: hidden;
+  min-width: 155px;
+}
+.cv-download.cv-loading {
+  cursor: wait;
+  background: #c9f17d18;
+}
+.cv-download.cv-loading::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: #c9f17d;
+  transform-origin: left;
+  animation: cv-progress 3s linear both !important;
+}
+@keyframes cv-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
 }
 
