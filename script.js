@@ -463,3 +463,31 @@ cvDownload?.addEventListener('click', (event) => {
   }),
 );
 
+// Delay closing briefly so expanded content can fade out visibly.
+document.querySelectorAll('details > summary').forEach((summary) => {
+  let closing = false;
+  summary.addEventListener('click', (event) => {
+    const detail = summary.parentElement;
+    if (!detail.open) return;
+    event.preventDefault();
+    if (closing) return;
+    closing = true;
+    const content = [...detail.children].filter((child) => child !== summary);
+    detail.classList.remove('expansion-playing');
+    const fades = content.map((child) =>
+      child.animate(
+        [
+          { opacity: 1, translate: '0 0' },
+          { opacity: 0, translate: '0 8px' },
+        ],
+        { duration: 300, easing: 'ease-in', fill: 'forwards' },
+      ),
+    );
+    Promise.all(fades.map((fade) => fade.finished.catch(() => {}))).then(() => {
+      detail.open = false;
+      fades.forEach((fade) => fade.cancel());
+      closing = false;
+    });
+  });
+});
+
