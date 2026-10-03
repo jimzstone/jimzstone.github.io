@@ -376,6 +376,7 @@ document.querySelectorAll('a.contact-card').forEach((card) => {
 const wechatCopy = document.querySelector('.wechat-copy');
 wechatCopy?.addEventListener('click', async () => {
   const status = document.querySelector('.wechat-status');
+  status.textContent = 'Search mingzstone in WeChat to add me.';
   try {
     await navigator.clipboard.writeText('mingzstone');
     status.textContent =
