@@ -3749,3 +3749,8 @@ details.expansion-playing[open] > :not(summary) {
   }
 }
 
+@media (max-width: 360px) {
+  #navigation a { font-size: 9px; padding: 8px 4px; }
+  #navigation .nav-contact { font-size: 9px; padding: 8px 5px; }
+}
+
