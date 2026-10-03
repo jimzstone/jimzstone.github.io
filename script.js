@@ -127,6 +127,13 @@ function stopNavigation(completed = false) {
   cancelAnimationFrame(scrollFrame);
   navigating = false;
   if (completed && navigationTarget) {
+    document
+      .querySelectorAll('.section-arriving')
+      .forEach((section) => section.classList.remove('section-arriving'));
+    if (navigationTarget !== document.body) {
+      void navigationTarget.offsetWidth;
+      navigationTarget.classList.add('section-arriving');
+    }
     if (!navigationTarget.matches('a, button, input, [tabindex]'))
       navigationTarget.setAttribute('tabindex', '-1');
     navigationTarget.focus({ preventScroll: true });
@@ -150,9 +157,10 @@ function scrollToSection(target) {
     ),
   );
   const distance = destination - start;
-  const duration = motion.matches
-    ? 0
-    : Math.min(1100, Math.max(450, Math.abs(distance) * 0.15 + 450));
+  const duration = Math.min(
+    1000,
+    Math.max(450, Math.abs(distance) * 0.12 + 450),
+  );
   if (!duration || Math.abs(distance) < 2) {
     window.scrollTo({ top: destination, behavior: 'instant' });
     stopNavigation(true);
