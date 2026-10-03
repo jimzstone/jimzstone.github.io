@@ -412,3 +412,11 @@ function sizeContactZoom() {
 sizeContactZoom();
 window.addEventListener('resize', sizeContactZoom);
 
+document.querySelectorAll('.code-example-toggle').forEach((button) => {
+  button.addEventListener('click', () => {
+    const expanded = button.getAttribute('aria-expanded') !== 'true';
+    button.setAttribute('aria-expanded', String(expanded));
+    button.closest('li').classList.toggle('example-open', expanded);
+  });
+});
+

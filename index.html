@@ -15,7 +15,7 @@
     <script src="assets/vendor/gsap.min.js" defer></script>
     <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
     <script src="assets/vendor/anime.umd.min.js" defer></script>
-    <script src="script.js?v=30" defer></script>
+    <script src="script.js?v=31" defer></script>
     <script type="module" src="/src/main.tsx"></script>
   </head>
   <body>
@@ -820,29 +820,109 @@
           <ul>
             <li>
               <strong>React</strong><span>Interactive project filters</span>
+              <button
+                class="code-example-toggle"
+                type="button"
+                aria-expanded="false"
+              >
+                Code example
+              </button>
+              <pre
+                class="package-example"
+              ><code>const [filter, setFilter] = useState(&quot;All&quot;);</code></pre>
             </li>
             <li>
               <strong>TypeScript</strong
               ><span>Type checks for interface code</span>
+              <button
+                class="code-example-toggle"
+                type="button"
+                aria-expanded="false"
+              >
+                Code example
+              </button>
+              <pre
+                class="package-example"
+              ><code>type Platform = &quot;Web&quot; | &quot;Android&quot; | &quot;Windows&quot;;</code></pre>
             </li>
             <li>
               <strong>Tailwind CSS</strong
               ><span>Layout and styling utilities</span>
+              <button
+                class="code-example-toggle"
+                type="button"
+                aria-expanded="false"
+              >
+                Code example
+              </button>
+              <pre
+                class="package-example"
+              ><code>&lt;div className=&quot;flex flex-wrap gap-2&quot;&gt;</code></pre>
             </li>
             <li>
               <strong>Framer Motion</strong
               ><span>Animated filter selection</span>
+              <button
+                class="code-example-toggle"
+                type="button"
+                aria-expanded="false"
+              >
+                Code example
+              </button>
+              <pre
+                class="package-example"
+              ><code>&lt;motion.span layoutId=&quot;selected-platform&quot; /&gt;</code></pre>
             </li>
             <li>
               <strong>GSAP &amp; ScrollTrigger</strong
               ><span>Section reveals and scroll progress</span>
+              <button
+                class="code-example-toggle"
+                type="button"
+                aria-expanded="false"
+              >
+                Code example
+              </button>
+              <pre
+                class="package-example"
+              ><code>gsap.from(card, { opacity: 0, y: 24, duration: 0.6 });</code></pre>
             </li>
             <li>
               <strong>Anime.js</strong><span>Button interaction effects</span>
+              <button
+                class="code-example-toggle"
+                type="button"
+                aria-expanded="false"
+              >
+                Code example
+              </button>
+              <pre
+                class="package-example"
+              ><code>anime.animate(card, { translateY: -5, duration: 300 });</code></pre>
             </li>
-            <li><strong>ESLint</strong><span>Code quality checks</span></li>
+            <li>
+              <strong>ESLint</strong><span>Code quality checks</span
+              ><button
+                class="code-example-toggle"
+                type="button"
+                aria-expanded="false"
+              >
+                Code example
+              </button>
+              <pre class="package-example"><code>npm run lint</code></pre>
+            </li>
             <li>
               <strong>Prettier</strong><span>Consistent code formatting</span>
+              <button
+                class="code-example-toggle"
+                type="button"
+                aria-expanded="false"
+              >
+                Code example
+              </button>
+              <pre
+                class="package-example"
+              ><code>npx prettier --write src</code></pre>
             </li>
           </ul>
         </div>
