@@ -3335,3 +3335,21 @@ h4 {
   }
 }
 
+/* Clear interactive feedback on every expandable heading. */
+details > summary {
+  transition:
+    background-color 0.25s,
+    color 0.25s,
+    box-shadow 0.25s;
+}
+details > summary:hover {
+  color: #4f712b;
+}
+details > summary:active {
+  background-color: #c9e69c30;
+}
+details > summary:focus-visible {
+  outline: 2px solid #7c9e4d;
+  outline-offset: 4px;
+}
+

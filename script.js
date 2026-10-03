@@ -400,7 +400,9 @@ document
   .querySelector('.effects-preview')
   ?.addEventListener('click', () => animateSetup(true));
 setupCards.forEach((card) => {
-  card.addEventListener('animationend', () => card.classList.remove('effect-playing'));
+  card.addEventListener('animationend', () =>
+    card.classList.remove('effect-playing'),
+  );
   card.addEventListener('pointerenter', () => {
     if (motion.matches || !window.anime?.animate) return;
     anime.animate(card, { translateY: -5, duration: 300, ease: 'out(3)' });
@@ -408,6 +410,34 @@ setupCards.forEach((card) => {
   card.addEventListener('pointerleave', () => {
     if (motion.matches || !window.anime?.animate) return;
     anime.animate(card, { translateY: 0, duration: 350, ease: 'out(3)' });
+  });
+});
+
+// Keep expanded content visible without jumping away from its heading.
+document.querySelectorAll('details').forEach((detail) => {
+  let expansionAnimation;
+  detail.addEventListener('toggle', () => {
+    expansionAnimation?.cancel();
+    if (!detail.open) return;
+    const content = [...detail.children].filter(
+      (child) => child.tagName !== 'SUMMARY',
+    );
+    content.forEach((child) => {
+      expansionAnimation = child.animate(
+        [
+          { opacity: 0, translate: '0 12px' },
+          { opacity: 1, translate: '0 0' },
+        ],
+        { duration: 450, easing: 'cubic-bezier(.22,1,.36,1)' },
+      );
+    });
+    const rect = detail.getBoundingClientRect();
+    const topGap = header.getBoundingClientRect().height + 24;
+    const contentBottom = rect.bottom;
+    if (rect.top < topGap || contentBottom > innerHeight - 24) {
+      const destination = Math.max(0, scrollY + rect.top - topGap);
+      window.scrollTo({ top: destination, behavior: 'smooth' });
+    }
   });
 });
 
