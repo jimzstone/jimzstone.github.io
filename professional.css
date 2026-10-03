@@ -3102,3 +3102,38 @@ h4 {
   }
 }
 
+#contact .contact-mobile {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+#contact .mobile-numbers {
+  display: grid;
+  gap: 12px;
+}
+#contact .mobile-numbers a {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  border-radius: 4px;
+}
+#contact .mobile-numbers a > span {
+  min-width: 46px;
+  font-size: 10px;
+  letter-spacing: 0.8px;
+  color: #bed0a8;
+}
+#contact .mobile-numbers a:hover strong {
+  color: #c9f17d;
+}
+#contact .mobile-numbers a:focus-visible {
+  outline: 2px solid #c9f17d;
+  outline-offset: 4px;
+}
+@media (max-width: 700px) {
+  #contact .contact-mobile {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
