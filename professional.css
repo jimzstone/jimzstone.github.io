@@ -2938,3 +2938,76 @@ h4 {
   }
 }
 
+/* Consistent contact columns, icon alignment, and readable typography. */
+#contact .contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 32px;
+  text-align: left;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+#contact .contact-card {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
+  padding: 24px 0;
+  min-height: 132px;
+}
+#contact .contact-symbol {
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  border: 1px solid #c9e69c35;
+  border-radius: 12px;
+  background: #c9e69c0b;
+}
+#contact .contact-symbol svg {
+  width: 23px;
+  height: 23px;
+  stroke-width: 1.6;
+}
+#contact .contact-card-copy {
+  padding-top: 2px;
+}
+#contact .contact-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+#contact .contact-card strong {
+  font-family: inherit;
+  font-size: clamp(14px, 1.2vw, 16px);
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+#contact .contact-services {
+  margin-top: 10px;
+  gap: 14px;
+}
+#contact .contact-services span {
+  font-size: 12px;
+  line-height: 1.5;
+}
+#contact .contact-services img {
+  width: 17px;
+  height: 17px;
+  opacity: 0.9;
+}
+@media (max-width: 700px) {
+  #contact .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  #contact .contact-card {
+    min-height: 0;
+    padding: 22px 0;
+  }
+}
+
