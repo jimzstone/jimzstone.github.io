@@ -2787,3 +2787,65 @@ h4 {
   }
 }
 
+/* Portrait identity and download action share a clean, balanced footer. */
+.portrait-caption {
+  display: block;
+  padding: 18px 4px 0;
+}
+.portrait-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 4px 2px;
+}
+.portrait-footer .portrait-mark {
+  color: #c9f17d;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1;
+}
+.cv-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 11px 16px;
+  border: 1px solid #c9f17d70;
+  border-radius: 8px;
+  color: #ecf8dc;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  background: #ffffff08;
+  transition:
+    background 0.25s,
+    border-color 0.25s,
+    transform 0.25s;
+}
+.cv-download:hover {
+  background: #c9f17d18;
+  border-color: #c9f17d;
+  transform: translateY(-2px);
+}
+.cv-download span {
+  transition: transform 0.25s;
+}
+.cv-download:hover span {
+  transform: translateY(2px);
+}
+.cv-download:focus-visible {
+  outline: 2px solid #c9f17d;
+  outline-offset: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cv-download,
+  .cv-download span {
+    transition: none;
+  }
+  .cv-download:hover,
+  .cv-download:hover span {
+    transform: none;
+  }
+}
+
