@@ -3171,3 +3171,15 @@ h4 {
   display: none;
 }
 
+.highlights > div::before {
+  content: none;
+}
+.highlights > div {
+  padding: 22px;
+}
+.highlights span {
+  font-size: 12px;
+  line-height: 1.75;
+  margin-top: 10px;
+}
+
