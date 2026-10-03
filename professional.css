@@ -3413,3 +3413,59 @@ details.expansion-playing[open] > :not(summary) {
   scale: 1;
 }
 
+/* Navigation has consistent hit areas and restrained hover motion. */
+#navigation {
+  align-items: center;
+  gap: 10px;
+}
+#navigation a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 10px 15px;
+  line-height: 1.4;
+  border-radius: 24px;
+  scale: 1;
+  transition:
+    scale 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.25s,
+    color 0.25s !important;
+}
+#navigation .nav-contact {
+  padding: 12px 20px;
+  min-height: 46px;
+  margin-left: 8px;
+}
+@media (hover: hover) and (pointer: fine) {
+  #navigation a:hover {
+    scale: 1.055;
+    background-color: #c9e69c70;
+  }
+  #navigation .nav-contact:hover {
+    background-color: #4b652d;
+    box-shadow: 0 5px 14px #31462120;
+  }
+}
+#navigation a:active {
+  scale: 0.98;
+}
+#navigation a:focus-visible {
+  outline: 2px solid #7c9e4d;
+  outline-offset: 3px;
+}
+@media (max-width: 700px) {
+  #navigation.open {
+    gap: 7px;
+    padding: 14px;
+  }
+  #navigation a {
+    min-height: 44px;
+    width: 100%;
+    padding: 11px 16px;
+  }
+  #navigation .nav-contact {
+    margin-left: 0;
+  }
+}
+
