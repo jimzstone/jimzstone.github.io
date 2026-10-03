@@ -3789,3 +3789,42 @@ details.expansion-playing[open] > :not(summary) {
   }
 }
 
+/* Keep code panels in the layout so opening and closing both animate. */
+#tools .development-setup ul {
+  align-items: start;
+}
+#tools .development-setup li .package-example {
+  display: block;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  padding: 0 12px;
+  margin: 0;
+  transform: translateY(6px);
+  animation: none !important;
+  transition:
+    max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.25s ease,
+    padding 0.35s ease,
+    margin 0.35s ease,
+    transform 0.35s ease !important;
+}
+#tools .development-setup li.example-open .package-example {
+  max-height: 200px;
+  opacity: 1;
+  padding: 12px;
+  margin-top: 4px;
+  transform: translateY(0);
+  animation: none !important;
+}
+@media (hover: hover) and (pointer: fine) {
+  #tools .development-setup li:hover .package-example {
+    max-height: 200px;
+    opacity: 1;
+    padding: 12px;
+    margin-top: 4px;
+    transform: translateY(0);
+    animation: none !important;
+  }
+}
+
