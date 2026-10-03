@@ -413,31 +413,34 @@ setupCards.forEach((card) => {
   });
 });
 
-// Keep expanded content visible without jumping away from its heading.
+// Animate user-triggered expansion even when automatic motion is reduced.
 document.querySelectorAll('details').forEach((detail) => {
-  let expansionAnimation;
+  let expandFrame = 0;
   detail.addEventListener('toggle', () => {
-    expansionAnimation?.cancel();
+    cancelAnimationFrame(expandFrame);
+    detail.classList.remove('expansion-playing');
     if (!detail.open) return;
-    const content = [...detail.children].filter(
-      (child) => child.tagName !== 'SUMMARY',
-    );
-    content.forEach((child) => {
-      expansionAnimation = child.animate(
-        [
-          { opacity: 0, translate: '0 12px' },
-          { opacity: 1, translate: '0 0' },
-        ],
-        { duration: 450, easing: 'cubic-bezier(.22,1,.36,1)' },
-      );
-    });
+    void detail.offsetWidth;
+    detail.classList.add('expansion-playing');
     const rect = detail.getBoundingClientRect();
     const topGap = header.getBoundingClientRect().height + 24;
-    const contentBottom = rect.bottom;
-    if (rect.top < topGap || contentBottom > innerHeight - 24) {
-      const destination = Math.max(0, scrollY + rect.top - topGap);
-      window.scrollTo({ top: destination, behavior: 'smooth' });
-    }
+    const destination = Math.min(
+      document.documentElement.scrollHeight - innerHeight,
+      Math.max(0, scrollY + rect.top - topGap),
+    );
+    const start = scrollY;
+    const distance = destination - start;
+    if (Math.abs(distance) < 24) return;
+    const started = performance.now();
+    const step = (now) => {
+      if (!detail.open) return;
+      const progress = Math.min(1, (now - started) / 850);
+      const ease =
+        progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2;
+      window.scrollTo({ top: start + distance * ease, behavior: 'instant' });
+      if (progress < 1) expandFrame = requestAnimationFrame(step);
+    };
+    expandFrame = requestAnimationFrame(step);
   });
 });
 

@@ -3353,3 +3353,23 @@ details > summary:focus-visible {
   outline-offset: 4px;
 }
 
+/* Deliberate clicks play a visible expansion, independent of automatic motion. */
+details.expansion-playing[open] > :not(summary) {
+  animation: expanded-content-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) both !important;
+  animation-iteration-count: 1 !important;
+}
+@keyframes expanded-content-in {
+  0% {
+    opacity: 0.15;
+    transform: translateY(24px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
