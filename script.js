@@ -374,8 +374,12 @@ document.querySelectorAll('a.contact-card').forEach((card) => {
 });
 
 const setupCards = document.querySelectorAll('.development-setup li');
-function animateSetup() {
-  if (motion.matches || !window.gsap) return;
+function animateSetup(force = false) {
+  if (motion.matches && force !== true) return;
+  if (!window.gsap) {
+    setupCards.forEach((card, index) => card.animate([{ opacity: 0, translate: '0 26px' }, { opacity: 1, translate: '0 0' }], { duration: 650, delay: index * 90, easing: 'ease-out', fill: 'backwards' }));
+    return;
+  }
   gsap.killTweensOf(setupCards);
   gsap.fromTo(
     setupCards,
@@ -401,7 +405,7 @@ if (window.ScrollTrigger) {
 }
 document
   .querySelector('.effects-preview')
-  ?.addEventListener('click', animateSetup);
+  ?.addEventListener('click', () => animateSetup(true));
 setupCards.forEach((card) => {
   card.addEventListener('pointerenter', () => {
     if (motion.matches || !window.anime?.animate) return;
