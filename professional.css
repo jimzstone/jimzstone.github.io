@@ -2868,3 +2868,29 @@ h4 {
   border-color: #c9f17d90;
 }
 
+/* Theme-colored emphasis for the everyday toolkit. */
+.tools .tool-card {
+  background: linear-gradient(135deg, #fcfdf7, #f0f5e5);
+  border-color: #b9cc9a;
+  transition:
+    background 0.3s,
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+.tools .tool-card .tool-icon {
+  background: linear-gradient(145deg, #e7f4ce, #d3e8ad);
+  border-color: #aac77c;
+  box-shadow: inset 0 1px 0 #ffffffb3;
+}
+@media (hover: hover) and (pointer: fine) {
+  .tools .tool-card:hover {
+    background: linear-gradient(135deg, #e8f5cc, #d6e8b7);
+    border-color: #7c9e4d;
+    box-shadow: 0 5px 16px #31462112;
+  }
+  .tools .tool-card:hover .tool-icon {
+    background: linear-gradient(145deg, #d5ef9f, #bddb83);
+    border-color: #7c9e4d;
+  }
+}
+
