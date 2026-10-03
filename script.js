@@ -393,3 +393,22 @@ document.querySelectorAll('details').forEach((detail) => {
   });
 });
 
+const contactZoomButtons = document.querySelectorAll(
+  '.contact-actions .button',
+);
+function sizeContactZoom() {
+  contactZoomButtons.forEach((button) => {
+    if (!button.offsetWidth || !button.offsetHeight) return;
+    button.style.setProperty(
+      '--contact-zoom-x',
+      String(1 + 5 / button.offsetWidth),
+    );
+    button.style.setProperty(
+      '--contact-zoom-y',
+      String(1 + 5 / button.offsetHeight),
+    );
+  });
+}
+sizeContactZoom();
+window.addEventListener('resize', sizeContactZoom);
+

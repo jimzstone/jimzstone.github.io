@@ -3392,3 +3392,24 @@ details.expansion-playing[open] > :not(summary) {
   }
 }
 
+/* Contact buttons expand approximately 2.5px on each edge. */
+#contact .contact-actions .button {
+  transition:
+    scale 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.25s,
+    border-color 0.25s,
+    box-shadow 0.25s;
+  transform: none;
+  scale: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  #contact .contact-actions .button:hover {
+    transform: none;
+    scale: var(--contact-zoom-x, 1.035) var(--contact-zoom-y, 1.1);
+    box-shadow: 0 5px 14px #00000018;
+  }
+}
+#contact .contact-actions .button:active {
+  scale: 1;
+}
+
