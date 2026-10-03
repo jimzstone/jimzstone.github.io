@@ -3469,3 +3469,48 @@ details.expansion-playing[open] > :not(summary) {
   }
 }
 
+/* Mobile navigation stays exposed in compact rows. */
+@media (max-width: 700px) {
+  header {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px 18px;
+  }
+  .menu-toggle {
+    display: none !important;
+  }
+  #navigation,
+  #navigation.open {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    position: static;
+    width: 100%;
+    gap: 6px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  #navigation a {
+    width: 100%;
+    min-width: 0;
+    min-height: 38px;
+    padding: 9px 5px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  #navigation .nav-contact {
+    min-height: 38px;
+    padding: 9px 5px;
+    margin: 0;
+  }
+  #navigation a:hover {
+    scale: 1;
+  }
+}
+
