@@ -3682,3 +3682,70 @@ details.expansion-playing[open] > :not(summary) {
   }
 }
 
+/* Navigation pills follow label width at every breakpoint. */
+#navigation a {
+  width: auto;
+  justify-self: center;
+  flex: 0 0 auto;
+}
+#navigation a.active,
+#navigation .nav-contact.active {
+  animation-fill-mode: none !important;
+  scale: 1;
+}
+@media (max-width: 700px) {
+  #navigation,
+  #navigation.open {
+    justify-items: center;
+    align-items: center;
+    column-gap: 4px;
+    row-gap: 7px;
+  }
+  #navigation a {
+    width: max-content;
+    max-width: 100%;
+    padding: 8px 9px;
+    font-size: 11px;
+    min-height: 36px;
+  }
+  #navigation .nav-contact {
+    width: max-content;
+    max-width: 100%;
+    padding: 8px 12px;
+    font-size: 11px;
+    min-height: 36px;
+  }
+}
+@media (max-width: 400px) {
+  header {
+    grid-template-columns: 70px minmax(0, 1fr);
+    gap: 6px;
+    padding: 10px 8px;
+  }
+  #navigation a {
+    font-size: 10px;
+    padding: 8px 5px;
+  }
+  #navigation .nav-contact {
+    font-size: 10px;
+    padding: 8px 7px;
+  }
+}
+@media (min-width: 701px) and (max-width: 1000px) {
+  header {
+    padding-inline: 20px;
+    gap: 15px;
+  }
+  #navigation {
+    gap: 4px;
+  }
+  #navigation a {
+    padding: 10px 10px;
+    font-size: 12px;
+  }
+  #navigation .nav-contact {
+    padding: 11px 14px;
+    margin-left: 3px;
+  }
+}
+
