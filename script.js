@@ -373,3 +373,43 @@ document.querySelectorAll('a.contact-card').forEach((card) => {
   contactPointer.addEventListener('change', reset);
 });
 
+const setupCards = document.querySelectorAll('.development-setup li');
+function animateSetup() {
+  if (motion.matches || !window.gsap) return;
+  gsap.killTweensOf(setupCards);
+  gsap.fromTo(
+    setupCards,
+    { opacity: 0, y: 26, scale: 0.96 },
+    {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 0.65,
+      stagger: 0.09,
+      ease: 'power3.out',
+      clearProps: 'opacity,transform',
+    },
+  );
+}
+if (window.ScrollTrigger) {
+  ScrollTrigger.create({
+    trigger: '.development-setup',
+    start: 'top 85%',
+    onEnter: animateSetup,
+    onEnterBack: animateSetup,
+  });
+}
+document
+  .querySelector('.effects-preview')
+  ?.addEventListener('click', animateSetup);
+setupCards.forEach((card) => {
+  card.addEventListener('pointerenter', () => {
+    if (motion.matches || !window.anime?.animate) return;
+    anime.animate(card, { translateY: -5, duration: 300, ease: 'out(3)' });
+  });
+  card.addEventListener('pointerleave', () => {
+    if (motion.matches || !window.anime?.animate) return;
+    anime.animate(card, { translateY: 0, duration: 350, ease: 'out(3)' });
+  });
+});
+
