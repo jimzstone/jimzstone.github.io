@@ -35,7 +35,7 @@ const targets = [
   ),
 ];
 let framePending = false;
-let navigationTimer;
+let scrollFrame = 0;
 let navigating = false;
 let navigationTarget;
 let menuAnimation;
@@ -172,20 +172,82 @@ function schedule() {
     framePending = true;
     requestAnimationFrame(update);
   }
-  if (navigating) {
-    clearTimeout(navigationTimer);
-    navigationTimer = setTimeout(() => {
-      navigating = false;
-      if (navigationTarget) {
-        if (!navigationTarget.matches('a, button, input, [tabindex]'))
-          navigationTarget.setAttribute('tabindex', '-1');
-        navigationTarget.focus({ preventScroll: true });
-        navigationTarget = null;
-      }
-      schedule();
-    }, 150);
-  }
 }
+
+function stopNavigation(completed = false) {
+  cancelAnimationFrame(scrollFrame);
+  navigating = false;
+  if (completed && navigationTarget) {
+    if (!navigationTarget.matches('a, button, input, [tabindex]'))
+      navigationTarget.setAttribute('tabindex', '-1');
+    navigationTarget.focus({ preventScroll: true });
+  }
+  navigationTarget = null;
+  schedule();
+}
+
+function scrollToSection(target) {
+  cancelAnimationFrame(scrollFrame);
+  navigating = true;
+  navigationTarget = target;
+  const start = scrollY;
+  const destination = Math.min(
+    Math.max(0, document.documentElement.scrollHeight - innerHeight),
+    Math.max(
+      0,
+      target === document.body
+        ? 0
+        : target.getBoundingClientRect().top + start - header.offsetHeight - 18,
+    ),
+  );
+  const distance = destination - start;
+  const duration = motion.matches
+    ? 0
+    : Math.min(1100, Math.max(450, Math.abs(distance) * 0.15 + 450));
+  if (!duration || Math.abs(distance) < 2) {
+    window.scrollTo({ top: destination, behavior: 'instant' });
+    stopNavigation(true);
+    return;
+  }
+  const began = performance.now();
+  const step = (now) => {
+    const progress = Math.min(1, (now - began) / duration);
+    const eased =
+      progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2;
+    window.scrollTo({ top: start + distance * eased, behavior: 'instant' });
+    if (progress < 1) scrollFrame = requestAnimationFrame(step);
+    else stopNavigation(true);
+  };
+  scrollFrame = requestAnimationFrame(step);
+}
+['wheel', 'touchstart'].forEach((type) =>
+  window.addEventListener(
+    type,
+    () => {
+      if (navigating) stopNavigation();
+    },
+    { passive: true },
+  ),
+);
+window.addEventListener('keydown', (event) => {
+  if (
+    navigating &&
+    [
+      'ArrowUp',
+      'ArrowDown',
+      'PageUp',
+      'PageDown',
+      'Home',
+      'End',
+      ' ',
+      'Escape',
+    ].includes(event.key)
+  )
+    stopNavigation();
+});
+motion.addEventListener('change', () => {
+  if (navigating) stopNavigation();
+});
 document.querySelectorAll('a[href^="#"]').forEach((link) =>
   link.addEventListener('click', (event) => {
     const target = link.hash
@@ -201,22 +263,10 @@ document.querySelectorAll('a[href^="#"]').forEach((link) =>
       return;
     event.preventDefault();
     setMenu(false);
-    navigating = true;
-    navigationTarget = target;
     targets
       .filter((element) => target.contains(element))
       .forEach((element) => shown.delete(element));
-    const y =
-      target === document.body
-        ? 0
-        : target.getBoundingClientRect().top +
-          scrollY -
-          header.offsetHeight -
-          18;
-    window.scrollTo({
-      top: Math.max(0, y),
-      behavior: motion.matches ? 'instant' : 'smooth',
-    });
+    scrollToSection(target);
     history.replaceState(
       null,
       '',
