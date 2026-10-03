@@ -1053,12 +1053,6 @@ h2 em {
 .skill-list p {
   line-height: 1.8;
 }
-.credential-column article {
-  transition: background 0.2s;
-}
-.credential-column article:hover {
-  background: #f6faf9;
-}
 .skip {
   left: 12px;
   top: 12px;
@@ -1418,9 +1412,6 @@ h2 em {
 }
 .credential-column article > span {
   color: #5c7d35;
-}
-.credential-column article:hover {
-  background: #eff5e4;
 }
 .contact {
   background: linear-gradient(135deg, #3c522e, #283b21 55%, #1b2d19);
@@ -2786,3 +2777,4 @@ h4 {
     margin-top: 26px;
   }
 }
+
