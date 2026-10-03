@@ -3308,3 +3308,30 @@ h4 {
   outline-offset: 4px;
 }
 
+/* Explicit user-requested previews also work with reduced motion enabled. */
+#tools .development-setup li.effect-playing {
+  animation: visible-tool-preview 1.6s cubic-bezier(0.22, 1, 0.36, 1)
+    var(--effect-delay, 0ms) both !important;
+  animation-iteration-count: 1 !important;
+}
+@keyframes visible-tool-preview {
+  0% {
+    opacity: 0.25;
+    transform: translateY(28px) scale(0.94);
+    background: #d0e99d;
+    box-shadow: 0 0 0 2px #90b653;
+  }
+  55% {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.015);
+    background: #e0efc5;
+    box-shadow: 0 8px 18px #31462120;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    background: #f3f7eb;
+    box-shadow: none;
+  }
+}
+

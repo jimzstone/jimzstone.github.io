@@ -376,24 +376,17 @@ document.querySelectorAll('a.contact-card').forEach((card) => {
 const setupCards = document.querySelectorAll('.development-setup li');
 function animateSetup(force = false) {
   if (motion.matches && force !== true) return;
-  if (!window.gsap) {
-    setupCards.forEach((card, index) => card.animate([{ opacity: 0, translate: '0 26px' }, { opacity: 1, translate: '0 0' }], { duration: 650, delay: index * 90, easing: 'ease-out', fill: 'backwards' }));
-    return;
-  }
-  gsap.killTweensOf(setupCards);
-  gsap.fromTo(
-    setupCards,
-    { opacity: 0, y: 26, scale: 0.96 },
-    {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      duration: 0.65,
-      stagger: 0.09,
-      ease: 'power3.out',
-      clearProps: 'opacity,transform',
-    },
-  );
+  if (window.gsap) gsap.killTweensOf(setupCards);
+  setupCards.forEach((card, index) => {
+    card.style.removeProperty('transform');
+    card.style.removeProperty('opacity');
+    card.classList.remove('effect-playing');
+    card.style.setProperty('--effect-delay', `${index * 140}ms`);
+    void card.offsetWidth;
+    card.classList.add('effect-playing');
+  });
+  const preview = document.querySelector('.effects-preview');
+  preview.textContent = 'Replay animation effects';
 }
 if (window.ScrollTrigger) {
   ScrollTrigger.create({
@@ -407,6 +400,7 @@ document
   .querySelector('.effects-preview')
   ?.addEventListener('click', () => animateSetup(true));
 setupCards.forEach((card) => {
+  card.addEventListener('animationend', () => card.classList.remove('effect-playing'));
   card.addEventListener('pointerenter', () => {
     if (motion.matches || !window.anime?.animate) return;
     anime.animate(card, { translateY: -5, duration: 300, ease: 'out(3)' });
