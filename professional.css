@@ -3611,3 +3611,58 @@ details.expansion-playing[open] > :not(summary) {
   }
 }
 
+/* Keep the identity beside the exposed mobile navigation. */
+@media (max-width: 700px) {
+  header {
+    display: grid;
+    grid-template-columns: 90px minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+  }
+  header .logo {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 23px;
+    letter-spacing: -1px;
+  }
+  header .logo span {
+    margin: 0;
+    max-width: 54px;
+    font-size: 8px;
+    line-height: 1.5;
+    letter-spacing: 0.7px;
+  }
+  #navigation,
+  #navigation.open {
+    width: auto;
+    gap: 5px;
+  }
+  #navigation a {
+    font-size: 10px;
+    padding: 8px 3px;
+    min-height: 34px;
+  }
+  #navigation .nav-contact {
+    min-height: 34px;
+    padding: 8px 3px;
+    font-size: 10px;
+  }
+}
+@media (max-width: 360px) {
+  header {
+    grid-template-columns: 70px minmax(0, 1fr);
+    gap: 6px;
+    padding: 10px 8px;
+  }
+  header .logo span {
+    max-width: 39px;
+    font-size: 7px;
+  }
+  #navigation a,
+  #navigation .nav-contact {
+    font-size: 9px;
+  }
+}
+
