@@ -82,50 +82,6 @@ document.addEventListener('keydown', (event) => {
 matchMedia('(min-width:701px)').addEventListener('change', () =>
   setMenu(false),
 );
-function reveal(element, delay = 0) {
-  if (motion.matches || !element.animate) return;
-  animations.get(element)?.cancel();
-  if (window.gsap) {
-    const tween = gsap.fromTo(
-      element,
-      { opacity: 0, y: effectSettings.reveal.distance },
-      {
-        opacity: 1,
-        y: 0,
-        duration: effectSettings.reveal.duration,
-        delay: delay / 1000,
-        ease: 'power2.out',
-        clearProps: 'opacity,transform',
-        onComplete: () => animations.delete(element),
-      },
-    );
-    animations.set(element, {
-      cancel: () => {
-        tween.kill();
-        gsap.set(element, { clearProps: 'opacity,transform' });
-      },
-    });
-    return;
-  }
-  const isText = !element.matches('.project, .tool-card');
-  const animation = element.animate(
-    [
-      {
-        opacity: 0,
-        transform: `translateY(${isText ? effectSettings.reveal.distance : 12}px)`,
-      },
-      { opacity: 1, transform: 'translateY(0)' },
-    ],
-    {
-      duration: effectSettings.reveal.duration * 1000,
-      delay,
-      easing: 'cubic-bezier(.2,.7,.2,1)',
-      fill: 'backwards',
-    },
-  );
-  animations.set(element, animation);
-  animation.onfinish = () => animations.delete(element);
-}
 function update() {
   framePending = false;
   const top = header.getBoundingClientRect().bottom + 16;
@@ -145,26 +101,19 @@ function update() {
     if (selected) link.setAttribute('aria-current', 'location');
     else link.removeAttribute('aria-current');
   });
-  let stagger = 0;
+  const visibleTop = header.getBoundingClientRect().bottom + 12;
+  const fadeZone = Math.min(110, innerHeight * 0.18);
   targets.forEach((element) => {
     if (!element.getClientRects().length) return;
     const rect = element.getBoundingClientRect();
-    if (rect.bottom < top || rect.top >= innerHeight) shown.delete(element);
-    if (
-      !navigating &&
-      rect.top < innerHeight - 35 &&
-      rect.bottom > top &&
-      !shown.has(element)
-    ) {
-      shown.add(element);
-      reveal(
-        element,
-        Math.min(
-          stagger++ * effectSettings.reveal.stagger * 1000,
-          effectSettings.reveal.maxDelay * 1000,
-        ),
-      );
-    }
+    const entering = (innerHeight - rect.top) / fadeZone;
+    const leaving = (rect.bottom - visibleTop) / fadeZone;
+    const amount = element.matches(':focus-within')
+      ? 1
+      : Math.max(0.12, Math.min(1, entering, leaving));
+    element.classList.add('scroll-fade');
+    element.style.setProperty('--scroll-opacity', String(amount));
+    element.style.setProperty('--scroll-offset', `${(1 - amount) * 12}px`);
   });
 }
 function schedule() {

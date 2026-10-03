@@ -3373,3 +3373,22 @@ details.expansion-playing[open] > :not(summary) {
   }
 }
 
+/* Scroll position controls entry and exit; focused content stays readable. */
+.scroll-fade {
+  opacity: var(--scroll-opacity, 1) !important;
+  translate: 0 var(--scroll-offset, 0px);
+  transition:
+    opacity 0.18s linear,
+    translate 0.18s ease-out !important;
+}
+.scroll-fade:focus-within {
+  opacity: 1 !important;
+  translate: none;
+}
+@media print {
+  .scroll-fade {
+    opacity: 1 !important;
+    translate: none !important;
+  }
+}
+
