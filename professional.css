@@ -3011,3 +3011,94 @@ h4 {
   }
 }
 
+/* A quiet, structured overview of professional strengths. */
+.highlights {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  padding: 12px;
+  background: linear-gradient(120deg, #f8fbf1, #e9f0dc);
+  border: 1px solid #bdcea3;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px #31462108;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+.highlights > div {
+  position: relative;
+  padding: 20px 22px;
+  min-width: 0;
+  border-radius: 8px;
+  transition:
+    background 0.3s,
+    transform 0.3s;
+}
+.highlights > div + div {
+  border-left: 1px solid #adbf963d;
+}
+.highlights > div::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 3px;
+  border-radius: 3px;
+  margin-bottom: 12px;
+  background: #85a34e;
+  transition:
+    width 0.3s,
+    background 0.3s;
+}
+.highlights strong {
+  display: block;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.2px;
+  color: #263b21;
+}
+.highlights span {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.65;
+  color: #526247;
+}
+@media (hover: hover) and (pointer: fine) {
+  .highlights > div:hover {
+    background: #d5e7b74d;
+    transform: translateY(-2px);
+  }
+  .highlights > div:hover::before {
+    width: 40px;
+    background: #5c7c31;
+  }
+}
+@media (max-width: 900px) {
+  .highlights {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .highlights > div:nth-child(3) {
+    border-left: 0;
+  }
+}
+@media (max-width: 480px) {
+  .highlights {
+    grid-template-columns: 1fr;
+  }
+  .highlights > div + div {
+    border-left: 0;
+    border-top: 1px solid #adbf963d;
+  }
+  .highlights > div {
+    padding: 18px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .highlights > div,
+  .highlights > div::before {
+    transition: none;
+  }
+  .highlights > div:hover {
+    transform: none;
+  }
+}
+
