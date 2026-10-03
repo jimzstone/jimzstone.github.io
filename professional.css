@@ -3828,3 +3828,35 @@ details.expansion-playing[open] > :not(summary) {
   }
 }
 
+/* Navigation highlights never create a scrollable header. */
+header {
+  overflow: visible;
+}
+#navigation,
+#navigation.open {
+  overflow: visible !important;
+  max-height: none !important;
+}
+#navigation a,
+#navigation a:hover,
+#navigation a.active,
+#navigation .nav-contact.active {
+  scale: 1 !important;
+  transform: none !important;
+}
+#navigation a.active,
+#navigation .nav-contact.active {
+  animation: nav-border-match 0.5s ease-out !important;
+  animation-iteration-count: 1 !important;
+}
+@keyframes nav-border-match {
+  from {
+    border-color: #bed3a0;
+    box-shadow: inset 0 0 0 1px #c9e69c20;
+  }
+  to {
+    border-color: #8fac61;
+    box-shadow: inset 0 1px 0 #ffffff30;
+  }
+}
+
