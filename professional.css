@@ -332,7 +332,16 @@ h2 em {
 .project-art .phone,
 .project-art .monitor,
 .project-art .dashboard {
-  transition: transform 0.4s;
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    scale 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .project:hover .project-art .phone,
+  .project:hover .project-art .monitor,
+  .project:hover .project-art .dashboard {
+    scale: 1.08;
+  }
 }
 .project:hover .phone {
   transform: translateX(-50%) rotate(-3deg) translateY(-5px);
