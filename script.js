@@ -373,16 +373,3 @@ document.querySelectorAll('a.contact-card').forEach((card) => {
   contactPointer.addEventListener('change', reset);
 });
 
-const wechatCopy = document.querySelector('.wechat-copy');
-wechatCopy?.addEventListener('click', async () => {
-  const status = document.querySelector('.wechat-status');
-  status.textContent = 'Search mingzstone in WeChat to add me.';
-  try {
-    await navigator.clipboard.writeText('mingzstone');
-    status.textContent =
-      'WeChat ID copied. Search mingzstone in WeChat to add me.';
-  } catch {
-    status.textContent = 'Search mingzstone in WeChat to add me.';
-  }
-});
-
