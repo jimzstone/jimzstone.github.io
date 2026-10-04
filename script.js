@@ -481,34 +481,58 @@ cvDownload?.addEventListener('click', (event) => {
   }),
 );
 
-// Delay closing briefly so expanded content can fade out visibly.
+// Animate the disclosure's space as well as its contents, in both directions.
 document.querySelectorAll('details > summary').forEach((summary) => {
-  let closing = false;
+  const detail = summary.parentElement;
+  detail.classList.add('disclosure-motion');
+  let busy = false;
   summary.addEventListener('click', (event) => {
-    const detail = summary.parentElement;
-    if (!detail.open) return;
     event.preventDefault();
-    if (closing) return;
-    closing = true;
+    if (busy) return;
+    busy = true;
+    cancelAnimationFrame(expandFrame);
+    if (navigating) stopNavigation();
+    const opening = !detail.open;
+    if (opening) detail.open = true;
     const content = [...detail.children].filter((child) => child !== summary);
-    detail.classList.remove('expansion-playing');
-    const fades = content.map((child) =>
-      child.animate(
-        [
-          { opacity: 1, translate: '0 0' },
-          { opacity: 0, translate: '0 8px' },
-        ],
+    const animations = content.map((child) => {
+      const style = getComputedStyle(child);
+      const expanded = {
+        height: `${child.getBoundingClientRect().height}px`,
+        opacity: 1,
+        marginTop: style.marginTop,
+        marginBottom: style.marginBottom,
+        paddingTop: style.paddingTop,
+        paddingBottom: style.paddingBottom,
+        transform: 'translateY(0)',
+      };
+      const collapsed = {
+        height: '0px',
+        opacity: 0,
+        marginTop: '0px',
+        marginBottom: '0px',
+        paddingTop: '0px',
+        paddingBottom: '0px',
+        transform: 'translateY(10px)',
+      };
+      child.style.overflow = 'hidden';
+      return child.animate(
+        opening ? [collapsed, expanded] : [expanded, collapsed],
         {
-          duration: desktopTiming(450, 550),
-          easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-          fill: 'forwards',
+          duration: desktopTiming(opening ? 700 : 550, opening ? 850 : 650),
+          easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+          fill: 'both',
         },
-      ),
-    );
-    Promise.all(fades.map((fade) => fade.finished.catch(() => {}))).then(() => {
-      detail.open = false;
-      fades.forEach((fade) => fade.cancel());
-      closing = false;
+      );
+    });
+    Promise.all(
+      animations.map((animation) => animation.finished.catch(() => {})),
+    ).then(() => {
+      if (!opening) detail.open = false;
+      animations.forEach((animation) => animation.cancel());
+      content.forEach((child) => child.style.removeProperty('overflow'));
+      busy = false;
+      schedule();
     });
   });
 });

@@ -4110,3 +4110,49 @@ details.expansion-playing[open] > :not(summary) {
   }
 }
 
+/* Native phone disclosures share one animation controller. */
+html {
+  background-color: var(--bg);
+}
+details.disclosure-motion > :not(summary) {
+  animation: none !important;
+}
+summary,
+.code-example-toggle {
+  -webkit-tap-highlight-color: transparent;
+}
+.code-example-toggle {
+  appearance: none;
+  -webkit-appearance: none;
+}
+details > summary span {
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (hover: none) {
+  #tools .development-setup li:not(.example-open) .package-example {
+    border: 0;
+    box-shadow: none;
+  }
+  .training-details summary:hover {
+    background: #eaf1de;
+  }
+}
+
+/* Keep the phone's exposed canvas in theme, including bottom overscroll. */
+html {
+  background-color: #2b3c24;
+  min-height: 100%;
+}
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+@media (hover: none) and (pointer: coarse) {
+  body {
+    background-attachment: scroll;
+  }
+}
+footer {
+  padding-bottom: max(35px, env(safe-area-inset-bottom));
+}
+
