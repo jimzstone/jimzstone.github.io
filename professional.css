@@ -4890,4 +4890,31 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+/* Match the CV countdown: tinted surface, outlined edge and lime progress line. */
+#contact .inquiry-submit.cv-loading {
+  background: #c9f17d18;
+  color: #e4f6cd;
+  border-color: #a4c56f;
+  opacity: 1;
+  transform: none;
+  box-shadow: inset 0 0 0 1px #c9f17d12;
+  min-width: 200px;
+}
+#contact .inquiry-submit.cv-loading .inquiry-spinner {
+  display: none;
+}
+#contact .inquiry-submit.cv-loading .inquiry-progress {
+  height: 3px;
+  background: #c9f17d;
+  animation: cv-progress 3s linear both !important;
+}
+#contact .inquiry-submit {
+  min-width: 200px;
+}
+@media (prefers-reduced-motion: reduce) {
+  #contact .inquiry-submit.cv-loading .inquiry-progress {
+    animation: none !important;
+    transform: scaleX(1);
+  }
+}
 

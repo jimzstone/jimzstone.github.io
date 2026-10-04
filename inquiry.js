@@ -123,6 +123,7 @@ if (inquiryForm) {
     button.disabled = true;
     inquiryForm.setAttribute('aria-busy', 'true');
     inquiryForm.classList.add('is-submitting');
+    button.classList.add('cv-loading');
     status.textContent = 'Submitting your inquiry…';
     status.className = 'inquiry-status';
     inquiryForm.classList.remove('is-complete');
@@ -157,6 +158,7 @@ if (inquiryForm) {
     clearInterval(countdown);
     clearTimeout(timeout);
     inquiryForm.classList.remove('is-submitting');
+    button.classList.remove('cv-loading');
     inquiryForm.removeAttribute('aria-busy');
     fields.disabled = false;
     button.disabled = false;
