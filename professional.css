@@ -3913,3 +3913,66 @@ details.expansion-smoothing > :not(summary),
   animation: none !important;
   visibility: visible !important;
 }
+
+/* Hiring overview follows the portfolio's existing green panels and typography. */
+.hire-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.hire-card {
+  min-width: 0;
+  padding: 28px;
+  border: 1px solid #c4d3ab;
+  border-radius: 14px;
+  background: #f3f7eb;
+}
+.hire-number {
+  display: inline-block;
+  margin-bottom: 14px;
+  color: #597b35;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.hire-card h3, .hire-approach h3 {
+  margin: 0 0 16px;
+  color: #293b22;
+  font-size: 20px;
+  line-height: 1.4;
+}
+.hire-card p, .hire-approach p {
+  color: #58644e;
+  font-size: 14px;
+  line-height: 1.85;
+  margin: 0 0 16px;
+}
+.hire-card p:last-child { margin-bottom: 0; }
+.hire-card strong { color: #394d2b; }
+.hire-approach {
+  margin-top: 24px;
+  padding: 30px;
+  background: #e6edda;
+  border: 1px solid #c4d3ab;
+  border-radius: 14px;
+}
+.hire-approach .button { margin: 8px 20px 8px 0; }
+.hire-experience-link {
+  display: inline-block;
+  color: #4d7028;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  line-height: 1.6;
+}
+.hire-experience-link:focus-visible {
+  outline: 2px solid #7c9e4d;
+  outline-offset: 4px;
+}
+@media (max-width: 700px) {
+  .hire-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .hire-card, .hire-approach { padding: 22px; }
+  .hire-card h3, .hire-approach h3 { font-size: 18px; }
+  .hire-approach .button { display: inline-flex; margin-right: 0; }
+  .hire-approach .hire-experience-link { display: block; margin-top: 12px; }
+}
