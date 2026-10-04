@@ -16,7 +16,7 @@
     <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
     <script src="assets/vendor/anime.umd.min.js" defer></script>
     <script src="script.js?v=45" defer></script>
-    <script src="inquiry.js?v=1" defer></script>
+    <script src="inquiry.js?v=2" defer></script>
     <script type="module" src="/src/main.tsx"></script>
   </head>
   <body>
@@ -1471,7 +1471,7 @@
             <h3 id="inquiry-heading">For Inquiry just fill-up this form</h3>
             <p>
               Share your inquiry and preferred meeting date. I’ll contact you to
-              confirm availability.
+              confirm availability. Fields are required unless marked optional.
             </p>
           </div>
           <form
@@ -1519,7 +1519,7 @@
                 />
               </div>
               <div class="inquiry-field">
-                <label for="inquiry-date">Set Schedule</label
+                <label for="inquiry-date">Preferred meeting date</label
                 ><input
                   id="inquiry-date"
                   type="date"
@@ -1541,6 +1541,25 @@
                   maxlength="30"
                   required
                 />
+              </div>
+              <div class="inquiry-field">
+                <label for="inquiry-time">Preferred time (optional)</label>
+                <input
+                  id="inquiry-time"
+                  type="time"
+                  name="Preferred meeting time"
+                />
+                <small>Uses the time zone shown with your meeting date.</small>
+              </div>
+              <div class="inquiry-field">
+                <label for="inquiry-subject">Inquiry topic</label>
+                <select id="inquiry-subject" name="Inquiry topic" required>
+                  <option value="">Choose a topic</option>
+                  <option>Job opportunity</option>
+                  <option>Project collaboration</option>
+                  <option>Meeting request</option>
+                  <option>General inquiry</option>
+                </select>
               </div>
               <fieldset class="inquiry-platforms inquiry-wide">
                 <legend>Where can I contact you?</legend>
@@ -1577,8 +1596,30 @@
                       required
                     /><span>Discord</span></label
                   >
+                  <label
+                    ><input
+                      type="radio"
+                      name="Preferred platform"
+                      value="Other Platform"
+                      required
+                    /><span>Other Platform</span></label
+                  >
                 </div>
               </fieldset>
+              <div
+                class="inquiry-field inquiry-wide"
+                id="inquiry-other-field"
+                hidden
+              >
+                <label for="inquiry-other">Platform name</label>
+                <input
+                  id="inquiry-other"
+                  name="Other platform name"
+                  maxlength="60"
+                  placeholder="For example, Signal or Messenger"
+                  disabled
+                />
+              </div>
               <div class="inquiry-field inquiry-wide">
                 <label id="inquiry-account-label" for="inquiry-account"
                   >Platform user ID or mobile number</label
@@ -1627,7 +1668,8 @@
               >
                 <path d="m3 3 18 9-18 9 4-9-4-9Zm4 9h14" /></svg
               ><span class="inquiry-submit-label">Submit</span
-              ><span class="inquiry-spinner" aria-hidden="true"></span>
+              ><span class="inquiry-spinner" aria-hidden="true"></span
+              ><span class="inquiry-progress" aria-hidden="true"></span>
             </button>
             <p
               class="inquiry-status"

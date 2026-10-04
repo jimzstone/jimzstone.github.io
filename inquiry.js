@@ -28,6 +28,8 @@ if (inquiryForm) {
   const account = document.getElementById('inquiry-account');
   const accountLabel = document.getElementById('inquiry-account-label');
   const accountHelp = document.getElementById('inquiry-account-help');
+  const other = document.getElementById('inquiry-other');
+  const otherField = document.getElementById('inquiry-other-field');
   const timezone =
     Intl.DateTimeFormat().resolvedOptions().timeZone || 'Not provided';
   document.getElementById('inquiry-timezone').value = timezone;
@@ -40,18 +42,27 @@ if (inquiryForm) {
       'input[name="Preferred platform"]:checked',
     )?.value;
     const phone = platform === 'Viber' || platform === 'WhatsApp';
+    const isOther = platform === 'Other Platform';
+    otherField.hidden = !isOther;
+    other.disabled = !isOther;
+    other.required = isOther;
+    other.setCustomValidity('');
     account.disabled = !platform;
     account.type = phone ? 'tel' : 'text';
     account.inputMode = phone ? 'tel' : 'text';
     account.autocomplete = 'off';
-    accountLabel.textContent = platform
-      ? `${platform} ${phone ? 'mobile number' : 'user ID or username'}`
-      : 'Platform user ID or mobile number';
-    account.placeholder = phone
-      ? '+63 9XX XXX XXXX'
+    accountLabel.textContent = isOther
+      ? 'Contact username, number or profile link'
       : platform
-        ? 'Your user ID or @username'
-        : 'Choose a contact platform above';
+        ? `${platform} ${phone ? 'mobile number' : 'user ID or username'}`
+        : 'Platform user ID or mobile number';
+    account.placeholder = isOther
+      ? 'Your username, mobile number or profile URL'
+      : phone
+        ? '+63 9XX XXX XXXX'
+        : platform
+          ? 'Your user ID or @username'
+          : 'Choose a contact platform above';
     accountHelp.textContent = phone
       ? 'Include the country code for the number registered with this app.'
       : 'Enter the account where you want me to reply.';
@@ -60,12 +71,17 @@ if (inquiryForm) {
   inquiryForm
     .querySelectorAll('input[name="Preferred platform"]')
     .forEach((radio) => radio.addEventListener('change', updateAccount));
-  [mobile, account, date].forEach((input) =>
+  [mobile, account, date, other].forEach((input) =>
     input.addEventListener('input', () => input.setCustomValidity('')),
   );
   inquiryForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (submitting) return;
+    other.setCustomValidity(
+      other.required && !other.value.trim()
+        ? 'Enter the name of your contact platform.'
+        : '',
+    );
     date.min = inquiryToday();
     date.setCustomValidity(
       date.value < date.min ? 'Choose today or a future date.' : '',
@@ -109,6 +125,7 @@ if (inquiryForm) {
     inquiryForm.classList.add('is-submitting');
     status.textContent = 'Submitting your inquiry…';
     status.className = 'inquiry-status';
+    inquiryForm.classList.remove('is-complete');
     let seconds = 3;
     label.textContent = 'Submitting · 3s';
     const countdown = setInterval(() => {
@@ -150,6 +167,7 @@ if (inquiryForm) {
       updateAccount();
       label.textContent = 'Submit';
       status.classList.add('is-success');
+      inquiryForm.classList.add('is-complete');
       status.textContent =
         'Submission complete. Thank you—your inquiry has been accepted. I’ll reply to confirm any meeting request.';
     } else {
