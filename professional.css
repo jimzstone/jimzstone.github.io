@@ -4816,4 +4816,78 @@ footer {
 .portfolio-plugins {
   margin-top: 32px;
 }
+.portrait-caption .portrait-gaming {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #d0e3b5;
+}
+.portrait-gaming svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+}
+.gaming-intro {
+  margin: 28px 0 16px;
+}
+.gaming-intro .games-heading {
+  margin: 0 0 8px;
+}
+.gaming-intro > p,
+.music-interests > p {
+  max-width: 780px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #506047;
+}
+.gaming-platforms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+.gaming-platforms span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid #ccdab9;
+  border-radius: 100px;
+  padding: 7px 12px;
+  font-size: 12px;
+  color: #45622e;
+  background: #f5f9ec;
+}
+.gaming-platforms svg {
+  width: 18px;
+  height: 18px;
+}
+.music-interests {
+  margin-top: 32px;
+}
+.music-interests > h4 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+.music-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+.music-grid .hobby-card {
+  align-items: flex-start;
+}
+@media (max-width: 850px) {
+  .music-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .music-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
