@@ -35,7 +35,7 @@ const animations = new Map();
 const shown = new WeakSet();
 const targets = [
   ...document.querySelectorAll(
-    '.hero h1, .hero .intro, .hero .actions, .section h2, .section .eyebrow, .about-copy > p, .profile-label, .small-note, .section-heading > p, .project-info > h3, .project-info > p, .tool-card > div, .tool-group-heading, .skill-list > div, .credential-column article, .timeline-item > div, .contact > p, .contact-actions, .contact-card',
+    '.hero h1, .hero .intro, .hero .actions, .section h2, .section .eyebrow, .about-copy > p, .profile-label, .small-note, .section-heading > p, .project-info > h3, .project-info > p, .tool-card > div, .tool-group-heading, .skill-list > div, .credential-column article, .timeline-item > div, .contact > p, .contact-actions, .contact-card, .hire-intro > p, .hire-intro h2, .hire-reasons article',
   ),
 ];
 let framePending = false;
@@ -106,7 +106,12 @@ function update() {
     else link.removeAttribute('aria-current');
   });
   const visibleTop = header.getBoundingClientRect().bottom + 12;
-  const fadeZone = Math.min(110, innerHeight * 0.18);
+  const desktopFade = matchMedia(
+    '(min-width: 1001px) and (pointer: fine)',
+  ).matches;
+  const fadeZone = desktopFade
+    ? Math.min(220, innerHeight * 0.26)
+    : Math.min(110, innerHeight * 0.18);
   targets.forEach((element) => {
     if (!element.getClientRects().length) return;
     const rect = element.getBoundingClientRect();
@@ -114,10 +119,13 @@ function update() {
     const leaving = (rect.bottom - visibleTop) / fadeZone;
     const amount = element.matches(':focus-within')
       ? 1
-      : Math.max(0.45, Math.min(1, entering, leaving));
+      : Math.max(desktopFade ? 0 : 0.45, Math.min(1, entering, leaving));
     element.classList.add('scroll-fade');
     element.style.setProperty('--scroll-opacity', String(amount));
-    element.style.setProperty('--scroll-offset', `${(1 - amount) * 12}px`);
+    element.style.setProperty(
+      '--scroll-offset',
+      `${(1 - amount) * (desktopFade ? 18 : 12)}px`,
+    );
   });
 }
 function schedule() {
