@@ -1,7 +1,7 @@
 'use strict';
 let effectSettings = {
-  reveal: { duration: 1.2, distance: 16, stagger: 0.08, maxDelay: 0.32 },
-  navigation: { duration: 0.45 },
+  reveal: { duration: 0.5, distance: 16, stagger: 0.035, maxDelay: 0.14 },
+  navigation: { duration: 0.22 },
   pointer: { distance: 4 },
 };
 fetch('effects.json')
@@ -23,6 +23,10 @@ document.documentElement.classList.add('js');
 const header = document.querySelector('header');
 const navigation = document.querySelector('#navigation');
 const menu = document.querySelector('.menu-toggle');
+const desktopTiming = (normal, slower) =>
+  matchMedia('(min-width: 701px) and (pointer: fine)').matches
+    ? slower
+    : normal;
 const motion = matchMedia('(prefers-reduced-motion: reduce)');
 if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
 const sections = [...document.querySelectorAll('section[id]')];
@@ -51,7 +55,7 @@ function setMenu(open) {
     const control = Motion.animate(
       navigation,
       { opacity: [0, 1], y: [-8, 0] },
-      { duration: effectSettings.navigation.duration },
+      { duration: 0.22 },
     );
     menuAnimation = { cancel: () => control.stop() };
   } else if (open && !motion.matches && navigation.animate)
@@ -159,10 +163,13 @@ function scrollToSection(target) {
   );
   const distance = destination - start;
   const duration = Math.min(
-    1600,
-    Math.max(800, Math.abs(distance) * 0.16 + 800),
+    desktopTiming(1000, 1600),
+    Math.max(
+      desktopTiming(450, 800),
+      Math.abs(distance) * 0.18 + desktopTiming(450, 800),
+    ),
   );
-  if (motion.matches || !duration || Math.abs(distance) < 2) {
+  if (!duration || Math.abs(distance) < 2) {
     window.scrollTo({ top: destination, behavior: 'instant' });
     stopNavigation(true);
     return;
@@ -260,7 +267,7 @@ document.querySelectorAll('.button, .nav-contact').forEach((button) =>
       anime.animate(ripple, {
         scale: [0, 14],
         opacity: [0.35, 0],
-        duration: 800,
+        duration: desktopTiming(450, 700),
         ease: 'outQuad',
         onComplete: () => ripple.remove(),
       });
@@ -271,7 +278,7 @@ document.querySelectorAll('.button, .nav-contact').forEach((button) =>
         { transform: 'translate(-50%,-50%) scale(0)', opacity: 0.35 },
         { transform: 'translate(-50%,-50%) scale(14)', opacity: 0 },
       ],
-      { duration: 800, easing: 'ease-out' },
+      { duration: desktopTiming(450, 700), easing: 'ease-out' },
     );
     animation.onfinish = () => ripple.remove();
     animation.oncancel = () => ripple.remove();
@@ -332,17 +339,19 @@ document.querySelectorAll('a.contact-card').forEach((card) => {
 });
 
 const setupCards = document.querySelectorAll('.development-setup li');
-function animateSetup() {
-  if (motion.matches) return;
+function animateSetup(force = false) {
+  if (motion.matches && force !== true) return;
   if (window.gsap) gsap.killTweensOf(setupCards);
   setupCards.forEach((card, index) => {
     card.style.removeProperty('transform');
     card.style.removeProperty('opacity');
     card.classList.remove('effect-playing');
-    card.style.setProperty('--effect-delay', `${index * 180}ms`);
+    card.style.setProperty('--effect-delay', `${index * 140}ms`);
     void card.offsetWidth;
     card.classList.add('effect-playing');
   });
+  const preview = document.querySelector('.effects-preview');
+  preview.textContent = 'Replay animation effects';
 }
 if (window.ScrollTrigger) {
   ScrollTrigger.create({
@@ -352,22 +361,61 @@ if (window.ScrollTrigger) {
     onEnterBack: animateSetup,
   });
 }
+document
+  .querySelector('.effects-preview')
+  ?.addEventListener('click', () => animateSetup(true));
 setupCards.forEach((card) => {
   card.addEventListener('animationend', () =>
     card.classList.remove('effect-playing'),
   );
   card.addEventListener('pointerenter', () => {
     if (motion.matches || !window.anime?.animate) return;
-    anime.animate(card, { translateY: -5, duration: 550, ease: 'out(3)' });
+    anime.animate(card, {
+      translateY: -5,
+      duration: desktopTiming(300, 550),
+      ease: 'out(3)',
+    });
   });
   card.addEventListener('pointerleave', () => {
     if (motion.matches || !window.anime?.animate) return;
-    anime.animate(card, { translateY: 0, duration: 600, ease: 'out(3)' });
+    anime.animate(card, {
+      translateY: 0,
+      duration: desktopTiming(350, 650),
+      ease: 'out(3)',
+    });
   });
 });
 
-// Expansion motion shares the same cancellable scroll frame.
+// Animate user-triggered expansion even when automatic motion is reduced.
 let expandFrame = 0;
+document.querySelectorAll('details').forEach((detail) => {
+  detail.addEventListener('toggle', () => {
+    cancelAnimationFrame(expandFrame);
+    detail.classList.remove('expansion-playing');
+    if (!detail.open) return;
+    void detail.offsetWidth;
+    detail.classList.add('expansion-playing');
+    const rect = detail.getBoundingClientRect();
+    const topGap = header.getBoundingClientRect().height + 24;
+    const destination = Math.min(
+      document.documentElement.scrollHeight - innerHeight,
+      Math.max(0, scrollY + rect.top - topGap),
+    );
+    const start = scrollY;
+    const distance = destination - start;
+    if (Math.abs(distance) < 24) return;
+    const started = performance.now();
+    const step = (now) => {
+      if (!detail.open) return;
+      const progress = Math.min(1, (now - started) / desktopTiming(850, 1300));
+      const ease =
+        progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2;
+      window.scrollTo({ top: start + distance * ease, behavior: 'instant' });
+      if (progress < 1) expandFrame = requestAnimationFrame(step);
+    };
+    expandFrame = requestAnimationFrame(step);
+  });
+});
 
 const contactZoomButtons = document.querySelectorAll(
   '.contact-actions .button',
@@ -387,6 +435,14 @@ function sizeContactZoom() {
 }
 sizeContactZoom();
 window.addEventListener('resize', sizeContactZoom);
+
+document.querySelectorAll('.code-example-toggle').forEach((button) => {
+  button.addEventListener('click', () => {
+    const expanded = button.getAttribute('aria-expanded') !== 'true';
+    button.setAttribute('aria-expanded', String(expanded));
+    button.closest('li').classList.toggle('example-open', expanded);
+  });
+});
 
 const cvDownload = document.querySelector('.cv-download');
 cvDownload?.addEventListener('click', (event) => {
@@ -422,100 +478,35 @@ cvDownload?.addEventListener('click', (event) => {
   }),
 );
 
-
-// Animate both opacity and occupied space so closing never snaps the layout.
-const expandingContainers = new WeakSet();
-function animateExpansion(container, content, opening, finish) {
-  if (expandingContainers.has(container)) return;
-  cancelAnimationFrame(expandFrame);
-  if (motion.matches) {
-    finish();
-    schedule();
-    return;
-  }
-  expandingContainers.add(container);
-  container.classList.add('expansion-smoothing');
-  const measurements = content.map((element) => {
-    const computed = getComputedStyle(element);
-    const properties = {
-      height: element.getBoundingClientRect().height,
-      'padding-top': parseFloat(computed.paddingTop) || 0,
-      'padding-bottom': parseFloat(computed.paddingBottom) || 0,
-      'margin-top': parseFloat(computed.marginTop) || 0,
-      'margin-bottom': parseFloat(computed.marginBottom) || 0,
-      'border-top-width': parseFloat(computed.borderTopWidth) || 0,
-      'border-bottom-width': parseFloat(computed.borderBottomWidth) || 0,
-    };
-    const names = [...Object.keys(properties), 'overflow', 'box-sizing', 'min-height', 'opacity', 'transition', 'animation', 'transform', 'translate'];
-    const original = names.map((name) => [name, element.style.getPropertyValue(name), element.style.getPropertyPriority(name)]);
-    element.style.setProperty('box-sizing', 'border-box', 'important');
-    element.style.setProperty('overflow', 'hidden', 'important');
-    element.style.setProperty('min-height', '0', 'important');
-    element.style.setProperty('transition', 'none', 'important');
-    element.style.setProperty('animation', 'none', 'important');
-    element.style.setProperty('transform', 'none', 'important');
-    element.style.setProperty('translate', 'none', 'important');
-    return { element, properties, original };
-  });
-  const render = (amount) => measurements.forEach(({ element, properties }) => {
-    Object.entries(properties).forEach(([name, value]) =>
-      element.style.setProperty(name, value * amount + 'px', 'important'),
-    );
-    element.style.setProperty('opacity', String(amount), 'important');
-  });
-  render(opening ? 0 : 1);
-  const duration = opening ? 1100 : 1300;
-  let began;
-  const step = (now) => {
-    if (began === undefined) began = now;
-    const progress = motion.matches ? 1 : Math.min(1, (now - began) / duration);
-    const eased = progress < 0.5
-      ? 4 * progress ** 3
-      : 1 - (-2 * progress + 2) ** 3 / 2;
-    render(opening ? eased : 1 - eased);
-    schedule();
-    if (progress < 1) {
-      requestAnimationFrame(step);
-      return;
-    }
-    finish();
-    measurements.forEach(({ element, original }) => original.forEach(([name, value, priority]) => {
-      if (value) element.style.setProperty(name, value, priority);
-      else element.style.removeProperty(name);
-    }));
-    container.classList.remove('expansion-smoothing');
-    expandingContainers.delete(container);
-    schedule();
-  };
-  requestAnimationFrame(step);
-}
-
+// Delay closing briefly so expanded content can fade out visibly.
 document.querySelectorAll('details > summary').forEach((summary) => {
+  let closing = false;
   summary.addEventListener('click', (event) => {
-    event.preventDefault();
     const detail = summary.parentElement;
-    if (expandingContainers.has(detail)) return;
-    const opening = !detail.open;
-    if (opening) detail.open = true;
+    if (!detail.open) return;
+    event.preventDefault();
+    if (closing) return;
+    closing = true;
     const content = [...detail.children].filter((child) => child !== summary);
-    animateExpansion(detail, content, opening, () => {
-      detail.open = opening;
+    detail.classList.remove('expansion-playing');
+    const fades = content.map((child) =>
+      child.animate(
+        [
+          { opacity: 1, translate: '0 0' },
+          { opacity: 0, translate: '0 8px' },
+        ],
+        {
+          duration: desktopTiming(300, 550),
+          easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+          fill: 'forwards',
+        },
+      ),
+    );
+    Promise.all(fades.map((fade) => fade.finished.catch(() => {}))).then(() => {
+      detail.open = false;
+      fades.forEach((fade) => fade.cancel());
+      closing = false;
     });
   });
 });
 
-document.querySelectorAll('.code-example-toggle').forEach((button) => {
-  button.addEventListener('click', () => {
-    const card = button.closest('li');
-    if (expandingContainers.has(card)) return;
-    const opening = button.getAttribute('aria-expanded') !== 'true';
-    if (opening) {
-      card.classList.add('example-open');
-      button.setAttribute('aria-expanded', 'true');
-    }
-    animateExpansion(card, [card.querySelector('.package-example')], opening, () => {
-      card.classList.toggle('example-open', opening);
-      button.setAttribute('aria-expanded', String(opening));
-    });
-  });
-});
