@@ -1039,6 +1039,116 @@
             </article>
           </div>
         </div>
+        <div class="tool-group">
+          <div class="tool-group-heading">
+            <span>04</span>
+            <div>
+              <h3>Build &amp; workflow tools</h3>
+              <p>
+                Tools supporting this portfolio’s development and contact
+                workflow.
+              </p>
+            </div>
+          </div>
+          <div class="tool-grid">
+            <article class="tool-card">
+              <span class="tool-icon" aria-hidden="true"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                >
+                  <path d="M12 2 21 7v10l-9 5-9-5V7Z" />
+                  <path d="M8 15V9l8 6V9" /></svg
+              ></span>
+              <div>
+                <h4>Node.js</h4>
+                <p>
+                  Runs the local build tools and validation scripts used to
+                  prepare the portfolio for release.
+                </p>
+                <a
+                  class="tool-resource"
+                  href="https://nodejs.org/en/about"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Official website</a
+                >
+              </div>
+            </article>
+            <article class="tool-card">
+              <span class="tool-icon" aria-hidden="true"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                >
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="m7 9 3 3-3 3m6 0h4" /></svg
+              ></span>
+              <div>
+                <h4>npm</h4>
+                <p>
+                  Manages project packages and runs repeatable commands for
+                  local previews, builds, and code checks.
+                </p>
+                <a
+                  class="tool-resource"
+                  href="https://docs.npmjs.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Documentation</a
+                >
+              </div>
+            </article>
+            <article class="tool-card">
+              <span class="tool-icon" aria-hidden="true"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                >
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="m3 6 9 7 9-7" /></svg
+              ></span>
+              <div>
+                <h4>FormSubmit</h4>
+                <p>
+                  Connects the inquiry form to email delivery, including meeting
+                  requests and visitors’ preferred contact details.
+                </p>
+                <a
+                  class="tool-resource"
+                  href="https://formsubmit.co/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Official website</a
+                >
+              </div>
+            </article>
+            <article class="tool-card">
+              <span class="tool-icon" aria-hidden="true"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                >
+                  <path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18" /></svg
+              ></span>
+              <div>
+                <h4>Codex</h4>
+                <p>
+                  Assists with portfolio updates, code review, and debugging.
+                  Changes are inspected and checked before publication.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
         <div class="development-setup">
           <h3>Portfolio development setup</h3>
           <p>
@@ -1151,6 +1261,103 @@
               <pre
                 class="package-example"
               ><code>npx prettier --write src</code></pre>
+            </li>
+          </ul>
+        </div>
+        <div class="development-setup portfolio-plugins">
+          <h3>Build plugins &amp; code checks</h3>
+          <p>
+            Active integrations in this portfolio, with examples of their
+            configuration.
+          </p>
+          <ul>
+            <li>
+              <strong>Tailwind Vite plugin</strong
+              ><span
+                >Processes Tailwind styles during preview and production
+                builds.</span
+              ><button
+                class="code-example-toggle"
+                type="button"
+                aria-expanded="false"
+              >
+                Configuration example
+              </button>
+              <pre
+                class="package-example"
+              ><code>plugins: [tailwindcss()]</code></pre>
+              <a
+                class="tool-resource"
+                href="https://tailwindcss.com/docs/installation/using-vite"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Documentation</a
+              >
+            </li>
+            <li>
+              <strong>React Hooks lint plugin</strong
+              ><span
+                >Checks Hook usage and effect dependencies in React
+                components.</span
+              ><button
+                class="code-example-toggle"
+                type="button"
+                aria-expanded="false"
+              >
+                Configuration example
+              </button>
+              <pre
+                class="package-example"
+              ><code>plugins: { 'react-hooks': reactHooks }</code></pre>
+              <a
+                class="tool-resource"
+                href="https://react.dev/reference/eslint-plugin-react-hooks"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Documentation</a
+              >
+            </li>
+            <li>
+              <strong>TypeScript ESLint</strong
+              ><span
+                >Applies TypeScript-aware lint rules to the project’s interface
+                code.</span
+              ><button
+                class="code-example-toggle"
+                type="button"
+                aria-expanded="false"
+              >
+                Configuration example
+              </button>
+              <pre
+                class="package-example"
+              ><code>...tseslint.configs.recommended</code></pre>
+              <a
+                class="tool-resource"
+                href="https://typescript-eslint.io/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Documentation</a
+              >
+            </li>
+            <li>
+              <strong>Static asset build plugin</strong
+              ><span
+                >Copies images, the CV, and supporting scripts into the
+                published build.</span
+              ><button
+                class="code-example-toggle"
+                type="button"
+                aria-expanded="false"
+              >
+                Configuration example
+              </button>
+              <pre
+                class="package-example"
+              ><code>cpSync('assets', 'dist/assets', { recursive: true });</code></pre>
+              <span class="plugin-note"
+                >Custom integration for this portfolio</span
+              >
             </li>
           </ul>
         </div>

@@ -4790,4 +4790,30 @@ footer {
     animation: none;
   }
 }
+.tool-resource {
+  display: inline-block;
+  margin-top: 12px;
+  color: #45622e;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.tool-resource:hover {
+  color: #253d18;
+}
+.tool-resource:focus-visible {
+  outline: 2px solid #6b8e42;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+.plugin-note {
+  display: block;
+  margin-top: 12px;
+  font-size: 11px;
+  color: #526448;
+}
+.portfolio-plugins {
+  margin-top: 32px;
+}
 
