@@ -27,7 +27,7 @@ header {
 }
 nav a {
   position: relative;
-  transition: color 0.2s;
+  transition: color 0.34s;
 }
 nav a:not(.nav-contact)::after {
   content: '';
@@ -37,7 +37,7 @@ nav a:not(.nav-contact)::after {
   width: 0;
   height: 2px;
   background: #168b78;
-  transition: width 0.25s;
+  transition: width 0.425s;
 }
 nav a:hover,
 nav a.active {
@@ -52,8 +52,8 @@ nav a.active::after {
   color: white;
   border-color: #142b41;
   transition:
-    background 0.2s,
-    transform 0.2s;
+    background 0.34s,
+    transform 0.34s;
 }
 .nav-contact:hover {
   background: #087e6a;
@@ -143,9 +143,9 @@ nav a.active::after {
   overflow: hidden;
   isolation: isolate;
   transition:
-    transform 0.22s,
-    box-shadow 0.22s,
-    background 0.22s;
+    transform 0.374s,
+    box-shadow 0.374s,
+    background 0.374s;
   border: 1px solid transparent;
   box-shadow: 0 5px 12px #142b4110;
 }
@@ -156,7 +156,7 @@ nav a.active::after {
   z-index: -1;
   transform: translateX(-105%);
   background: linear-gradient(110deg, transparent, #ffffff21, transparent);
-  transition: transform 0.55s;
+  transition: transform 0.935s;
 }
 .button:hover::before {
   transform: translateX(105%);
@@ -171,7 +171,7 @@ nav a.active::after {
   box-shadow: none;
 }
 .button span {
-  transition: transform 0.22s;
+  transition: transform 0.374s;
 }
 .button:hover span {
   transform: translate(3px, -2px);
@@ -316,13 +316,13 @@ h2 em {
   transform: rotate(45deg);
 }
 .history summary span {
-  transition: transform 0.2s;
+  transition: transform 0.34s;
 }
 .project {
   transition:
-    transform 0.25s,
-    box-shadow 0.25s,
-    border-color 0.25s;
+    transform 0.425s,
+    box-shadow 0.425s,
+    border-color 0.425s;
 }
 .project:hover {
   transform: translateY(-5px);
@@ -333,8 +333,8 @@ h2 em {
 .project-art .monitor,
 .project-art .dashboard {
   transition:
-    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-    scale 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    transform 0.765s cubic-bezier(0.22, 1, 0.36, 1),
+    scale 0.765s cubic-bezier(0.22, 1, 0.36, 1);
 }
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .project:hover .project-art .phone,
@@ -357,13 +357,13 @@ h2 em {
   color: #386265;
 }
 .project summary {
-  transition: color 0.2s;
+  transition: color 0.34s;
 }
 .project summary:hover {
   color: #087e6a;
 }
 .project summary span {
-  transition: transform 0.2s;
+  transition: transform 0.34s;
 }
 .safety {
   background: #e2efe9;
@@ -388,8 +388,8 @@ h2 em {
   border: 1px solid var(--line);
   border-radius: 30px;
   transition:
-    border-color 0.2s,
-    background 0.2s;
+    border-color 0.34s,
+    background 0.34s;
 }
 .skill-chips span:hover {
   background: #e4f4ee;
@@ -492,7 +492,7 @@ h2 em {
   margin-bottom: 9px;
 }
 .contact-grid a {
-  transition: color 0.2s;
+  transition: color 0.34s;
   overflow-wrap: anywhere;
 }
 .contact-grid a:hover {
@@ -509,8 +509,8 @@ h2 em {
   opacity: 0;
   transform: translateY(18px);
   transition:
-    opacity 0.65s,
-    transform 0.65s;
+    opacity 1.105s,
+    transform 1.105s;
 }
 .motion-ready .reveal.visible {
   opacity: 1;
@@ -696,8 +696,8 @@ h2 em {
   box-shadow: 0 25px 60px #0003;
   transform: rotate(2deg);
   transition:
-    transform 0.3s,
-    box-shadow 0.3s;
+    transform 0.51s,
+    box-shadow 0.51s;
 }
 .portrait-card:hover {
   transform: rotate(0);
@@ -713,7 +713,7 @@ h2 em {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s;
+  transition: transform 0.68s;
 }
 .portrait-card:hover img {
   transform: scale(1.025);
@@ -802,9 +802,9 @@ h2 em {
   border-radius: 11px;
   padding: 22px;
   transition:
-    transform 0.22s,
-    box-shadow 0.22s,
-    border-color 0.22s;
+    transform 0.374s,
+    box-shadow 0.374s,
+    border-color 0.374s;
 }
 .tool-card:hover {
   transform: translateY(-4px);
@@ -824,8 +824,8 @@ h2 em {
   font-size: 13px;
   font-weight: 700;
   transition:
-    background 0.22s,
-    color 0.22s;
+    background 0.374s,
+    color 0.374s;
 }
 .tool-card:hover .tool-icon {
   background: #142b41;
@@ -1179,9 +1179,9 @@ nav .nav-contact {
     0 4px 0 #0c1e2c,
     0 7px 12px #132f4325;
   transition:
-    transform 0.22s,
-    box-shadow 0.22s,
-    border-color 0.22s;
+    transform 0.374s,
+    box-shadow 0.374s,
+    border-color 0.374s;
   transform: translateY(-2px);
 }
 nav .nav-contact::before {
@@ -1210,7 +1210,7 @@ nav .nav-contact:hover {
     0 11px 18px #132f4330;
 }
 nav .nav-contact:hover::before {
-  animation: nav-button-shine 0.75s ease-out both;
+  animation: nav-button-shine 1.275s ease-out both;
 }
 nav .nav-contact:active {
   transform: translateY(2px);
@@ -1545,7 +1545,7 @@ summary:focus-visible,
 }
 /* Consistent controls and compact-screen layout. */
 header {
-  transition: box-shadow 0.2s;
+  transition: box-shadow 0.34s;
 }
 header.is-scrolled {
   box-shadow: 0 5px 20px #24391f1a;
@@ -1730,9 +1730,9 @@ main > .section:not(.contact) {
   border: 1px solid #cddcba;
   border-radius: 12px;
   transition:
-    transform 0.22s,
-    box-shadow 0.22s,
-    border-color 0.22s;
+    transform 0.374s,
+    box-shadow 0.374s,
+    border-color 0.374s;
 }
 .foundation-card:hover {
   transform: translateY(-5px);
@@ -1847,7 +1847,7 @@ main > .section:not(.contact) {
   position: relative;
   display: inline-block;
   padding: 7px 0;
-  transition: color 0.2s;
+  transition: color 0.34s;
 }
 .text-link::after {
   content: '';
@@ -1859,7 +1859,7 @@ main > .section:not(.contact) {
   background: currentColor;
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.2s;
+  transition: transform 0.34s;
 }
 .text-link:hover {
   color: #557a30;
@@ -1872,7 +1872,7 @@ h2 em {
   background-position: 0 100%;
   background-size: 0 3px;
   background-repeat: no-repeat;
-  transition: background-size 0.3s;
+  transition: background-size 0.51s;
 }
 h2:hover em {
   background-size: 100% 3px;
@@ -2028,8 +2028,8 @@ nav .nav-contact:visited {
   transform: none;
   overflow: hidden;
   transition:
-    background-color 0.2s,
-    color 0.2s;
+    background-color 0.34s,
+    color 0.34s;
 }
 nav .nav-contact:hover,
 nav .nav-contact:active {
@@ -2123,9 +2123,9 @@ nav a:not(.nav-contact) {
   padding: 9px 12px;
   border-radius: 20px;
   transition:
-    background-color 0.25s,
-    color 0.25s,
-    box-shadow 0.25s;
+    background-color 0.425s,
+    color 0.425s,
+    box-shadow 0.425s;
 }
 nav a:not(.nav-contact):hover {
   background: #e1edcf;
@@ -2158,7 +2158,7 @@ nav {
 }
 .project summary span,
 .history summary span {
-  transition: transform 0.25s;
+  transition: transform 0.425s;
 }
 .project details[open] summary span,
 .history[open] > summary span {
@@ -2295,9 +2295,9 @@ nav {
 }
 .button {
   transition:
-    transform 0.22s ease,
-    box-shadow 0.22s ease,
-    background-color 0.22s ease;
+    transform 0.374s ease,
+    box-shadow 0.374s ease,
+    background-color 0.374s ease;
 }
 .button:hover {
   transform: translateY(-2px);
@@ -2305,9 +2305,9 @@ nav {
 .project,
 .tool-card {
   transition:
-    transform 0.25s ease,
-    border-color 0.25s ease,
-    box-shadow 0.25s ease;
+    transform 0.425s ease,
+    border-color 0.425s ease,
+    box-shadow 0.425s ease;
 }
 .project:hover {
   transform: translateY(-3px);
@@ -2316,7 +2316,7 @@ nav {
   transform: translateY(-3px);
 }
 .timeline-item h3 {
-  transition: color 0.2s;
+  transition: color 0.34s;
 }
 .timeline-item:hover h3 {
   color: #587b31;
@@ -2461,7 +2461,7 @@ nav a:not(.nav-contact)::after {
   box-shadow: none;
   color: #f6faef;
   isolation: isolate;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.51s ease;
 }
 .contact-card::before {
   content: '';
@@ -2473,7 +2473,7 @@ nav a:not(.nav-contact)::after {
   background: #c9ee87;
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.765s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .contact-card::after {
   content: '';
@@ -2488,7 +2488,7 @@ nav a:not(.nav-contact)::after {
   );
   opacity: 0;
   transform: none;
-  transition: opacity 0.3s;
+  transition: opacity 0.51s;
 }
 .contact-grid .contact-symbol {
   display: grid;
@@ -2504,8 +2504,8 @@ nav a:not(.nav-contact)::after {
   letter-spacing: 0;
   transform: translate(var(--icon-x, 0px), var(--icon-y, 0px));
   transition:
-    transform 0.22s ease-out,
-    background-color 0.3s;
+    transform 0.374s ease-out,
+    background-color 0.51s;
 }
 .contact-symbol svg {
   width: 22px;
@@ -2543,8 +2543,8 @@ nav a:not(.nav-contact)::after {
   letter-spacing: 0;
   color: #cdeaa2;
   transition:
-    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    background-color 0.3s;
+    transform 0.595s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.51s;
 }
 .contact-grid .contact-services {
   display: flex;
@@ -2819,9 +2819,9 @@ h4 {
   line-height: 1.4;
   background: #ffffff08;
   transition:
-    background 0.25s,
-    border-color 0.25s,
-    transform 0.25s;
+    background 0.425s,
+    border-color 0.425s,
+    transform 0.425s;
 }
 .cv-download:hover {
   background: #c9f17d18;
@@ -2829,7 +2829,7 @@ h4 {
   transform: translateY(-2px);
 }
 .cv-download span {
-  transition: transform 0.25s;
+  transition: transform 0.425s;
 }
 .cv-download:hover span {
   transform: translateY(2px);
@@ -2873,9 +2873,9 @@ h4 {
   background: linear-gradient(135deg, #fcfdf7, #f0f5e5);
   border-color: #b9cc9a;
   transition:
-    background 0.3s,
-    border-color 0.3s,
-    box-shadow 0.3s;
+    background 0.51s,
+    border-color 0.51s,
+    box-shadow 0.51s;
 }
 #tools .tool-card .tool-icon {
   background: linear-gradient(145deg, #e7f4ce, #d3e8ad);
@@ -3029,8 +3029,8 @@ h4 {
   min-width: 0;
   border-radius: 8px;
   transition:
-    background 0.3s,
-    transform 0.3s;
+    background 0.51s,
+    transform 0.51s;
 }
 .highlights > div + div {
   border-left: 1px solid #adbf963d;
@@ -3044,8 +3044,8 @@ h4 {
   margin-bottom: 12px;
   background: #85a34e;
   transition:
-    width 0.3s,
-    background 0.3s;
+    width 0.51s,
+    background 0.51s;
 }
 .highlights strong {
   display: block;
@@ -3239,7 +3239,7 @@ h4 {
     600 12px/1.5 'Segoe UI',
     Arial,
     sans-serif;
-  transition: background 0.25s;
+  transition: background 0.425s;
 }
 .training-details summary::-webkit-details-marker {
   display: none;
@@ -3254,7 +3254,7 @@ h4 {
 .training-details summary span {
   font-size: 18px;
   line-height: 1;
-  transition: transform 0.25s;
+  transition: transform 0.425s;
 }
 .training-details[open] summary span {
   transform: rotate(45deg);
@@ -3273,7 +3273,7 @@ h4 {
 }
 @media (prefers-reduced-motion: no-preference) {
   .training-details[open] > div {
-    animation: training-open 0.25s ease-out;
+    animation: training-open 0.425s ease-out;
   }
 }
 @keyframes training-open {
@@ -3287,30 +3287,10 @@ h4 {
   }
 }
 
-.effects-preview {
-  border: 1px solid #7c9e4d;
-  background: #314621;
-  color: #f4fae9;
-  border-radius: 8px;
-  padding: 11px 16px;
-  font:
-    600 12px/1.5 'Segoe UI',
-    Arial,
-    sans-serif;
-  cursor: pointer;
-  margin: 12px 0;
-}
-.effects-preview:hover {
-  background: #4b652d;
-}
-.effects-preview:focus-visible {
-  outline: 2px solid #7c9e4d;
-  outline-offset: 4px;
-}
 
 /* Explicit user-requested previews also work with reduced motion enabled. */
 #tools .development-setup li.effect-playing {
-  animation: visible-tool-preview 1.6s cubic-bezier(0.22, 1, 0.36, 1)
+  animation: visible-tool-preview 2.72s cubic-bezier(0.22, 1, 0.36, 1)
     var(--effect-delay, 0ms) both !important;
   animation-iteration-count: 1 !important;
 }
@@ -3338,9 +3318,9 @@ h4 {
 /* Clear interactive feedback on every expandable heading. */
 details > summary {
   transition:
-    background-color 0.25s,
-    color 0.25s,
-    box-shadow 0.25s;
+    background-color 0.425s,
+    color 0.425s,
+    box-shadow 0.425s;
 }
 details > summary:hover {
   color: #4f712b;
@@ -3355,7 +3335,7 @@ details > summary:focus-visible {
 
 /* Deliberate clicks play a visible expansion, independent of automatic motion. */
 details.expansion-playing[open] > :not(summary) {
-  animation: expanded-content-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) both !important;
+  animation: expanded-content-in 2.04s cubic-bezier(0.22, 1, 0.36, 1) both !important;
   animation-iteration-count: 1 !important;
 }
 @keyframes expanded-content-in {
@@ -3378,8 +3358,8 @@ details.expansion-playing[open] > :not(summary) {
   opacity: var(--scroll-opacity, 1) !important;
   translate: 0 var(--scroll-offset, 0px);
   transition:
-    opacity 0.18s linear,
-    translate 0.18s ease-out !important;
+    opacity 0.306s linear,
+    translate 0.306s ease-out !important;
 }
 .scroll-fade:focus-within {
   opacity: 1 !important;
@@ -3395,10 +3375,10 @@ details.expansion-playing[open] > :not(summary) {
 /* Contact buttons expand approximately 2.5px on each edge. */
 #contact .contact-actions .button {
   transition:
-    scale 0.25s cubic-bezier(0.22, 1, 0.36, 1),
-    background-color 0.25s,
-    border-color 0.25s,
-    box-shadow 0.25s;
+    scale 0.425s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.425s,
+    border-color 0.425s,
+    box-shadow 0.425s;
   transform: none;
   scale: 1;
 }
@@ -3428,9 +3408,9 @@ details.expansion-playing[open] > :not(summary) {
   border-radius: 24px;
   scale: 1;
   transition:
-    scale 0.25s cubic-bezier(0.22, 1, 0.36, 1),
-    background-color 0.25s,
-    color 0.25s !important;
+    scale 0.425s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.425s,
+    color 0.425s !important;
 }
 #navigation .nav-contact {
   padding: 12px 20px;
@@ -3523,7 +3503,7 @@ details.expansion-playing[open] > :not(summary) {
   box-shadow:
     inset 0 1px 0 #ffffff90,
     0 3px 9px #31462112;
-  animation: nav-section-match 0.7s cubic-bezier(0.22, 1, 0.36, 1) both !important;
+  animation: nav-section-match 1.19s cubic-bezier(0.22, 1, 0.36, 1) both !important;
   animation-iteration-count: 1 !important;
 }
 @keyframes nav-section-match {
@@ -3588,12 +3568,12 @@ details.expansion-playing[open] > :not(summary) {
 }
 #tools li.example-open .package-example {
   display: block;
-  animation: code-example-in 0.35s ease-out !important;
+  animation: code-example-in 0.595s ease-out !important;
 }
 @media (hover: hover) and (pointer: fine) {
   #tools .development-setup li:hover .package-example {
     display: block;
-    animation: code-example-in 0.35s ease-out !important;
+    animation: code-example-in 0.595s ease-out !important;
   }
 }
 #tools .code-example-toggle:focus-visible {
@@ -3672,7 +3652,7 @@ details.expansion-playing[open] > :not(summary) {
   box-shadow:
     inset 0 1px 0 #ffffff25,
     0 3px 9px #31462120;
-  animation: nav-section-match 0.7s cubic-bezier(0.22, 1, 0.36, 1) both !important;
+  animation: nav-section-match 1.19s cubic-bezier(0.22, 1, 0.36, 1) both !important;
   animation-iteration-count: 1 !important;
 }
 @media (hover: hover) and (pointer: fine) {
@@ -3803,11 +3783,11 @@ details.expansion-playing[open] > :not(summary) {
   transform: translateY(6px);
   animation: none !important;
   transition:
-    max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.25s ease,
-    padding 0.35s ease,
-    margin 0.35s ease,
-    transform 0.35s ease !important;
+    max-height 0.68s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.425s ease,
+    padding 0.595s ease,
+    margin 0.595s ease,
+    transform 0.595s ease !important;
 }
 #tools .development-setup li.example-open .package-example {
   max-height: 200px;
@@ -3846,7 +3826,7 @@ header {
 }
 #navigation a.active,
 #navigation .nav-contact.active {
-  animation: nav-border-match 0.5s ease-out !important;
+  animation: nav-border-match 0.85s ease-out !important;
   animation-iteration-count: 1 !important;
 }
 @keyframes nav-border-match {
@@ -3862,7 +3842,7 @@ header {
 
 /* A restrained arrival effect follows deliberate section navigation. */
 section.section-arriving {
-  animation: section-arrival 0.65s cubic-bezier(0.22, 1, 0.36, 1) both !important;
+  animation: section-arrival 1.105s cubic-bezier(0.22, 1, 0.36, 1) both !important;
   animation-iteration-count: 1 !important;
 }
 @keyframes section-arrival {
@@ -3914,4 +3894,14 @@ summary {
   .scroll-fade {
     translate: none;
   }
+}
+
+/* Honor the visitor's motion preference, including later interaction rules. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  .scroll-fade { opacity: 1 !important; translate: none !important; }
 }

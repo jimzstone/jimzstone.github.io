@@ -1,7 +1,7 @@
 'use strict';
 let effectSettings = {
-  reveal: { duration: 0.5, distance: 16, stagger: 0.035, maxDelay: 0.14 },
-  navigation: { duration: 0.22 },
+  reveal: { duration: 1.2, distance: 16, stagger: 0.08, maxDelay: 0.32 },
+  navigation: { duration: 0.45 },
   pointer: { distance: 4 },
 };
 fetch('effects.json')
@@ -51,7 +51,7 @@ function setMenu(open) {
     const control = Motion.animate(
       navigation,
       { opacity: [0, 1], y: [-8, 0] },
-      { duration: 0.22 },
+      { duration: effectSettings.navigation.duration },
     );
     menuAnimation = { cancel: () => control.stop() };
   } else if (open && !motion.matches && navigation.animate)
@@ -159,10 +159,10 @@ function scrollToSection(target) {
   );
   const distance = destination - start;
   const duration = Math.min(
-    1000,
-    Math.max(450, Math.abs(distance) * 0.12 + 450),
+    1600,
+    Math.max(800, Math.abs(distance) * 0.16 + 800),
   );
-  if (!duration || Math.abs(distance) < 2) {
+  if (motion.matches || !duration || Math.abs(distance) < 2) {
     window.scrollTo({ top: destination, behavior: 'instant' });
     stopNavigation(true);
     return;
@@ -260,7 +260,7 @@ document.querySelectorAll('.button, .nav-contact').forEach((button) =>
       anime.animate(ripple, {
         scale: [0, 14],
         opacity: [0.35, 0],
-        duration: 450,
+        duration: 800,
         ease: 'outQuad',
         onComplete: () => ripple.remove(),
       });
@@ -271,7 +271,7 @@ document.querySelectorAll('.button, .nav-contact').forEach((button) =>
         { transform: 'translate(-50%,-50%) scale(0)', opacity: 0.35 },
         { transform: 'translate(-50%,-50%) scale(14)', opacity: 0 },
       ],
-      { duration: 450, easing: 'ease-out' },
+      { duration: 800, easing: 'ease-out' },
     );
     animation.onfinish = () => ripple.remove();
     animation.oncancel = () => ripple.remove();
@@ -332,19 +332,17 @@ document.querySelectorAll('a.contact-card').forEach((card) => {
 });
 
 const setupCards = document.querySelectorAll('.development-setup li');
-function animateSetup(force = false) {
-  if (motion.matches && force !== true) return;
+function animateSetup() {
+  if (motion.matches) return;
   if (window.gsap) gsap.killTweensOf(setupCards);
   setupCards.forEach((card, index) => {
     card.style.removeProperty('transform');
     card.style.removeProperty('opacity');
     card.classList.remove('effect-playing');
-    card.style.setProperty('--effect-delay', `${index * 140}ms`);
+    card.style.setProperty('--effect-delay', `${index * 180}ms`);
     void card.offsetWidth;
     card.classList.add('effect-playing');
   });
-  const preview = document.querySelector('.effects-preview');
-  preview.textContent = 'Replay animation effects';
 }
 if (window.ScrollTrigger) {
   ScrollTrigger.create({
@@ -354,20 +352,17 @@ if (window.ScrollTrigger) {
     onEnterBack: animateSetup,
   });
 }
-document
-  .querySelector('.effects-preview')
-  ?.addEventListener('click', () => animateSetup(true));
 setupCards.forEach((card) => {
   card.addEventListener('animationend', () =>
     card.classList.remove('effect-playing'),
   );
   card.addEventListener('pointerenter', () => {
     if (motion.matches || !window.anime?.animate) return;
-    anime.animate(card, { translateY: -5, duration: 300, ease: 'out(3)' });
+    anime.animate(card, { translateY: -5, duration: 550, ease: 'out(3)' });
   });
   card.addEventListener('pointerleave', () => {
     if (motion.matches || !window.anime?.animate) return;
-    anime.animate(card, { translateY: 0, duration: 350, ease: 'out(3)' });
+    anime.animate(card, { translateY: 0, duration: 600, ease: 'out(3)' });
   });
 });
 
@@ -377,7 +372,7 @@ document.querySelectorAll('details').forEach((detail) => {
   detail.addEventListener('toggle', () => {
     cancelAnimationFrame(expandFrame);
     detail.classList.remove('expansion-playing');
-    if (!detail.open) return;
+    if (!detail.open || motion.matches) return;
     void detail.offsetWidth;
     detail.classList.add('expansion-playing');
     const rect = detail.getBoundingClientRect();
@@ -392,7 +387,7 @@ document.querySelectorAll('details').forEach((detail) => {
     const started = performance.now();
     const step = (now) => {
       if (!detail.open) return;
-      const progress = Math.min(1, (now - started) / 850);
+      const progress = Math.min(1, (now - started) / 1300);
       const ease =
         progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2;
       window.scrollTo({ top: start + distance * ease, behavior: 'instant' });
@@ -468,7 +463,7 @@ document.querySelectorAll('details > summary').forEach((summary) => {
   let closing = false;
   summary.addEventListener('click', (event) => {
     const detail = summary.parentElement;
-    if (!detail.open) return;
+    if (!detail.open || motion.matches) return;
     event.preventDefault();
     if (closing) return;
     closing = true;
@@ -480,7 +475,7 @@ document.querySelectorAll('details > summary').forEach((summary) => {
           { opacity: 1, translate: '0 0' },
           { opacity: 0, translate: '0 8px' },
         ],
-        { duration: 300, easing: 'ease-in', fill: 'forwards' },
+        { duration: 500, easing: 'ease-in', fill: 'forwards' },
       ),
     );
     Promise.all(fades.map((fade) => fade.finished.catch(() => {}))).then(() => {
