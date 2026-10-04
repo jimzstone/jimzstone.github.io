@@ -4056,3 +4056,57 @@ details.expansion-playing[open] > :not(summary) {
   }
 }
 
+/* Hiring rationale follows the same quiet editorial layout as the profile. */
+.hire-panel {
+  max-width: 1120px;
+  margin: 0 auto 48px;
+  padding: 36px 28px;
+  border: 1px solid #b9cba0;
+  border-radius: 16px;
+  background: #f8fbf0;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr);
+  gap: 48px;
+}
+.hire-panel h2 {
+  margin: 8px 0 18px;
+  font-size: clamp(26px, 3vw, 36px);
+  line-height: 1.2;
+}
+.hire-panel p {
+  line-height: 1.75;
+  margin: 0;
+}
+.hire-reasons {
+  display: grid;
+  gap: 24px;
+}
+.hire-reasons article {
+  position: relative;
+  padding-left: 38px;
+}
+.hire-number {
+  position: absolute;
+  left: 0;
+  top: 3px;
+  font-size: 12px;
+  color: #627d43;
+  font-weight: 600;
+}
+.hire-reasons h3 {
+  margin: 0 0 8px;
+  font-size: 17px;
+  line-height: 1.45;
+}
+.claude-icon {
+  color: #ba6749;
+}
+@media (max-width: 700px) {
+  .hire-panel {
+    margin: 0 18px 32px;
+    grid-template-columns: 1fr;
+    padding: 26px 20px;
+    gap: 28px;
+  }
+}
+
