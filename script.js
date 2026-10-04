@@ -163,10 +163,10 @@ function scrollToSection(target) {
   );
   const distance = destination - start;
   const duration = Math.min(
-    desktopTiming(1000, 1600),
+    desktopTiming(1300, 1600),
     Math.max(
-      desktopTiming(450, 800),
-      Math.abs(distance) * 0.18 + desktopTiming(450, 800),
+      desktopTiming(650, 800),
+      Math.abs(distance) * 0.18 + desktopTiming(650, 800),
     ),
   );
   if (!duration || Math.abs(distance) < 2) {
@@ -372,7 +372,7 @@ setupCards.forEach((card) => {
     if (motion.matches || !window.anime?.animate) return;
     anime.animate(card, {
       translateY: -5,
-      duration: desktopTiming(300, 550),
+      duration: desktopTiming(450, 550),
       ease: 'out(3)',
     });
   });
@@ -393,6 +393,7 @@ document.querySelectorAll('details').forEach((detail) => {
     cancelAnimationFrame(expandFrame);
     detail.classList.remove('expansion-playing');
     if (!detail.open) return;
+    if (navigating) stopNavigation();
     void detail.offsetWidth;
     detail.classList.add('expansion-playing');
     const rect = detail.getBoundingClientRect();
@@ -403,11 +404,13 @@ document.querySelectorAll('details').forEach((detail) => {
     );
     const start = scrollY;
     const distance = destination - start;
+    // Avoid moving a disclosure whose heading is already visible.
+    if (rect.top >= topGap && rect.top < innerHeight - 100) return;
     if (Math.abs(distance) < 24) return;
     const started = performance.now();
     const step = (now) => {
       if (!detail.open) return;
-      const progress = Math.min(1, (now - started) / desktopTiming(850, 1300));
+      const progress = Math.min(1, (now - started) / desktopTiming(1100, 1300));
       const ease =
         progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2;
       window.scrollTo({ top: start + distance * ease, behavior: 'instant' });
@@ -496,7 +499,7 @@ document.querySelectorAll('details > summary').forEach((summary) => {
           { opacity: 0, translate: '0 8px' },
         ],
         {
-          duration: desktopTiming(300, 550),
+          duration: desktopTiming(450, 550),
           easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
           fill: 'forwards',
         },
