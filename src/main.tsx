@@ -11,13 +11,13 @@ function ProjectFilters() {
   const [selected, setSelected] = useState<Filter>('All projects');
   const reduceMotion = useReducedMotion();
   useEffect(() => {
-    document
-      .querySelectorAll<HTMLElement>('.project')
-      .forEach((project, index) => {
-        const show =
-          selected === 'All projects' || filters[index + 1] === selected;
-        project.hidden = !show;
-        if (show && !reduceMotion) {
+    const activeAnimations: Animation[] = [];
+    document.querySelectorAll<HTMLElement>('.project').forEach((project) => {
+      const show =
+        selected === 'All projects' || project.dataset.platform === selected;
+      project.hidden = !show;
+      if (show && !reduceMotion) {
+        activeAnimations.push(
           project.animate(
             [
               { opacity: 0, translate: '0 8px' },
@@ -25,12 +25,14 @@ function ProjectFilters() {
             ],
             {
               duration: effects.filter.duration * 1000,
-              easing: 'ease-out',
+              easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
             },
-          );
-        }
-      });
+          ),
+        );
+      }
+    });
     window.dispatchEvent(new Event('resize'));
+    return () => activeAnimations.forEach((animation) => animation.cancel());
   }, [selected, reduceMotion]);
   return (
     <MotionConfig reducedMotion="user">
@@ -69,3 +71,4 @@ function ProjectFilters() {
 
 const mount = document.getElementById('project-filters');
 if (mount) createRoot(mount).render(<ProjectFilters />);
+

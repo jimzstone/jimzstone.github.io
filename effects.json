@@ -8,6 +8,13 @@
   "navigation": { "duration": 0.22 },
   "filter": { "duration": 0.55 },
   "pointer": { "distance": 4 },
+  "scroll": {
+    "slowMobile": 1.4,
+    "slowDesktop": 1.65,
+    "fast": 0.28,
+    "speedThreshold": 2.5,
+    "edgeRatio": 0.28
+  },
   "respectReducedMotion": true
 }
 

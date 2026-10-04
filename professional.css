@@ -4328,3 +4328,19 @@ footer {
   }
 }
 
+/* Explicit code toggles prevent hover from overriding the selected state. */
+#tools .development-setup li:not(.example-open) .package-example,
+#tools .development-setup li:not(.example-open):hover .package-example {
+  max-height: 0;
+  opacity: 0;
+  padding: 0 12px;
+  margin: 0;
+  transform: translateY(6px);
+  visibility: hidden;
+  transition-delay: 0s, 0s, 0s, 0s, 0s, 0.85s !important;
+}
+#tools .development-setup li.example-open .package-example {
+  max-height: var(--example-height, 320px);
+  visibility: visible;
+}
+

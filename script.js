@@ -3,6 +3,13 @@ let effectSettings = {
   reveal: { duration: 0.5, distance: 16, stagger: 0.035, maxDelay: 0.14 },
   navigation: { duration: 0.22 },
   pointer: { distance: 4 },
+  scroll: {
+    slowMobile: 1.4,
+    slowDesktop: 1.65,
+    fast: 0.28,
+    speedThreshold: 2.5,
+    edgeRatio: 0.28,
+  },
 };
 fetch('effects.json')
   .then((response) => {
@@ -15,8 +22,35 @@ fetch('effects.json')
       settings.reveal.duration <= 2 &&
       settings.pointer?.distance >= 0 &&
       settings.pointer.distance <= 8
-    )
-      effectSettings = settings;
+    ) {
+      const validNumber = (value, min, max, fallback) =>
+        Number.isFinite(value) && value >= min && value <= max
+          ? value
+          : fallback;
+      effectSettings.pointer.distance = settings.pointer.distance;
+      effectSettings.navigation.duration = validNumber(
+        settings.navigation?.duration,
+        0.1,
+        1,
+        0.22,
+      );
+      const bounds = {
+        slowMobile: [0.5, 3],
+        slowDesktop: [0.5, 3],
+        fast: [0.15, 0.5],
+        speedThreshold: [0.5, 10],
+        edgeRatio: [0.1, 0.35],
+      };
+      Object.entries(bounds).forEach(([key, [min, max]]) => {
+        effectSettings.scroll[key] = validNumber(
+          settings.scroll?.[key],
+          min,
+          max,
+          effectSettings.scroll[key],
+        );
+      });
+      schedule();
+    }
   })
   .catch(() => {});
 document.documentElement.classList.add('js');
@@ -31,8 +65,6 @@ const motion = matchMedia('(prefers-reduced-motion: reduce)');
 if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
 const sections = [...document.querySelectorAll('section[id]')];
 const links = [...navigation.querySelectorAll('a')];
-const animations = new Map();
-const shown = new WeakSet();
 const targets = [
   ...document.querySelectorAll(
     '.hero h1, .hero .intro, .hero .actions, .section h2, .section .eyebrow, .about-copy > p, .profile-label, .small-note, .section-heading > p, .project-info > h3, .project-info > p, .tool-card > div, .tool-group-heading, .skill-list > div, .credential-column article, .timeline-item > div, .contact > p, .contact-actions, .contact-card, .hire-intro > p, .hire-intro h2, .hire-reasons article',
@@ -99,9 +131,16 @@ function update() {
   const measuredSpeed = travel / elapsed;
   scrollSpeed =
     elapsed > 200 ? measuredSpeed : scrollSpeed * 0.65 + measuredSpeed * 0.35;
-  const speedFactor = Math.min(1, scrollSpeed / 2.5);
-  const slowDuration = innerWidth > 1000 ? 1.65 : 1.4;
-  const fadeDuration = slowDuration + (0.28 - slowDuration) * speedFactor;
+  const speedFactor = Math.min(
+    1,
+    scrollSpeed / effectSettings.scroll.speedThreshold,
+  );
+  const slowDuration =
+    innerWidth > 1000
+      ? effectSettings.scroll.slowDesktop
+      : effectSettings.scroll.slowMobile;
+  const fadeDuration =
+    slowDuration + (effectSettings.scroll.fast - slowDuration) * speedFactor;
   document.documentElement.style.setProperty(
     '--scroll-fade-duration',
     fadeDuration.toFixed(2) + 's',
@@ -138,7 +177,10 @@ function update() {
   });
   const visibleTop = header.getBoundingClientRect().bottom + 12;
   const availableHeight = Math.max(200, innerHeight - visibleTop);
-  const motionZone = Math.min(220, availableHeight * 0.28);
+  const motionZone = Math.min(
+    220,
+    availableHeight * effectSettings.scroll.edgeRatio,
+  );
   const distance = innerWidth <= 700 ? 8 : innerWidth <= 1000 ? 12 : 16;
   const measurements = targets
     .filter((element) => element.getClientRects().length)
@@ -200,7 +242,6 @@ function stopNavigation(completed = false) {
 }
 
 function scrollToSection(target) {
-  cancelAnimationFrame(expandFrame);
   cancelAnimationFrame(scrollFrame);
   navigating = true;
   navigationTarget = target;
@@ -281,9 +322,7 @@ document.querySelectorAll('a[href^="#"]').forEach((link) =>
       return;
     event.preventDefault();
     setMenu(false);
-    targets
-      .filter((element) => target.contains(element))
-      .forEach((element) => shown.delete(element));
+
     scrollToSection(target);
     history.replaceState(
       null,
@@ -300,8 +339,6 @@ document
   .querySelectorAll('details')
   .forEach((detail) => detail.addEventListener('toggle', schedule));
 motion.addEventListener('change', () => {
-  animations.forEach((a) => a.cancel());
-  animations.clear();
   menuAnimation?.cancel();
   schedule();
 });
@@ -425,40 +462,6 @@ setupCards.forEach((card) => {
     if (event.target === card) card.classList.remove('effect-playing');
   });
 });
-// Animate user-triggered expansion even when automatic motion is reduced.
-let expandFrame = 0;
-document.querySelectorAll('details').forEach((detail) => {
-  detail.addEventListener('toggle', () => {
-    cancelAnimationFrame(expandFrame);
-    detail.classList.remove('expansion-playing');
-    if (!detail.open) return;
-    if (navigating) stopNavigation();
-    void detail.offsetWidth;
-    detail.classList.add('expansion-playing');
-    const rect = detail.getBoundingClientRect();
-    const topGap = header.getBoundingClientRect().height + 24;
-    const destination = Math.min(
-      document.documentElement.scrollHeight - innerHeight,
-      Math.max(0, scrollY + rect.top - topGap),
-    );
-    const start = scrollY;
-    const distance = destination - start;
-    // Avoid moving a disclosure whose heading is already visible.
-    if (rect.top >= topGap && rect.top < innerHeight - 100) return;
-    if (Math.abs(distance) < 24) return;
-    const started = performance.now();
-    const step = (now) => {
-      if (!detail.open) return;
-      const progress = Math.min(1, (now - started) / desktopTiming(1100, 1300));
-      const ease =
-        progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2;
-      window.scrollTo({ top: start + distance * ease, behavior: 'instant' });
-      if (progress < 1) expandFrame = requestAnimationFrame(step);
-    };
-    expandFrame = requestAnimationFrame(step);
-  });
-});
-
 const contactZoomButtons = document.querySelectorAll(
   '.contact-actions .button',
 );
@@ -478,9 +481,15 @@ function sizeContactZoom() {
 sizeContactZoom();
 window.addEventListener('resize', sizeContactZoom);
 
-document.querySelectorAll('.code-example-toggle').forEach((button) => {
+document.querySelectorAll('.code-example-toggle').forEach((button, index) => {
+  const panel = button.closest('li').querySelector('.package-example');
+  panel.id = 'code-example-' + index;
+  button.setAttribute('aria-controls', panel.id);
   button.addEventListener('click', () => {
     const expanded = button.getAttribute('aria-expanded') !== 'true';
+    button
+      .closest('li')
+      .style.setProperty('--example-height', panel.scrollHeight + 32 + 'px');
     button.setAttribute('aria-expanded', String(expanded));
     button.closest('li').classList.toggle('example-open', expanded);
   });
@@ -514,63 +523,80 @@ cvDownload?.addEventListener('click', (event) => {
   }, 1000);
 });
 
-['wheel', 'touchstart'].forEach((type) =>
-  window.addEventListener(type, () => cancelAnimationFrame(expandFrame), {
-    passive: true,
-  }),
-);
-
-// Animate the disclosure's space as well as its contents, in both directions.
+// One reversible controller owns each disclosure; rapid clicks change its target.
 document.querySelectorAll('details > summary').forEach((summary) => {
   const detail = summary.parentElement;
   detail.classList.add('disclosure-motion');
-  let busy = false;
+  const content = [...detail.children].filter((child) => child !== summary);
+  let desiredOpen = detail.open;
+  let generation = 0;
+  let running = [];
   summary.addEventListener('click', (event) => {
     event.preventDefault();
-    if (busy) return;
-    busy = true;
-    cancelAnimationFrame(expandFrame);
     if (navigating) stopNavigation();
-    const opening = !detail.open;
-    if (opening) detail.open = true;
-    const content = [...detail.children].filter((child) => child !== summary);
-    const animations = content.map((child) => {
+    desiredOpen = !desiredOpen;
+    const currentGeneration = ++generation;
+    const wasOpen = detail.open;
+    const current = content.map((child) => {
       const style = getComputedStyle(child);
-      const expanded = {
+      return {
+        height: `${child.getBoundingClientRect().height}px`,
+        opacity: style.opacity,
+        marginTop: style.marginTop,
+        marginBottom: style.marginBottom,
+        paddingTop: style.paddingTop,
+        paddingBottom: style.paddingBottom,
+        transform: style.transform,
+      };
+    });
+    running.forEach((animation) => animation.cancel());
+    detail.open = true;
+    const collapsed = {
+      height: '0px',
+      opacity: 0,
+      marginTop: '0px',
+      marginBottom: '0px',
+      paddingTop: '0px',
+      paddingBottom: '0px',
+      transform: motion.matches ? 'none' : 'translateY(8px)',
+    };
+    const expanded = content.map((child) => {
+      const style = getComputedStyle(child);
+      return {
         height: `${child.getBoundingClientRect().height}px`,
         opacity: 1,
         marginTop: style.marginTop,
         marginBottom: style.marginBottom,
         paddingTop: style.paddingTop,
         paddingBottom: style.paddingBottom,
-        transform: 'translateY(0)',
+        transform: 'none',
       };
-      const collapsed = {
-        height: '0px',
-        opacity: 0,
-        marginTop: '0px',
-        marginBottom: '0px',
-        paddingTop: '0px',
-        paddingBottom: '0px',
-        transform: 'translateY(10px)',
-      };
+    });
+    running = content.map((child, index) => {
       child.style.overflow = 'hidden';
       return child.animate(
-        opening ? [collapsed, expanded] : [expanded, collapsed],
+        [
+          wasOpen ? current[index] : collapsed,
+          desiredOpen ? expanded[index] : collapsed,
+        ],
         {
-          duration: desktopTiming(opening ? 850 : 650, opening ? 1000 : 750),
+          duration: desktopTiming(
+            desiredOpen ? 850 : 650,
+            desiredOpen ? 1000 : 750,
+          ),
           easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
           fill: 'both',
         },
       );
     });
     Promise.all(
-      animations.map((animation) => animation.finished.catch(() => {})),
+      running.map((animation) => animation.finished.catch(() => {})),
     ).then(() => {
-      if (!opening) detail.open = false;
-      animations.forEach((animation) => animation.cancel());
+      if (currentGeneration !== generation) return;
+      detail.open = desiredOpen;
+      running.forEach((animation) => animation.cancel());
+      running = [];
       content.forEach((child) => child.style.removeProperty('overflow'));
-      busy = false;
       schedule();
     });
   });
