@@ -4254,3 +4254,33 @@ footer {
   }
 }
 
+/* Reading-first scroll motion: text stays visible on every screen. */
+.scroll-fade {
+  opacity: 1 !important;
+  transition: translate 0.9s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+@media (min-width: 1001px) {
+  .scroll-fade {
+    transition: translate 1.15s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  }
+}
+@keyframes section-arrival {
+  from {
+    opacity: 1;
+    translate: 0 10px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-fade {
+    translate: none !important;
+    transition: none !important;
+  }
+  section.section-arriving {
+    animation: none !important;
+  }
+}
+

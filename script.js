@@ -86,6 +86,7 @@ document.addEventListener('keydown', (event) => {
 matchMedia('(min-width:701px)').addEventListener('change', () =>
   setMenu(false),
 );
+
 function update() {
   framePending = false;
   const top = header.getBoundingClientRect().bottom + 16;
@@ -106,26 +107,37 @@ function update() {
     else link.removeAttribute('aria-current');
   });
   const visibleTop = header.getBoundingClientRect().bottom + 12;
-  const desktopFade = matchMedia(
-    '(min-width: 1001px) and (pointer: fine)',
-  ).matches;
-  const fadeZone = desktopFade
-    ? Math.min(220, innerHeight * 0.26)
-    : Math.min(110, innerHeight * 0.18);
-  targets.forEach((element) => {
-    if (!element.getClientRects().length) return;
-    const rect = element.getBoundingClientRect();
-    const entering = (innerHeight - rect.top) / fadeZone;
-    const leaving = (rect.bottom - visibleTop) / fadeZone;
-    const amount = element.matches(':focus-within')
-      ? 1
-      : Math.max(desktopFade ? 0 : 0.45, Math.min(1, entering, leaving));
-    element.classList.add('scroll-fade');
-    element.style.setProperty('--scroll-opacity', String(amount));
-    element.style.setProperty(
-      '--scroll-offset',
-      `${(1 - amount) * (desktopFade ? 18 : 12)}px`,
+  const availableHeight = Math.max(200, innerHeight - visibleTop);
+  const motionZone = Math.min(180, availableHeight * 0.24);
+  const distance = innerWidth <= 700 ? 8 : innerWidth <= 1000 ? 12 : 16;
+  const measurements = targets
+    .filter((element) => element.getClientRects().length)
+    .map((element) => ({
+      element,
+      rect: element.getBoundingClientRect(),
+      shift:
+        Number.parseFloat(getComputedStyle(element).translate.split(' ')[1]) ||
+        0,
+    }));
+  measurements.forEach(({ element, rect, shift }) => {
+    // Measure before writing and subtract the currently rendered shift.
+    const top = rect.top - shift;
+    const bottom = rect.bottom - shift;
+    const enter = Math.max(
+      0,
+      Math.min(1, (top - (innerHeight - motionZone)) / motionZone),
     );
+    const leave = Math.max(
+      0,
+      Math.min(1, (visibleTop + motionZone - bottom) / motionZone),
+    );
+    const offset =
+      motion.matches || element.matches(':focus-within')
+        ? 0
+        : enter * distance - leave * distance * 0.35;
+    element.classList.add('scroll-fade');
+    element.style.setProperty('--scroll-opacity', '1');
+    element.style.setProperty('--scroll-offset', `${offset.toFixed(2)}px`);
   });
 }
 function schedule() {
