@@ -74,6 +74,10 @@ if (inquiryForm) {
   [mobile, account, date, other].forEach((input) =>
     input.addEventListener('input', () => input.setCustomValidity('')),
   );
+  updateAccount();
+  window.addEventListener('pageshow', () => {
+    if (!submitting) updateAccount();
+  });
   inquiryForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (submitting) return;

@@ -70,6 +70,18 @@ const targets = [
     '.hero h1, .hero .intro, .hero .actions, .section h2, .section .eyebrow, .about-copy > p, .profile-label, .small-note, .section-heading > p, .project-info > h3, .project-info > p, .tool-card > div, .tool-group-heading, .skill-list > div, .credential-column article, .timeline-item > div, .contact > p, .contact-actions, .contact-card, .hire-intro > p, .hire-intro h2, .hire-reasons article, .interests-heading, .hobby-card, .favorite-games, .gaming-intro, .music-interests > h4, .music-interests > p',
   ),
 ];
+// Animate only the outer selected block; nested fades multiply opacity.
+const targetSet = new Set(targets);
+const fadeTargets = targets.filter((element) => {
+  for (
+    let parent = element.parentElement;
+    parent;
+    parent = parent.parentElement
+  )
+    if (targetSet.has(parent)) return false;
+  element.classList.add('scroll-fade');
+  return true;
+});
 let framePending = false;
 let scrollFrame = 0;
 let navigating = false;
@@ -182,7 +194,14 @@ function update() {
     availableHeight * effectSettings.scroll.edgeRatio,
   );
   const distance = innerWidth <= 700 ? 8 : innerWidth <= 1000 ? 12 : 16;
-  const measurements = targets
+  if (motion.matches) {
+    fadeTargets.forEach((element) => {
+      element.style.setProperty('--scroll-opacity', '1');
+      element.style.setProperty('--scroll-offset', '0px');
+    });
+    return;
+  }
+  const measurements = fadeTargets
     .filter((element) => element.getClientRects().length)
     .map((element) => ({
       element,
@@ -207,7 +226,6 @@ function update() {
       motion.matches || element.matches(':focus-within')
         ? 0
         : enter * distance - leave * distance * 0.35;
-    element.classList.add('scroll-fade');
     const opacity = element.matches(':focus-within')
       ? 1
       : 1 - Math.max(enter, leave);
@@ -256,13 +274,15 @@ function scrollToSection(target) {
     ),
   );
   const distance = destination - start;
-  const duration = Math.min(
-    desktopTiming(1300, 1600),
-    Math.max(
-      desktopTiming(650, 800),
-      Math.abs(distance) * 0.18 + desktopTiming(650, 800),
-    ),
-  );
+  const duration = motion.matches
+    ? 0
+    : Math.min(
+        desktopTiming(1300, 1600),
+        Math.max(
+          desktopTiming(650, 800),
+          Math.abs(distance) * 0.18 + desktopTiming(650, 800),
+        ),
+      );
   if (!duration || Math.abs(distance) < 2) {
     window.scrollTo({ top: destination, behavior: 'instant' });
     stopNavigation(true);
@@ -344,7 +364,14 @@ motion.addEventListener('change', () => {
 });
 document.querySelectorAll('.button, .nav-contact').forEach((button) =>
   button.addEventListener('pointerdown', (event) => {
-    if (motion.matches || event.button !== 0 || !button.animate) return;
+    if (
+      motion.matches ||
+      button.disabled ||
+      button.getAttribute('aria-disabled') === 'true' ||
+      event.button !== 0 ||
+      !button.animate
+    )
+      return;
     const rect = button.getBoundingClientRect();
     const ripple = document.createElement('span');
     ripple.className = 'button-ripple';
@@ -429,33 +456,38 @@ document.querySelectorAll('a.contact-card').forEach((card) => {
 });
 
 const setupCards = document.querySelectorAll('.development-setup li');
-let setupRevealed = false;
-function animateSetup() {
-  if (motion.matches || setupRevealed) return;
-  setupRevealed = true;
-  setupCards.forEach((card, index) => {
-    card.style.setProperty('--effect-delay', `${index * 80}ms`);
+const revealedSetups = new WeakSet();
+function animateSetup(group) {
+  if (motion.matches || revealedSetups.has(group)) return;
+  revealedSetups.add(group);
+  group.querySelectorAll('li').forEach((card, index) => {
+    card.style.setProperty('--effect-delay', `${Math.min(index * 60, 240)}ms`);
     card.classList.add('effect-playing');
   });
 }
 if (window.ScrollTrigger) {
-  ScrollTrigger.create({
-    trigger: '.development-setup',
-    start: 'top 85%',
-    onEnter: animateSetup,
-    onEnterBack: animateSetup,
-  });
+  document.querySelectorAll('.development-setup').forEach((group) =>
+    ScrollTrigger.create({
+      trigger: group,
+      start: 'top 85%',
+      onEnter: () => animateSetup(group),
+      onEnterBack: () => animateSetup(group),
+    }),
+  );
 } else {
   const setupObserver = new IntersectionObserver(
     (entries) => {
-      if (entries.some((entry) => entry.isIntersecting)) {
-        animateSetup();
-        setupObserver.disconnect();
-      }
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        animateSetup(entry.target);
+        setupObserver.unobserve(entry.target);
+      });
     },
     { threshold: 0.15 },
   );
-  setupObserver.observe(document.querySelector('.development-setup'));
+  document
+    .querySelectorAll('.development-setup')
+    .forEach((group) => setupObserver.observe(group));
 }
 setupCards.forEach((card) => {
   card.addEventListener('animationend', (event) => {
@@ -481,10 +513,12 @@ function sizeContactZoom() {
 sizeContactZoom();
 window.addEventListener('resize', sizeContactZoom);
 
+const examplePanels = [];
 document.querySelectorAll('.code-example-toggle').forEach((button, index) => {
   const panel = button.closest('li').querySelector('.package-example');
   panel.id = 'code-example-' + index;
   button.setAttribute('aria-controls', panel.id);
+  examplePanels.push({ button, panel });
   button.addEventListener('click', () => {
     const expanded = button.getAttribute('aria-expanded') !== 'true';
     button
@@ -494,6 +528,16 @@ document.querySelectorAll('.code-example-toggle').forEach((button, index) => {
     button.closest('li').classList.toggle('example-open', expanded);
   });
 });
+function resizeExamples() {
+  examplePanels.forEach(({ button, panel }) => {
+    if (button.getAttribute('aria-expanded') === 'true')
+      button
+        .closest('li')
+        .style.setProperty('--example-height', panel.scrollHeight + 32 + 'px');
+  });
+}
+window.addEventListener('resize', resizeExamples);
+document.fonts?.ready.then(resizeExamples);
 
 const cvDownload = document.querySelector('.cv-download');
 cvDownload?.addEventListener('click', (event) => {
@@ -580,10 +624,9 @@ document.querySelectorAll('details > summary').forEach((summary) => {
           desiredOpen ? expanded[index] : collapsed,
         ],
         {
-          duration: desktopTiming(
-            desiredOpen ? 850 : 650,
-            desiredOpen ? 1000 : 750,
-          ),
+          duration: motion.matches
+            ? 0
+            : desktopTiming(desiredOpen ? 850 : 650, desiredOpen ? 1000 : 750),
           easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
           fill: 'both',
         },

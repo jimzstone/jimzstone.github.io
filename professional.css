@@ -3374,23 +3374,6 @@ details.expansion-playing[open] > :not(summary) {
 }
 
 /* Scroll position controls entry and exit; focused content stays readable. */
-.scroll-fade {
-  opacity: var(--scroll-opacity, 1) !important;
-  translate: 0 var(--scroll-offset, 0px);
-  transition:
-    opacity 0.18s linear,
-    translate 0.18s ease-out !important;
-}
-.scroll-fade:focus-within {
-  opacity: 1 !important;
-  translate: none;
-}
-@media print {
-  .scroll-fade {
-    opacity: 1 !important;
-    translate: none !important;
-  }
-}
 
 /* Contact buttons expand approximately 2.5px on each edge. */
 #contact .contact-actions .button {
@@ -3925,11 +3908,7 @@ summary {
   section.section-arriving {
     animation-duration: 1.1s !important;
   }
-  .scroll-fade {
-    transition:
-      opacity 0.45s ease-out,
-      translate 0.55s cubic-bezier(0.22, 1, 0.36, 1) !important;
-  }
+
   details.expansion-playing[open] > :not(summary) {
     animation-duration: 1.6s !important;
   }
@@ -3993,11 +3972,7 @@ summary {
 section.section-arriving {
   animation-duration: var(--motion-arrival) !important;
 }
-.scroll-fade {
-  transition:
-    opacity 0.4s ease-out,
-    translate var(--motion-ui) var(--motion-ease) !important;
-}
+
 details.expansion-playing[open] > :not(summary) {
   animation-duration: 1.4s !important;
 }
@@ -4046,13 +4021,6 @@ details.expansion-playing[open] > :not(summary) {
   }
   .button:active {
     opacity: 0.85;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .scroll-fade {
-    opacity: 1 !important;
-    translate: none !important;
-    transition: none !important;
   }
 }
 
@@ -4242,28 +4210,9 @@ footer {
 }
 
 /* Desktop scroll fades settle slowly at the viewport edges. */
-@media (min-width: 1001px) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .scroll-fade {
-    transition:
-      opacity 1.2s cubic-bezier(0.2, 0.65, 0.3, 1),
-      translate 1.35s cubic-bezier(0.22, 1, 0.36, 1) !important;
-  }
-  .scroll-fade:focus-within {
-    opacity: 1 !important;
-    translate: none !important;
-  }
-}
 
 /* Reading-first scroll motion: text stays visible on every screen. */
-.scroll-fade {
-  opacity: 1 !important;
-  transition: translate 0.9s cubic-bezier(0.22, 1, 0.36, 1) !important;
-}
-@media (min-width: 1001px) {
-  .scroll-fade {
-    transition: translate 1.15s cubic-bezier(0.22, 1, 0.36, 1) !important;
-  }
-}
+
 @keyframes section-arrival {
   from {
     opacity: 1;
@@ -4275,58 +4224,14 @@ footer {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .scroll-fade {
-    translate: none !important;
-    transition: none !important;
-  }
   section.section-arriving {
     animation: none !important;
   }
 }
 
 /* Repeatable entry and exit fades work in both scroll directions. */
-.scroll-fade {
-  opacity: var(--scroll-opacity, 1) !important;
-  transition:
-    opacity 1.4s cubic-bezier(0.2, 0.65, 0.3, 1),
-    translate 1.25s cubic-bezier(0.22, 1, 0.36, 1) !important;
-}
-@media (min-width: 1001px) {
-  .scroll-fade {
-    transition:
-      opacity 1.65s cubic-bezier(0.2, 0.65, 0.3, 1),
-      translate 1.45s cubic-bezier(0.22, 1, 0.36, 1) !important;
-  }
-}
-.scroll-fade:focus-within {
-  opacity: 1 !important;
-  translate: none !important;
-}
-@media (prefers-reduced-motion: reduce) {
-  .scroll-fade {
-    translate: none !important;
-    transition: opacity 1.4s ease !important;
-  }
-}
-@media print {
-  .scroll-fade {
-    opacity: 1 !important;
-    translate: none !important;
-  }
-}
 
 /* Scroll velocity controls settling time without altering layout. */
-.scroll-fade {
-  transition:
-    opacity var(--scroll-fade-duration, 1.4s) cubic-bezier(0.2, 0.65, 0.3, 1),
-    translate var(--scroll-move-duration, 1.25s) cubic-bezier(0.22, 1, 0.36, 1) !important;
-}
-@media (prefers-reduced-motion: reduce) {
-  .scroll-fade {
-    transition: opacity var(--scroll-fade-duration, 1.4s) ease !important;
-    translate: none !important;
-  }
-}
 
 /* Explicit code toggles prevent hover from overriding the selected state. */
 #tools .development-setup li:not(.example-open) .package-example,
@@ -4915,6 +4820,104 @@ footer {
   #contact .inquiry-submit.cv-loading .inquiry-progress {
     animation: none !important;
     transform: scaleX(1);
+  }
+}
+
+/* Shared motion rules replace competing scroll and hover declarations. */
+:root {
+  --interaction-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --interaction-duration: 0.55s;
+}
+.scroll-fade {
+  opacity: var(--scroll-opacity, 1) !important;
+  translate: 0 var(--scroll-offset, 0px) !important;
+  transition:
+    opacity var(--scroll-fade-duration, 1.4s) ease,
+    translate var(--scroll-move-duration, 1.25s) var(--interaction-ease) !important;
+}
+.scroll-fade:focus-within {
+  opacity: 1 !important;
+  translate: none !important;
+}
+.tool-card,
+.project,
+.hobby-card,
+#tools .development-setup li {
+  transition:
+    transform var(--interaction-duration) var(--interaction-ease),
+    translate var(--interaction-duration) var(--interaction-ease),
+    border-color 0.45s ease,
+    box-shadow 0.55s ease,
+    background-color 0.45s ease !important;
+}
+#navigation a,
+.button,
+.cv-download,
+.code-example-toggle {
+  transition-timing-function: var(--interaction-ease) !important;
+}
+@media (hover: hover) and (pointer: fine) {
+  .project:hover {
+    transform: translateY(-3px) scale(1.008) !important;
+    box-shadow: 0 12px 30px #20321c16;
+  }
+  .tool-card:hover {
+    transform: translateY(-2px) !important;
+    border-color: #96b56b;
+  }
+  .hobby-card:hover {
+    transform: translateY(-2px);
+    border-color: #aac380;
+  }
+  .code-example-toggle:hover {
+    background: #e6efda;
+  }
+}
+@media (hover: none), (pointer: coarse) {
+  .tool-card:hover,
+  .project:hover,
+  .hobby-card:hover,
+  #tools .development-setup li:hover,
+  #contact .inquiry-submit:hover:not(:disabled) {
+    transform: none !important;
+    translate: none !important;
+    scale: 1 !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-fade {
+    opacity: 1 !important;
+    translate: none !important;
+    transition: none !important;
+  }
+  .project,
+  .tool-card,
+  .hobby-card,
+  #tools .development-setup li,
+  #navigation a,
+  .button,
+  .cv-download,
+  .code-example-toggle {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    translate: none !important;
+    scale: 1 !important;
+  }
+  #tools .development-setup li .package-example {
+    transition: none !important;
+  }
+}
+@media print {
+  .scroll-fade {
+    opacity: 1 !important;
+    translate: none !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #navigation a.active,
+  #navigation .nav-contact.active {
+    animation: none !important;
   }
 }
 
