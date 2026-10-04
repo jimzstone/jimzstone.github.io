@@ -67,7 +67,7 @@ const sections = [...document.querySelectorAll('section[id]')];
 const links = [...navigation.querySelectorAll('a')];
 const targets = [
   ...document.querySelectorAll(
-    '.hero h1, .hero .intro, .hero .actions, .section h2, .section .eyebrow, .about-copy > p, .profile-label, .small-note, .section-heading > p, .project-info > h3, .project-info > p, .tool-card > div, .tool-group-heading, .skill-list > div, .credential-column article, .timeline-item > div, .contact > p, .contact-actions, .contact-card, .hire-intro > p, .hire-intro h2, .hire-reasons article',
+    '.hero h1, .hero .intro, .hero .actions, .section h2, .section .eyebrow, .about-copy > p, .profile-label, .small-note, .section-heading > p, .project-info > h3, .project-info > p, .tool-card > div, .tool-group-heading, .skill-list > div, .credential-column article, .timeline-item > div, .contact > p, .contact-actions, .contact-card, .hire-intro > p, .hire-intro h2, .hire-reasons article, .interests-heading, .hobby-card, .favorite-games',
   ),
 ];
 let framePending = false;
