@@ -287,10 +287,12 @@ function scrollToSection(target, { reveal = false } = {}) {
     ),
   );
   const distance = destination - start;
-  const duration = motion.matches
-    ? 0
-    : polishedDesktop.matches
-      ? Math.min(1800, 900 + Math.abs(distance) * 0.16)
+  const duration = polishedDesktop.matches
+    ? motion.matches
+      ? 650
+      : Math.min(1800, 900 + Math.abs(distance) * 0.16)
+    : motion.matches
+      ? 0
       : Math.min(
           desktopTiming(1300, 1600),
           Math.max(
