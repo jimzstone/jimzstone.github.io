@@ -5010,4 +5010,33 @@ footer {
     transition-duration: 0.65s !important;
   }
 }
+/* Desktop disclosures remain measurable until their closing fade completes. */
+@media (min-width: 1001px) and (hover: hover) and (pointer: fine) {
+  details.disclosure-motion {
+    overflow-anchor: none;
+  }
+  #tools .development-setup li:not(.example-open) .package-example {
+    opacity: 0;
+  }
+  #tools .development-setup li.example-open .package-example {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (min-width: 1001px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: reduce) {
+  #tools .development-setup li .package-example {
+    transition:
+      max-height 0.25s ease,
+      opacity 0.25s ease,
+      padding 0.25s ease,
+      margin 0.25s ease,
+      visibility 0s linear 0.25s !important;
+  }
+  #tools .development-setup li:not(.example-open) .package-example {
+    transition-delay: 0s, 0s, 0s, 0s, 0.25s !important;
+  }
+  #tools .development-setup li.example-open .package-example {
+    transition-delay: 0s !important;
+  }
+}
 

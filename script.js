@@ -524,6 +524,7 @@ document.querySelectorAll('.code-example-toggle').forEach((button, index) => {
   button.setAttribute('aria-controls', panel.id);
   examplePanels.push({ button, panel });
   button.addEventListener('click', () => {
+    if (polishedDesktop.matches && navigating) stopNavigation();
     const expanded = button.getAttribute('aria-expanded') !== 'true';
     button
       .closest('li')
@@ -579,11 +580,17 @@ document.querySelectorAll('details > summary').forEach((summary) => {
   let desiredOpen = detail.open;
   let generation = 0;
   let running = [];
+  let layoutFrame = 0;
+  const trackLayout = () => {
+    schedule();
+    layoutFrame = requestAnimationFrame(trackLayout);
+  };
   summary.addEventListener('click', (event) => {
     event.preventDefault();
     if (navigating) stopNavigation();
     desiredOpen = !desiredOpen;
     const currentGeneration = ++generation;
+    cancelAnimationFrame(layoutFrame);
     const wasOpen = detail.open;
     const current = content.map((child) => {
       const style = getComputedStyle(child);
@@ -628,18 +635,33 @@ document.querySelectorAll('details > summary').forEach((summary) => {
           desiredOpen ? expanded[index] : collapsed,
         ],
         {
-          duration: motion.matches
-            ? 0
-            : desktopTiming(desiredOpen ? 850 : 650, desiredOpen ? 1000 : 750),
-          easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+          duration: polishedDesktop.matches
+            ? motion.matches
+              ? 250
+              : desiredOpen
+                ? 1100
+                : 850
+            : motion.matches
+              ? 0
+              : desktopTiming(
+                  desiredOpen ? 850 : 650,
+                  desiredOpen ? 1000 : 750,
+                ),
+          easing:
+            polishedDesktop.matches && !desiredOpen
+              ? 'cubic-bezier(0.4, 0, 0.2, 1)'
+              : 'cubic-bezier(0.22, 1, 0.36, 1)',
           fill: 'both',
         },
       );
     });
+    if (polishedDesktop.matches)
+      layoutFrame = requestAnimationFrame(trackLayout);
     Promise.all(
       running.map((animation) => animation.finished.catch(() => {})),
     ).then(() => {
       if (currentGeneration !== generation) return;
+      cancelAnimationFrame(layoutFrame);
       detail.open = desiredOpen;
       running.forEach((animation) => animation.cancel());
       running = [];
