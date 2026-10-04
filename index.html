@@ -16,6 +16,7 @@
     <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
     <script src="assets/vendor/anime.umd.min.js" defer></script>
     <script src="script.js?v=44" defer></script>
+    <script src="inquiry.js?v=1" defer></script>
     <script type="module" src="/src/main.tsx"></script>
   </head>
   <body>
@@ -1343,6 +1344,178 @@
               ><strong>Canlubang, Calamba, Laguna, Philippines</strong>
             </div>
           </div>
+        </div>
+        <div class="inquiry-panel" aria-labelledby="inquiry-heading">
+          <div class="inquiry-heading">
+            <p class="eyebrow">LET’S DISCUSS YOUR INQUIRY</p>
+            <h3 id="inquiry-heading">For Inquiry just fill-up this form</h3>
+            <p>
+              Share your inquiry and preferred meeting date. I’ll contact you to
+              confirm availability.
+            </p>
+          </div>
+          <form
+            id="inquiry-form"
+            action="https://formsubmit.co/lopez.jimuelb@yahoo.com"
+            method="POST"
+          >
+            <input type="hidden" name="_cc" value="j.lopezx23@gmail.com" />
+            <input
+              type="hidden"
+              name="_subject"
+              value="New portfolio inquiry"
+            />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" id="inquiry-timezone" name="Time zone" />
+            <input
+              class="inquiry-honey"
+              type="text"
+              name="_honey"
+              tabindex="-1"
+              autocomplete="off"
+              aria-hidden="true"
+            />
+            <fieldset class="inquiry-fields">
+              <legend class="inquiry-sr">Inquiry details</legend>
+              <div class="inquiry-field">
+                <label for="inquiry-name">Full name</label
+                ><input
+                  id="inquiry-name"
+                  name="Full name"
+                  autocomplete="name"
+                  maxlength="100"
+                  required
+                />
+              </div>
+              <div class="inquiry-field">
+                <label for="inquiry-email">Email Address</label
+                ><input
+                  id="inquiry-email"
+                  type="email"
+                  name="email"
+                  autocomplete="email"
+                  maxlength="254"
+                  required
+                />
+              </div>
+              <div class="inquiry-field">
+                <label for="inquiry-date">Set Schedule</label
+                ><input
+                  id="inquiry-date"
+                  type="date"
+                  name="Requested meeting date"
+                  required
+                  aria-describedby="inquiry-date-help"
+                /><small id="inquiry-date-help"
+                  >A requested date, subject to confirmation.</small
+                >
+              </div>
+              <div class="inquiry-field">
+                <label for="inquiry-mobile">Your mobile number</label
+                ><input
+                  id="inquiry-mobile"
+                  type="tel"
+                  name="Mobile number"
+                  autocomplete="tel"
+                  placeholder="+63 9XX XXX XXXX"
+                  maxlength="30"
+                  required
+                />
+              </div>
+              <fieldset class="inquiry-platforms inquiry-wide">
+                <legend>Where can I contact you?</legend>
+                <div class="inquiry-platform-options">
+                  <label
+                    ><input
+                      type="radio"
+                      name="Preferred platform"
+                      value="Viber"
+                      required
+                    /><span>Viber</span></label
+                  >
+                  <label
+                    ><input
+                      type="radio"
+                      name="Preferred platform"
+                      value="WhatsApp"
+                      required
+                    /><span>WhatsApp</span></label
+                  >
+                  <label
+                    ><input
+                      type="radio"
+                      name="Preferred platform"
+                      value="Telegram"
+                      required
+                    /><span>Telegram</span></label
+                  >
+                  <label
+                    ><input
+                      type="radio"
+                      name="Preferred platform"
+                      value="Discord"
+                      required
+                    /><span>Discord</span></label
+                  >
+                </div>
+              </fieldset>
+              <div class="inquiry-field inquiry-wide">
+                <label id="inquiry-account-label" for="inquiry-account"
+                  >Platform user ID or mobile number</label
+                ><input
+                  id="inquiry-account"
+                  name="Platform account"
+                  maxlength="100"
+                  placeholder="Choose a contact platform above"
+                  required
+                  disabled
+                  aria-describedby="inquiry-account-help"
+                /><small id="inquiry-account-help"
+                  >Enter the account where you want me to reply.</small
+                >
+              </div>
+              <div class="inquiry-field inquiry-wide">
+                <label for="inquiry-message">Message</label
+                ><textarea
+                  id="inquiry-message"
+                  name="Message"
+                  rows="5"
+                  maxlength="4000"
+                  required
+                  placeholder="Tell me about your inquiry, meeting purpose, or opportunity."
+                ></textarea>
+              </div>
+            </fieldset>
+            <p class="inquiry-privacy">
+              Your details are sent to Jimuel’s Yahoo and Gmail inboxes through
+              <a
+                href="https://formsubmit.co/privacy.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                >FormSubmit</a
+              >
+              to respond to your inquiry.
+            </p>
+            <button class="button inquiry-submit" type="submit">
+              <svg
+                class="inquiry-send-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                aria-hidden="true"
+              >
+                <path d="m3 3 18 9-18 9 4-9-4-9Zm4 9h14" /></svg
+              ><span class="inquiry-submit-label">Submit</span
+              ><span class="inquiry-spinner" aria-hidden="true"></span>
+            </button>
+            <p
+              class="inquiry-status"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+            ></p>
+          </form>
         </div>
       </section>
     </main>

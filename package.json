@@ -9,7 +9,7 @@
     "dev": "vite --host 127.0.0.1 --port 4180",
     "build": "tsc && vite build",
     "preview": "vite preview --host 127.0.0.1 --port 4180",
-    "lint": "eslint script.js src vite.config.js"
+    "lint": "eslint script.js inquiry.js src vite.config.js"
   },
   "dependencies": {
     "framer-motion": "^14.0.0",
@@ -32,3 +32,4 @@
     "vite": "^8.3.2"
   }
 }
+

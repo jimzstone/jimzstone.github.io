@@ -28,3 +28,9 @@ Professional information is based on the supplied résumé and project documenta
 
 Responsive checks use the in-app browser at phone, tablet and desktop widths. Actual iOS/Android scrolling and app-specific external links require device verification. Vendored third-party library internals are not maintained as portfolio source.
 
+## Inquiry form
+
+The contact form uses inquiry.js and FormSubmit AJAX to deliver inquiries to lopez.jimuelb@yahoo.com with j.lopezx23@gmail.com copied. The owner must activate the FormSubmit endpoint using the email confirmation link. A three-second minimum loading indicator does not imply success: the interface shows completion only for an accepted service response, preserves entries on failure and does not retry automatically. Schedule dates are requests rather than confirmed bookings. The client's time zone is included.
+
+Run `node verify-inquiry.mjs` to check phone validation, local date formatting and service-result classification without sending mail.
+

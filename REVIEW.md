@@ -16,3 +16,7 @@ Reviewed the first-party HTML, CSS behavior, script.js, React filter, JSON setti
 
 Validation: ESLint and TypeScript/Vite build passed. Browser checks covered rapid disclosure toggles, code-preview opening/closing, Windows/Web/All filters and widths 320, 390, 768 and 1280 without horizontal overflow or captured browser errors. Actual phone and external app behavior remain outside browser-emulation verification.
 
+## Inquiry form verification
+
+Added accessible inquiry fields, a native date calendar, platform radio controls and conditional account input. Phone/mobile layouts use one column; tablet/desktop use two. Tested widths 320, 390, 768 and 1280 with no horizontal overflow and no captured browser errors. ESLint, TypeScript/Vite build and inquiry helper checks passed. The approved FormSubmit setup POST returned needs-Activation, including after the owner reported activation. Delivery must not be claimed until the endpoint accepts a test and the owner confirms receipt.
+
