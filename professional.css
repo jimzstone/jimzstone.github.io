@@ -4959,4 +4959,55 @@ footer {
     opacity: 1 !important;
   }
 }
+/* Desktop polish only: touch and smaller viewports retain their existing motion. */
+@media (min-width: 1001px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  :root {
+    --interaction-duration: 0.7s;
+    --interaction-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  :is(.scroll-fade, #tools .development-setup li.scroll-fade) {
+    transition:
+      opacity var(--scroll-fade-duration, 1.9s) cubic-bezier(0.2, 0.65, 0.3, 1),
+      translate var(--scroll-move-duration, 1.7s) var(--interaction-ease),
+      transform 0.7s var(--interaction-ease),
+      border-color 0.6s ease,
+      box-shadow 0.7s ease,
+      background-color 0.6s ease !important;
+  }
+  .project:hover {
+    transform: translateY(-3px) scale(1.005) !important;
+  }
+  .hobby-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px #253d1810;
+  }
+  #navigation a {
+    transition-duration: 0.55s !important;
+  }
+  #navigation a.active,
+  #navigation .nav-contact.active {
+    animation-duration: 1.1s !important;
+  }
+  section.section-arriving {
+    animation-duration: 1.1s !important;
+  }
+  #tools .development-setup li .package-example {
+    transition:
+      max-height 1s var(--interaction-ease),
+      opacity 0.75s ease,
+      padding 1s var(--interaction-ease),
+      margin 1s var(--interaction-ease),
+      transform 1s var(--interaction-ease),
+      visibility 0s linear 1s !important;
+  }
+  #tools .development-setup li:not(.example-open) .package-example {
+    transition-delay: 0s, 0s, 0s, 0s, 0s, 1s !important;
+  }
+  #tools .development-setup li.example-open .package-example {
+    transition-delay: 0s !important;
+  }
+  #contact .inquiry-submit {
+    transition-duration: 0.65s !important;
+  }
+}
 

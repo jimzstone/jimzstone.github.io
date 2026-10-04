@@ -62,6 +62,9 @@ const desktopTiming = (normal, slower) =>
     ? slower
     : normal;
 const motion = matchMedia('(prefers-reduced-motion: reduce)');
+const polishedDesktop = matchMedia(
+  '(min-width: 1001px) and (hover: hover) and (pointer: fine)',
+);
 if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
 const sections = [...document.querySelectorAll('section[id]')];
 const links = [...navigation.querySelectorAll('a')];
@@ -151,8 +154,9 @@ function update() {
     innerWidth > 1000
       ? effectSettings.scroll.slowDesktop
       : effectSettings.scroll.slowMobile;
-  const fadeDuration =
-    slowDuration + (effectSettings.scroll.fast - slowDuration) * speedFactor;
+  const fadeDuration = polishedDesktop.matches
+    ? 1.9 + (0.45 - 1.9) * speedFactor
+    : slowDuration + (effectSettings.scroll.fast - slowDuration) * speedFactor;
   document.documentElement.style.setProperty(
     '--scroll-fade-duration',
     fadeDuration.toFixed(2) + 's',
@@ -190,10 +194,17 @@ function update() {
   const visibleTop = header.getBoundingClientRect().bottom + 12;
   const availableHeight = Math.max(200, innerHeight - visibleTop);
   const motionZone = Math.min(
-    220,
-    availableHeight * effectSettings.scroll.edgeRatio,
+    polishedDesktop.matches ? 200 : 220,
+    availableHeight *
+      (polishedDesktop.matches ? 0.24 : effectSettings.scroll.edgeRatio),
   );
-  const distance = innerWidth <= 700 ? 8 : innerWidth <= 1000 ? 12 : 16;
+  const distance = polishedDesktop.matches
+    ? 10
+    : innerWidth <= 700
+      ? 8
+      : innerWidth <= 1000
+        ? 12
+        : 16;
   const measurements = fadeTargets
     .filter((element) => element.getClientRects().length)
     .map((element) => ({
