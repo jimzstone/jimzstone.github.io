@@ -87,8 +87,38 @@ matchMedia('(min-width:701px)').addEventListener('change', () =>
   setMenu(false),
 );
 
+let lastScrollPosition = scrollY;
+let lastScrollTime = performance.now();
+let scrollSpeed = 0;
+let scrollSettleTimer;
 function update() {
   framePending = false;
+  const now = performance.now();
+  const elapsed = Math.max(16, now - lastScrollTime);
+  const travel = Math.abs(scrollY - lastScrollPosition);
+  const measuredSpeed = travel / elapsed;
+  scrollSpeed =
+    elapsed > 200 ? measuredSpeed : scrollSpeed * 0.65 + measuredSpeed * 0.35;
+  const speedFactor = Math.min(1, scrollSpeed / 2.5);
+  const slowDuration = innerWidth > 1000 ? 1.65 : 1.4;
+  const fadeDuration = slowDuration + (0.28 - slowDuration) * speedFactor;
+  document.documentElement.style.setProperty(
+    '--scroll-fade-duration',
+    fadeDuration.toFixed(2) + 's',
+  );
+  document.documentElement.style.setProperty(
+    '--scroll-move-duration',
+    Math.max(0.3, fadeDuration * 0.9).toFixed(2) + 's',
+  );
+  lastScrollPosition = scrollY;
+  lastScrollTime = now;
+  if (travel > 0) {
+    clearTimeout(scrollSettleTimer);
+    scrollSettleTimer = setTimeout(() => {
+      scrollSpeed = 0;
+      schedule();
+    }, 180);
+  }
   const top = header.getBoundingClientRect().bottom + 16;
   const total = document.documentElement.scrollHeight - innerHeight;
   header.style.setProperty(

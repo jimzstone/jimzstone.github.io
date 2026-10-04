@@ -4315,3 +4315,16 @@ footer {
   }
 }
 
+/* Scroll velocity controls settling time without altering layout. */
+.scroll-fade {
+  transition:
+    opacity var(--scroll-fade-duration, 1.4s) cubic-bezier(0.2, 0.65, 0.3, 1),
+    translate var(--scroll-move-duration, 1.25s) cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-fade {
+    transition: opacity var(--scroll-fade-duration, 1.4s) ease !important;
+    translate: none !important;
+  }
+}
+
