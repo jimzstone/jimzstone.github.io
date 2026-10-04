@@ -20,3 +20,5 @@ Validation: ESLint and TypeScript/Vite build passed. Browser checks covered rapi
 
 Added accessible inquiry fields, a native date calendar, platform radio controls and conditional account input. Phone/mobile layouts use one column; tablet/desktop use two. Tested widths 320, 390, 768 and 1280 with no horizontal overflow and no captured browser errors. ESLint, TypeScript/Vite build and inquiry helper checks passed. The approved FormSubmit setup POST returned needs-Activation, including after the owner reported activation. Delivery must not be claimed until the endpoint accepts a test and the owner confirms receipt.
 
+Live follow-up: the approved browser test from https://jimzstone.github.io/?v=inquiry-form#contact showed the three-second countdown followed by Submission complete. FormSubmit accepted the browser-origin submission after activation. Dummy test contact/schedule values were used and explicitly marked not to book a meeting. No browser errors were captured. Inbox arrival remains for the owner to confirm.
+
