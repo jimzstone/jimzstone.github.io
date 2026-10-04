@@ -366,36 +366,8 @@ setupCards.forEach((card) => {
   });
 });
 
-// Animate user-triggered expansion even when automatic motion is reduced.
+// Expansion motion shares the same cancellable scroll frame.
 let expandFrame = 0;
-document.querySelectorAll('details').forEach((detail) => {
-  detail.addEventListener('toggle', () => {
-    cancelAnimationFrame(expandFrame);
-    detail.classList.remove('expansion-playing');
-    if (!detail.open || motion.matches) return;
-    void detail.offsetWidth;
-    detail.classList.add('expansion-playing');
-    const rect = detail.getBoundingClientRect();
-    const topGap = header.getBoundingClientRect().height + 24;
-    const destination = Math.min(
-      document.documentElement.scrollHeight - innerHeight,
-      Math.max(0, scrollY + rect.top - topGap),
-    );
-    const start = scrollY;
-    const distance = destination - start;
-    if (Math.abs(distance) < 24) return;
-    const started = performance.now();
-    const step = (now) => {
-      if (!detail.open) return;
-      const progress = Math.min(1, (now - started) / 1300);
-      const ease =
-        progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2;
-      window.scrollTo({ top: start + distance * ease, behavior: 'instant' });
-      if (progress < 1) expandFrame = requestAnimationFrame(step);
-    };
-    expandFrame = requestAnimationFrame(step);
-  });
-});
 
 const contactZoomButtons = document.querySelectorAll(
   '.contact-actions .button',
@@ -415,23 +387,6 @@ function sizeContactZoom() {
 }
 sizeContactZoom();
 window.addEventListener('resize', sizeContactZoom);
-
-document.querySelectorAll('.code-example-toggle').forEach((button) => {
-  button.addEventListener('click', () => {
-    const card = button.closest('li');
-    if (card.classList.contains('content-closing')) return;
-    const expanded = button.getAttribute('aria-expanded') !== 'true';
-    if (!expanded && !motion.matches) {
-      fadeExpandedContent(card, () => {
-        card.classList.remove('example-open');
-        button.setAttribute('aria-expanded', 'false');
-      });
-      return;
-    }
-    button.setAttribute('aria-expanded', String(expanded));
-    card.classList.toggle('example-open', expanded);
-  });
-});
 
 const cvDownload = document.querySelector('.cv-download');
 cvDownload?.addEventListener('click', (event) => {
@@ -467,37 +422,100 @@ cvDownload?.addEventListener('click', (event) => {
   }),
 );
 
-// Keep expanded content visible until its closing transition completes.
-function fadeExpandedContent(container, finish) {
+
+// Animate both opacity and occupied space so closing never snaps the layout.
+const expandingContainers = new WeakSet();
+function animateExpansion(container, content, opening, finish) {
+  if (expandingContainers.has(container)) return;
   cancelAnimationFrame(expandFrame);
-  container.classList.remove('expansion-playing');
-  container.style.setProperty('--closing-opacity', '1');
-  container.classList.add('content-closing');
-  // Commit the visible state before starting the fade.
-  void container.offsetWidth;
-  requestAnimationFrame(() => {
-    container.style.setProperty('--closing-opacity', '0');
-  });
-  setTimeout(() => {
+  if (motion.matches) {
     finish();
-    container.classList.remove('content-closing');
-    container.style.removeProperty('--closing-opacity');
     schedule();
-  }, 700);
+    return;
+  }
+  expandingContainers.add(container);
+  container.classList.add('expansion-smoothing');
+  const measurements = content.map((element) => {
+    const computed = getComputedStyle(element);
+    const properties = {
+      height: element.getBoundingClientRect().height,
+      'padding-top': parseFloat(computed.paddingTop) || 0,
+      'padding-bottom': parseFloat(computed.paddingBottom) || 0,
+      'margin-top': parseFloat(computed.marginTop) || 0,
+      'margin-bottom': parseFloat(computed.marginBottom) || 0,
+      'border-top-width': parseFloat(computed.borderTopWidth) || 0,
+      'border-bottom-width': parseFloat(computed.borderBottomWidth) || 0,
+    };
+    const names = [...Object.keys(properties), 'overflow', 'box-sizing', 'min-height', 'opacity', 'transition', 'animation', 'transform', 'translate'];
+    const original = names.map((name) => [name, element.style.getPropertyValue(name), element.style.getPropertyPriority(name)]);
+    element.style.setProperty('box-sizing', 'border-box', 'important');
+    element.style.setProperty('overflow', 'hidden', 'important');
+    element.style.setProperty('min-height', '0', 'important');
+    element.style.setProperty('transition', 'none', 'important');
+    element.style.setProperty('animation', 'none', 'important');
+    element.style.setProperty('transform', 'none', 'important');
+    element.style.setProperty('translate', 'none', 'important');
+    return { element, properties, original };
+  });
+  const render = (amount) => measurements.forEach(({ element, properties }) => {
+    Object.entries(properties).forEach(([name, value]) =>
+      element.style.setProperty(name, value * amount + 'px', 'important'),
+    );
+    element.style.setProperty('opacity', String(amount), 'important');
+  });
+  render(opening ? 0 : 1);
+  const duration = opening ? 1100 : 1300;
+  let began;
+  const step = (now) => {
+    if (began === undefined) began = now;
+    const progress = motion.matches ? 1 : Math.min(1, (now - began) / duration);
+    const eased = progress < 0.5
+      ? 4 * progress ** 3
+      : 1 - (-2 * progress + 2) ** 3 / 2;
+    render(opening ? eased : 1 - eased);
+    schedule();
+    if (progress < 1) {
+      requestAnimationFrame(step);
+      return;
+    }
+    finish();
+    measurements.forEach(({ element, original }) => original.forEach(([name, value, priority]) => {
+      if (value) element.style.setProperty(name, value, priority);
+      else element.style.removeProperty(name);
+    }));
+    container.classList.remove('expansion-smoothing');
+    expandingContainers.delete(container);
+    schedule();
+  };
+  requestAnimationFrame(step);
 }
 
 document.querySelectorAll('details > summary').forEach((summary) => {
-  let closing = false;
   summary.addEventListener('click', (event) => {
-    const detail = summary.parentElement;
-    if (!detail.open || motion.matches) return;
     event.preventDefault();
-    if (closing) return;
-    closing = true;
-    fadeExpandedContent(detail, () => {
-      detail.open = false;
-      closing = false;
+    const detail = summary.parentElement;
+    if (expandingContainers.has(detail)) return;
+    const opening = !detail.open;
+    if (opening) detail.open = true;
+    const content = [...detail.children].filter((child) => child !== summary);
+    animateExpansion(detail, content, opening, () => {
+      detail.open = opening;
     });
   });
 });
 
+document.querySelectorAll('.code-example-toggle').forEach((button) => {
+  button.addEventListener('click', () => {
+    const card = button.closest('li');
+    if (expandingContainers.has(card)) return;
+    const opening = button.getAttribute('aria-expanded') !== 'true';
+    if (opening) {
+      card.classList.add('example-open');
+      button.setAttribute('aria-expanded', 'true');
+    }
+    animateExpansion(card, [card.querySelector('.package-example')], opening, () => {
+      card.classList.toggle('example-open', opening);
+      button.setAttribute('aria-expanded', String(opening));
+    });
+  });
+});
