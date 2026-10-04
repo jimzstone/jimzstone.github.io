@@ -4932,4 +4932,31 @@ footer {
   transform: none;
   text-decoration: none;
 }
+/* Preserve fades when a card also has its own hover transition. */
+:is(.scroll-fade, #tools .development-setup li.scroll-fade) {
+  transition:
+    opacity var(--scroll-fade-duration, 1.4s) cubic-bezier(0.2, 0.65, 0.3, 1),
+    translate var(--scroll-move-duration, 1.25s) var(--interaction-ease),
+    transform 0.55s var(--interaction-ease),
+    border-color 0.45s ease,
+    box-shadow 0.55s ease,
+    background-color 0.45s ease !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Keep the requested entry/exit fade, without spatial movement. */
+  :is(.scroll-fade, #tools .development-setup li.scroll-fade) {
+    opacity: var(--scroll-opacity, 1) !important;
+    translate: none !important;
+    transition: opacity 0.45s ease !important;
+  }
+}
+:is(.scroll-fade, #tools .development-setup li.scroll-fade):focus-within {
+  opacity: 1 !important;
+  translate: none !important;
+}
+@media print {
+  :is(.scroll-fade, #tools .development-setup li.scroll-fade) {
+    opacity: 1 !important;
+  }
+}
 
