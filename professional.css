@@ -4207,3 +4207,37 @@ footer {
   }
 }
 
+.hire-panel {
+  align-items: start;
+  gap: clamp(28px, 4vw, 48px);
+}
+.hire-intro .hire-fit {
+  margin-top: 20px;
+  color: #536246;
+}
+.hire-reasons {
+  gap: 30px;
+}
+.hire-reasons .hire-contribution {
+  margin-top: 12px;
+  color: #536246;
+}
+.hire-contribution strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #425d30;
+}
+.hire-panel p {
+  text-wrap: pretty;
+}
+@media (max-width: 700px) {
+  .hire-reasons article {
+    padding-left: 30px;
+  }
+  .hire-panel p {
+    font-size: 14px;
+  }
+}
+
