@@ -88,6 +88,7 @@ const fadeTargets = targets.filter((element) => {
 let framePending = false;
 let scrollFrame = 0;
 let navigating = false;
+let scrollIntent = 0;
 let navigationTarget;
 let menuAnimation;
 function setMenu(open) {
@@ -263,10 +264,14 @@ function stopNavigation(completed = false) {
   schedule();
 }
 
-function scrollToSection(target) {
+function scrollToSection(target, { reveal = false } = {}) {
+  const rect = target.getBoundingClientRect();
+  const viewportTop = header.offsetHeight + 18;
+  if (reveal && rect.top >= viewportTop && rect.bottom <= innerHeight - 24)
+    return;
   cancelAnimationFrame(scrollFrame);
   navigating = true;
-  navigationTarget = target;
+  navigationTarget = reveal ? null : target;
   const start = scrollY;
   const destination = Math.min(
     Math.max(0, document.documentElement.scrollHeight - innerHeight),
@@ -274,19 +279,25 @@ function scrollToSection(target) {
       0,
       target === document.body
         ? 0
-        : target.getBoundingClientRect().top + start - header.offsetHeight - 18,
+        : reveal &&
+            rect.top >= viewportTop &&
+            rect.height < innerHeight - viewportTop - 24
+          ? start + rect.bottom - innerHeight + 24
+          : rect.top + start - viewportTop,
     ),
   );
   const distance = destination - start;
   const duration = motion.matches
     ? 0
-    : Math.min(
-        desktopTiming(1300, 1600),
-        Math.max(
-          desktopTiming(650, 800),
-          Math.abs(distance) * 0.18 + desktopTiming(650, 800),
-        ),
-      );
+    : polishedDesktop.matches
+      ? Math.min(1800, 900 + Math.abs(distance) * 0.16)
+      : Math.min(
+          desktopTiming(1300, 1600),
+          Math.max(
+            desktopTiming(650, 800),
+            Math.abs(distance) * 0.18 + desktopTiming(650, 800),
+          ),
+        );
   if (!duration || Math.abs(distance) < 2) {
     window.scrollTo({ top: destination, behavior: 'instant' });
     stopNavigation(true);
@@ -295,8 +306,11 @@ function scrollToSection(target) {
   const began = performance.now();
   const step = (now) => {
     const progress = Math.min(1, (now - began) / duration);
-    const eased =
-      progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2;
+    const eased = polishedDesktop.matches
+      ? progress ** 3 * (progress * (progress * 6 - 15) + 10)
+      : progress < 0.5
+        ? 4 * progress ** 3
+        : 1 - (-2 * progress + 2) ** 3 / 2;
     window.scrollTo({ top: start + distance * eased, behavior: 'instant' });
     if (progress < 1) scrollFrame = requestAnimationFrame(step);
     else stopNavigation(true);
@@ -307,12 +321,26 @@ function scrollToSection(target) {
   window.addEventListener(
     type,
     () => {
+      scrollIntent++;
       if (navigating) stopNavigation();
     },
     { passive: true },
   ),
 );
 window.addEventListener('keydown', (event) => {
+  if (
+    [
+      'ArrowUp',
+      'ArrowDown',
+      'PageUp',
+      'PageDown',
+      'Home',
+      'End',
+      ' ',
+      'Escape',
+    ].includes(event.key)
+  )
+    scrollIntent++;
   if (
     navigating &&
     [
@@ -523,7 +551,19 @@ document.querySelectorAll('.code-example-toggle').forEach((button, index) => {
   panel.id = 'code-example-' + index;
   button.setAttribute('aria-controls', panel.id);
   examplePanels.push({ button, panel });
+  let openingIntent = scrollIntent;
+  panel.addEventListener('transitionend', (event) => {
+    if (
+      polishedDesktop.matches &&
+      event.target === panel &&
+      event.propertyName === 'max-height' &&
+      openingIntent === scrollIntent &&
+      button.getAttribute('aria-expanded') === 'true'
+    )
+      scrollToSection(button.closest('li'), { reveal: true });
+  });
   button.addEventListener('click', () => {
+    openingIntent = scrollIntent;
     if (polishedDesktop.matches && navigating) stopNavigation();
     const expanded = button.getAttribute('aria-expanded') !== 'true';
     button
@@ -590,6 +630,7 @@ document.querySelectorAll('details > summary').forEach((summary) => {
     if (navigating) stopNavigation();
     desiredOpen = !desiredOpen;
     const currentGeneration = ++generation;
+    const openingIntent = scrollIntent;
     cancelAnimationFrame(layoutFrame);
     const wasOpen = detail.open;
     const current = content.map((child) => {
@@ -666,6 +707,12 @@ document.querySelectorAll('details > summary').forEach((summary) => {
       running.forEach((animation) => animation.cancel());
       running = [];
       content.forEach((child) => child.style.removeProperty('overflow'));
+      if (
+        polishedDesktop.matches &&
+        desiredOpen &&
+        openingIntent === scrollIntent
+      )
+        scrollToSection(detail, { reveal: true });
       schedule();
     });
   });
