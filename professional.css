@@ -4920,4 +4920,16 @@ footer {
     animation: none !important;
   }
 }
+/* The progress line is visible only during an actual submission. */
+#contact .inquiry-submit:not(.cv-loading) .inquiry-progress {
+  display: none;
+}
+#contact .inquiry-submit.cv-loading .inquiry-progress {
+  display: block;
+}
+#contact .inquiry-submit .inquiry-submit-label,
+#contact .inquiry-submit:hover .inquiry-submit-label {
+  transform: none;
+  text-decoration: none;
+}
 
