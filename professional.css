@@ -3905,3 +3905,20 @@ summary {
   }
   .scroll-fade { opacity: 1 !important; translate: none !important; }
 }
+
+/* Closing transitions override scroll fades and entry animation fill states. */
+details.content-closing[open] > :not(summary),
+#tools .development-setup li.content-closing .package-example {
+  opacity: var(--closing-opacity, 1) !important;
+  animation: none !important;
+  transition: opacity 0.65s ease-in-out !important;
+  translate: none !important;
+  transform: none !important;
+  visibility: visible !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  details.content-closing[open] > :not(summary),
+  #tools .development-setup li.content-closing .package-example {
+    transition: none !important;
+  }
+}

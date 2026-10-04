@@ -418,9 +418,18 @@ window.addEventListener('resize', sizeContactZoom);
 
 document.querySelectorAll('.code-example-toggle').forEach((button) => {
   button.addEventListener('click', () => {
+    const card = button.closest('li');
+    if (card.classList.contains('content-closing')) return;
     const expanded = button.getAttribute('aria-expanded') !== 'true';
+    if (!expanded && !motion.matches) {
+      fadeExpandedContent(card, () => {
+        card.classList.remove('example-open');
+        button.setAttribute('aria-expanded', 'false');
+      });
+      return;
+    }
     button.setAttribute('aria-expanded', String(expanded));
-    button.closest('li').classList.toggle('example-open', expanded);
+    card.classList.toggle('example-open', expanded);
   });
 });
 
@@ -458,7 +467,25 @@ cvDownload?.addEventListener('click', (event) => {
   }),
 );
 
-// Delay closing briefly so expanded content can fade out visibly.
+// Keep expanded content visible until its closing transition completes.
+function fadeExpandedContent(container, finish) {
+  cancelAnimationFrame(expandFrame);
+  container.classList.remove('expansion-playing');
+  container.style.setProperty('--closing-opacity', '1');
+  container.classList.add('content-closing');
+  // Commit the visible state before starting the fade.
+  void container.offsetWidth;
+  requestAnimationFrame(() => {
+    container.style.setProperty('--closing-opacity', '0');
+  });
+  setTimeout(() => {
+    finish();
+    container.classList.remove('content-closing');
+    container.style.removeProperty('--closing-opacity');
+    schedule();
+  }, 700);
+}
+
 document.querySelectorAll('details > summary').forEach((summary) => {
   let closing = false;
   summary.addEventListener('click', (event) => {
@@ -467,20 +494,8 @@ document.querySelectorAll('details > summary').forEach((summary) => {
     event.preventDefault();
     if (closing) return;
     closing = true;
-    const content = [...detail.children].filter((child) => child !== summary);
-    detail.classList.remove('expansion-playing');
-    const fades = content.map((child) =>
-      child.animate(
-        [
-          { opacity: 1, translate: '0 0' },
-          { opacity: 0, translate: '0 8px' },
-        ],
-        { duration: 500, easing: 'ease-in', fill: 'forwards' },
-      ),
-    );
-    Promise.all(fades.map((fade) => fade.finished.catch(() => {}))).then(() => {
+    fadeExpandedContent(detail, () => {
       detail.open = false;
-      fades.forEach((fade) => fade.cancel());
       closing = false;
     });
   });
