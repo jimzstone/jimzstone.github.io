@@ -4284,3 +4284,34 @@ footer {
   }
 }
 
+/* Repeatable entry and exit fades work in both scroll directions. */
+.scroll-fade {
+  opacity: var(--scroll-opacity, 1) !important;
+  transition:
+    opacity 1.4s cubic-bezier(0.2, 0.65, 0.3, 1),
+    translate 1.25s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+@media (min-width: 1001px) {
+  .scroll-fade {
+    transition:
+      opacity 1.65s cubic-bezier(0.2, 0.65, 0.3, 1),
+      translate 1.45s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  }
+}
+.scroll-fade:focus-within {
+  opacity: 1 !important;
+  translate: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-fade {
+    translate: none !important;
+    transition: opacity 1.4s ease !important;
+  }
+}
+@media print {
+  .scroll-fade {
+    opacity: 1 !important;
+    translate: none !important;
+  }
+}
+

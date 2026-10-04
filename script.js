@@ -108,7 +108,7 @@ function update() {
   });
   const visibleTop = header.getBoundingClientRect().bottom + 12;
   const availableHeight = Math.max(200, innerHeight - visibleTop);
-  const motionZone = Math.min(180, availableHeight * 0.24);
+  const motionZone = Math.min(220, availableHeight * 0.28);
   const distance = innerWidth <= 700 ? 8 : innerWidth <= 1000 ? 12 : 16;
   const measurements = targets
     .filter((element) => element.getClientRects().length)
@@ -136,7 +136,10 @@ function update() {
         ? 0
         : enter * distance - leave * distance * 0.35;
     element.classList.add('scroll-fade');
-    element.style.setProperty('--scroll-opacity', '1');
+    const opacity = element.matches(':focus-within')
+      ? 1
+      : 1 - Math.max(enter, leave);
+    element.style.setProperty('--scroll-opacity', opacity.toFixed(3));
     element.style.setProperty('--scroll-offset', `${offset.toFixed(2)}px`);
   });
 }
