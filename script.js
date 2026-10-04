@@ -339,19 +339,14 @@ document.querySelectorAll('a.contact-card').forEach((card) => {
 });
 
 const setupCards = document.querySelectorAll('.development-setup li');
-function animateSetup(force = false) {
-  if (motion.matches && force !== true) return;
-  if (window.gsap) gsap.killTweensOf(setupCards);
+let setupRevealed = false;
+function animateSetup() {
+  if (motion.matches || setupRevealed) return;
+  setupRevealed = true;
   setupCards.forEach((card, index) => {
-    card.style.removeProperty('transform');
-    card.style.removeProperty('opacity');
-    card.classList.remove('effect-playing');
-    card.style.setProperty('--effect-delay', `${index * 140}ms`);
-    void card.offsetWidth;
+    card.style.setProperty('--effect-delay', `${index * 80}ms`);
     card.classList.add('effect-playing');
   });
-  const preview = document.querySelector('.effects-preview');
-  preview.textContent = 'Replay animation effects';
 }
 if (window.ScrollTrigger) {
   ScrollTrigger.create({
@@ -360,32 +355,23 @@ if (window.ScrollTrigger) {
     onEnter: animateSetup,
     onEnterBack: animateSetup,
   });
-}
-document
-  .querySelector('.effects-preview')
-  ?.addEventListener('click', () => animateSetup(true));
-setupCards.forEach((card) => {
-  card.addEventListener('animationend', () =>
-    card.classList.remove('effect-playing'),
+} else {
+  const setupObserver = new IntersectionObserver(
+    (entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        animateSetup();
+        setupObserver.disconnect();
+      }
+    },
+    { threshold: 0.15 },
   );
-  card.addEventListener('pointerenter', () => {
-    if (motion.matches || !window.anime?.animate) return;
-    anime.animate(card, {
-      translateY: -5,
-      duration: desktopTiming(450, 550),
-      ease: 'out(3)',
-    });
-  });
-  card.addEventListener('pointerleave', () => {
-    if (motion.matches || !window.anime?.animate) return;
-    anime.animate(card, {
-      translateY: 0,
-      duration: desktopTiming(350, 650),
-      ease: 'out(3)',
-    });
+  setupObserver.observe(document.querySelector('.development-setup'));
+}
+setupCards.forEach((card) => {
+  card.addEventListener('animationend', (event) => {
+    if (event.target === card) card.classList.remove('effect-playing');
   });
 });
-
 // Animate user-triggered expansion even when automatic motion is reduced.
 let expandFrame = 0;
 document.querySelectorAll('details').forEach((detail) => {
@@ -519,7 +505,7 @@ document.querySelectorAll('details > summary').forEach((summary) => {
       return child.animate(
         opening ? [collapsed, expanded] : [expanded, collapsed],
         {
-          duration: desktopTiming(opening ? 700 : 550, opening ? 850 : 650),
+          duration: desktopTiming(opening ? 850 : 650, opening ? 1000 : 750),
           easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
           fill: 'both',
         },
