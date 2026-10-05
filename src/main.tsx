@@ -10,6 +10,9 @@ type Filter = (typeof filters)[number];
 function ProjectFilters() {
   const [selected, setSelected] = useState<Filter>('All projects');
   const reduceMotion = useReducedMotion();
+  const projectCount = [...document.querySelectorAll<HTMLElement>('.project')].filter(
+    (project) => selected === 'All projects' || project.dataset.platform === selected,
+  ).length;
   useEffect(() => {
     const activeAnimations: Animation[] = [];
     document.querySelectorAll<HTMLElement>('.project').forEach((project) => {
@@ -62,11 +65,7 @@ function ProjectFilters() {
           </button>
         ))}
         <span className="filter-count" role="status">
-          {selected === 'All projects'
-            ? '4 projects'
-            : selected === 'Web'
-              ? '2 projects'
-              : '1 project'}
+          {projectCount} {projectCount === 1 ? 'project' : 'projects'}
         </span>
       </div>
     </MotionConfig>
