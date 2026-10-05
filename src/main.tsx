@@ -62,7 +62,11 @@ function ProjectFilters() {
           </button>
         ))}
         <span className="filter-count" role="status">
-          {selected === 'All projects' ? '3 projects' : '1 project'}
+          {selected === 'All projects'
+            ? '4 projects'
+            : selected === 'Web'
+              ? '2 projects'
+              : '1 project'}
         </span>
       </div>
     </MotionConfig>
