@@ -114,3 +114,49 @@
 #work .deviantart-actual .artwork-links a { padding:10px; font-size:13px; }
 
 #work .projects.project-slideshow::-webkit-scrollbar { display:none; }
+
+/* Responsive project sizing and consistently aligned disclosure controls. */
+#work #project-slides > .project { min-height:0; }
+#work #project-slides .project-info {
+  display:flex; flex-direction:column; min-height:350px;
+}
+#work #project-slides .project-info details {
+  width:100%; min-width:0; margin-top:auto;
+}
+#work #project-slides summary {
+  display:flex; justify-content:space-between; align-items:center;
+  width:100%; min-width:0; min-height:48px;
+  padding:12px 0; gap:12px; text-align:left;
+  font-size:14px; line-height:1.5; overflow-wrap:anywhere;
+}
+#work #project-slides summary > span {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:28px; height:28px; flex:0 0 28px; line-height:1;
+}
+#work #project-slides .project-info > .button {
+  justify-content:center; width:100%; min-width:0; font-size:14px;
+}
+#work #project-slides .project-info > p { font-size:14px; }
+#work .project-slide-controls {
+  width:100%; max-width:100%; min-width:0;
+  grid-template-columns:44px minmax(0,1fr) 44px;
+}
+#work .project-slide-dots { min-width:0; flex-wrap:wrap; gap:4px; }
+#work .project-slide-dots button { width:36px; min-width:36px; height:44px; }
+#work .project-slide-controls > button { margin:0; }
+#work .project-slide-controls [data-slide-previous] { grid-column:1; grid-row:1; }
+#work .project-slide-controls .project-slide-dots { grid-column:2; grid-row:1; }
+#work #project-slides > .project:hover { transform:none !important; }
+@media(max-width:900px) {
+  #work #project-slides .project-info { min-height:0; }
+  #work #project-slides .project-info details { margin-top:8px; }
+  #work #project-slides .project-info > .button { margin-top:12px; }
+}
+@media(max-width:480px) {
+  #work #project-slides > .project { min-height:0; }
+  #work #project-slides .project-info { min-height:0; padding:16px; }
+  #work #project-slides .project-art { width:100%; }
+  #work .deviantart-actual .artwork-links { min-width:0; padding:4px; }
+  #work .deviantart-actual .artwork-links a { padding:8px; font-size:12px; overflow-wrap:anywhere; }
+  #work .project-slide-controls { column-gap:4px; }
+}
