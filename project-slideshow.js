@@ -14,14 +14,16 @@
   let pendingFrame = 0;
   let autoplayTimer;
   let touching = false;
-  let hovering = false;
+  const hovered = new Set();
+  let keyboardFocus = false;
+  let loopAnimation;
   function schedule() {
     clearTimeout(autoplayTimer);
-    if (!overview || slides.length < 2 || hovering || touching ||
-        document.hidden || reduced.matches || track.contains(document.activeElement) ||
-        controls.contains(document.activeElement)) return;
+    if (!overview || slides.length < 2 || hovered.size || touching ||
+        document.hidden || reduced.matches || (keyboardFocus && (track.contains(document.activeElement) ||
+        controls.contains(document.activeElement)))) return;
     autoplayTimer = setTimeout(() => {
-      go((current + 1) % slides.length, current < slides.length - 1);
+      go(current + 1);
       schedule();
     }, 2000);
   }
@@ -42,16 +44,29 @@
     [...dots.children].forEach((button, index) =>
       button.setAttribute('aria-current', String(index === current)));
   }
-  function go(index, smooth = true) {
+  async function go(index, smooth = true) {
     if (!overview) return;
     const slide = slides[((index % slides.length) + slides.length) % slides.length];
     if (!slide) return;
+    loopAnimation?.cancel();
+    const wraps = smooth && !reduced.matches &&
+      ((current === slides.length - 1 && index >= slides.length) || (current === 0 && index < 0));
+    if (wraps && typeof track.animate === 'function') {
+      loopAnimation = track.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 180, fill: 'forwards', easing: 'ease-in' });
+      try { await loopAnimation.finished; } catch { return; }
+      if (!overview) return;
+    }
     track.scrollTo({
       left: track.scrollLeft + slide.getBoundingClientRect().left - track.getBoundingClientRect().left,
-      behavior: smooth && !reduced.matches ? 'smooth' : 'instant',
+      behavior: smooth && !reduced.matches && !wraps ? 'smooth' : 'instant',
     });
+    if (wraps && typeof track.animate === 'function') {
+      loopAnimation.cancel();
+      loopAnimation = track.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 320, easing: 'ease-out' });
+    }
   }
   function rebuild() {
+    loopAnimation?.cancel();
     overview = !track.dataset.category || track.dataset.category === 'All projects';
     track.classList.toggle('project-slideshow', overview);
     track.classList.toggle('project-category-list', !overview);
@@ -107,18 +122,20 @@
   }
   [track, controls].forEach(element => {
     element.addEventListener('pointerenter', event => {
-      if (event.pointerType !== 'touch') { hovering = true; schedule(); }
+      if (event.pointerType !== 'touch') { hovered.add(element); schedule(); }
     });
     element.addEventListener('pointerleave', event => {
-      if (event.pointerType !== 'touch') { hovering = false; schedule(); }
+      if (event.pointerType !== 'touch') { hovered.delete(element); schedule(); }
     });
-    element.addEventListener('pointerdown', () => { touching = true; schedule(); });
+    element.addEventListener('pointerdown', () => { keyboardFocus = false; touching = true; schedule(); });
     element.addEventListener('focusin', schedule);
     element.addEventListener('focusout', () => setTimeout(schedule, 0));
     element.addEventListener('click', schedule);
   });
   window.addEventListener('pointerup', () => { touching = false; schedule(); });
   window.addEventListener('pointercancel', () => { touching = false; schedule(); });
+  document.addEventListener('keydown', () => { keyboardFocus = true; schedule(); });
+  window.addEventListener('blur', () => { touching = false; hovered.clear(); schedule(); });
   document.addEventListener('visibilitychange', schedule);
   reduced.addEventListener('change', schedule);
   track.classList.add('project-slideshow');
