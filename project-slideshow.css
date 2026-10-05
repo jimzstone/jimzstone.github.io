@@ -207,3 +207,19 @@
   #work .deviantart-preview.deviantart-samples { gap: 6px; padding: 8px; }
   #work .deviantart-samples figcaption { font-size: 10px; }
 }
+
+/* Equal collapsed cards, with room to grow when details are opened. */
+#work .project-slideshow .project-info { box-sizing: border-box; min-height: 320px; }
+#work .project-slideshow[data-category="All projects"] > .project { min-height: 582px; }
+#work .project-slideshow:not([data-category="All projects"]) > .project { min-height: 352px; }
+#work .project-slideshow:not([data-category="All projects"]) .project-art { height: 350px; }
+#work .project-slideshow .project-info > .button { margin-bottom: 0; }
+@media (max-width:900px) {
+  #work .project-slideshow:not([data-category="All projects"]) .project-art { height:270px; }
+}
+@media (max-width:480px) {
+  #work .project-slideshow .project-info { min-height:440px; }
+  #work .project-slideshow:not([data-category="All projects"]) .project-art { height:230px; }
+  #work .project-slideshow[data-category="All projects"] > .project,
+  #work .project-slideshow:not([data-category="All projects"]) > .project { min-height:672px; }
+}

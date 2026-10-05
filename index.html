@@ -11,14 +11,14 @@
     <title>Jimuel Lopez · Safety Professional & Developer</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="professional.css?v=27" />
+    <link rel="stylesheet" href="professional.css?v=28" />
     <script src="assets/vendor/gsap.min.js" defer></script>
     <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
     <script src="assets/vendor/anime.umd.min.js" defer></script>
     <script src="script.js?v=52" defer></script>
     <script src="inquiry.js?v=4" defer></script>
-    <script src="project-slideshow.js?v=2" defer></script>
-    <link rel="stylesheet" href="project-slideshow.css?v=4" />
+    <script src="project-slideshow.js?v=3" defer></script>
+    <link rel="stylesheet" href="project-slideshow.css?v=5" />
     <script type="module" src="/src/main.tsx"></script>
   </head>
   <body>
@@ -699,7 +699,7 @@
               </details>
             </div>
           </article>
-          <article class="project wide" data-platform="Web">
+          <article class="project" data-platform="Web">
             <div class="project-art techlock">
               <span class="art-label">WEB / OPERATIONS PROTOTYPE</span>
               <div class="dashboard">
@@ -768,7 +768,7 @@
             <div class="project-info">
               <div class="tags"><span>Creative portfolio</span><span>DeviantArt</span></div>
               <h3>Jimzstone / DeviantArt</h3>
-              <p>Explore the creative side of my work through my DeviantArt profile. The two generated concept previews are illustrative samples; visit my profile to see my actual gallery.</p>
+              <p>Creative portfolio on DeviantArt. Two generated concept samples are shown here; visit my profile for my actual gallery.</p>
               <a class="button button-outline" href="https://www.deviantart.com/jimzstone" target="_blank" rel="noopener noreferrer" aria-label="View Jimzstone on DeviantArt (opens in a new tab)">View DeviantArt portfolio</a>
             </div>
           </article>
@@ -780,7 +780,7 @@
             <div class="project-info">
               <div class="tags"><span>PDF portfolio</span><span>Portfolio website</span><span>CV &amp; résumé</span><span>Design examples</span></div>
               <h3>Portfolio, CV &amp; Résumé Design</h3>
-              <p>I can create professional portfolios, CVs, and résumés tailored to your experience, skills, and target role. Choose a shareable PDF, a print-ready document, or an online portfolio website.</p>
+              <p>Professional portfolios, CVs, and résumés in PDF or website format, tailored to your experience and target role.</p>
               <details>
                 <summary>Explore portfolio, CV &amp; résumé options <span>＋</span></summary>
                 <div class="detail">
@@ -983,7 +983,7 @@
               <div>
                 <h4>Netlify</h4>
                 <p>Deploy portfolio websites and web projects, with previews and Git-based publishing workflows.</p>
-                <a class="tool-resource" href="https://www.netlify.com/" target="_blank" rel="noopener noreferrer">Official website</a>
+                
               </div>
             </article>
             <article class="tool-card">
@@ -991,7 +991,7 @@
               <div>
                 <h4>Cloudflare</h4>
                 <p>Support website hosting and domain setup through Cloudflare Pages and DNS tools.</p>
-                <a class="tool-resource" href="https://www.cloudflare.com/" target="_blank" rel="noopener noreferrer">Official website</a>
+                
               </div>
             </article>
             <article class="tool-card">
@@ -999,7 +999,7 @@
               <div>
                 <h4>Neon</h4>
                 <p>Work with hosted PostgreSQL databases for web applications and project data.</p>
-                <a class="tool-resource" href="https://neon.com/" target="_blank" rel="noopener noreferrer">Official website</a>
+                
               </div>
             </article>
           </div>
@@ -1123,19 +1123,7 @@
               </div>
             </article>
             <article class="tool-card">
-              <span class="tool-icon" aria-hidden="true"
-                ><svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.7"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path
-                    d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"
-                  /></svg
-              ></span>
+              <span class="tool-icon" aria-hidden="true"><img src="assets/icons/openai.svg" alt="" width="32" height="32" loading="lazy" /></span>
               <div>
                 <h4>ChatGPT</h4>
                 <p>
@@ -1145,18 +1133,7 @@
               </div>
             </article>
             <article class="tool-card">
-              <span class="tool-icon claude-icon" aria-hidden="true"
-                ><svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                >
-                  <path
-                    d="M12 2v20M2 12h20M5 5l14 14M5 19 19 5M8 3l8 18M3 8l18 8M3 16 18 8M8 21 16 3"
-                  /></svg
-              ></span>
+              <span class="tool-icon" aria-hidden="true"><img src="assets/icons/claude.svg" alt="" width="32" height="32" loading="lazy" /></span>
               <div>
                 <h4>Claude</h4>
                 <p>
@@ -1201,55 +1178,25 @@
           </div>
           <div class="tool-grid">
             <article class="tool-card">
-              <span class="tool-icon" aria-hidden="true"
-                ><svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.7"
-                >
-                  <path d="M12 2 21 7v10l-9 5-9-5V7Z" />
-                  <path d="M8 15V9l8 6V9" /></svg
-              ></span>
+              <span class="tool-icon" aria-hidden="true"><img src="assets/icons/nodedotjs.svg" alt="" width="32" height="32" loading="lazy" /></span>
               <div>
                 <h4>Node.js</h4>
                 <p>
                   Runs the local build tools and validation scripts used to
                   prepare the portfolio for release.
                 </p>
-                <a
-                  class="tool-resource"
-                  href="https://nodejs.org/en/about"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >Official website</a
-                >
+                
               </div>
             </article>
             <article class="tool-card">
-              <span class="tool-icon" aria-hidden="true"
-                ><svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.7"
-                >
-                  <rect x="3" y="5" width="18" height="14" rx="2" />
-                  <path d="m7 9 3 3-3 3m6 0h4" /></svg
-              ></span>
+              <span class="tool-icon" aria-hidden="true"><img src="assets/icons/npm.svg" alt="" width="32" height="32" loading="lazy" /></span>
               <div>
                 <h4>npm</h4>
                 <p>
                   Manages project packages and runs repeatable commands for
                   local previews, builds, and code checks.
                 </p>
-                <a
-                  class="tool-resource"
-                  href="https://docs.npmjs.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >Documentation</a
-                >
+                
               </div>
             </article>
             <article class="tool-card">
@@ -1269,25 +1216,11 @@
                   Connects the inquiry form to email delivery, including meeting
                   requests and visitors’ preferred contact details.
                 </p>
-                <a
-                  class="tool-resource"
-                  href="https://formsubmit.co/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >Official website</a
-                >
+                
               </div>
             </article>
             <article class="tool-card">
-              <span class="tool-icon" aria-hidden="true"
-                ><svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.7"
-                >
-                  <path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18" /></svg
-              ></span>
+              <span class="tool-icon" aria-hidden="true"><img src="assets/icons/openai.svg" alt="" width="32" height="32" loading="lazy" /></span>
               <div>
                 <h4>Codex</h4>
                 <p>
@@ -1308,31 +1241,31 @@
           </div>
           <div class="tool-grid">
             <article class="tool-card">
-              <span class="tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11a9 9 0 0 1-9 9 10 10 0 0 1-4-.8L3 21l1.7-5A9 9 0 1 1 21 11Z"/><path d="M8 10h8M8 14h5"/></svg></span>
+              <span class="tool-icon" aria-hidden="true"><img src="assets/icons/telegram.svg" alt="" width="32" height="32" loading="lazy" /></span>
               <div><h4>Telegram</h4><p>Coordinate project updates, share files, and discuss requests through chat or calls.</p></div>
             </article>
             <article class="tool-card">
-              <span class="tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11a9 9 0 0 1-9 9 10 10 0 0 1-4-.8L3 21l1.7-5A9 9 0 1 1 21 11Z"/><path d="M8 10h8M8 14h5"/></svg></span>
+              <span class="tool-icon" aria-hidden="true"><img src="assets/icons/whatsapp.svg" alt="" width="32" height="32" loading="lazy" /></span>
               <div><h4>WhatsApp</h4><p>Keep in touch through messages, voice calls, video calls, and document sharing.</p></div>
             </article>
             <article class="tool-card">
-              <span class="tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11a9 9 0 0 1-9 9 10 10 0 0 1-4-.8L3 21l1.7-5A9 9 0 1 1 21 11Z"/><path d="M8 10h8M8 14h5"/></svg></span>
+              <span class="tool-icon" aria-hidden="true"><img src="assets/icons/discord.svg" alt="" width="32" height="32" loading="lazy" /></span>
               <div><h4>Discord</h4><p>Discuss projects through direct messages, channels, voice chat, or screen sharing.</p></div>
             </article>
             <article class="tool-card">
-              <span class="tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11a9 9 0 0 1-9 9 10 10 0 0 1-4-.8L3 21l1.7-5A9 9 0 1 1 21 11Z"/><path d="M8 10h8M8 14h5"/></svg></span>
+              <span class="tool-icon" aria-hidden="true"><img src="assets/icons/viber.svg" alt="" width="32" height="32" loading="lazy" /></span>
               <div><h4>Viber</h4><p>Communicate through messages and calls for project coordination and follow-up.</p></div>
             </article>
             <article class="tool-card">
-              <span class="tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="13" height="14" rx="3"/><path d="m16 10 5-3v10l-5-3"/></svg></span>
+              <span class="tool-icon" aria-hidden="true"><img src="assets/icons/googlemeet.svg" alt="" width="32" height="32" loading="lazy" /></span>
               <div><h4>Google Meet</h4><p>Join scheduled video meetings to discuss requirements, review designs, and share screens.</p></div>
             </article>
             <article class="tool-card">
-              <span class="tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="13" height="14" rx="3"/><path d="m16 10 5-3v10l-5-3"/></svg></span>
+              <span class="tool-icon" aria-hidden="true"><img src="assets/icons/microsoftteams.svg" alt="" width="32" height="32" loading="lazy" /></span>
               <div><h4>Microsoft Teams</h4><p>Collaborate through team chats, video meetings, and shared project discussions.</p></div>
             </article>
             <article class="tool-card">
-              <span class="tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11a9 9 0 0 1-9 9 10 10 0 0 1-4-.8L3 21l1.7-5A9 9 0 1 1 21 11Z"/><path d="M8 10h8M8 14h5"/></svg></span>
+              <span class="tool-icon" aria-hidden="true"><img src="assets/icons/messenger.svg" alt="" width="32" height="32" loading="lazy" /></span>
               <div><h4>Messenger</h4><p>Use chat and calls for convenient updates and initial project conversations.</p></div>
             </article>
             <article class="tool-card">
@@ -1478,13 +1411,7 @@
               <pre
                 class="package-example"
               ><code>plugins: [tailwindcss()]</code></pre>
-              <a
-                class="tool-resource"
-                href="https://tailwindcss.com/docs/installation/using-vite"
-                target="_blank"
-                rel="noopener noreferrer"
-                >Documentation</a
-              >
+              
             </li>
             <li>
               <strong>React Hooks lint plugin</strong
@@ -1501,13 +1428,7 @@
               <pre
                 class="package-example"
               ><code>plugins: { 'react-hooks': reactHooks }</code></pre>
-              <a
-                class="tool-resource"
-                href="https://react.dev/reference/eslint-plugin-react-hooks"
-                target="_blank"
-                rel="noopener noreferrer"
-                >Documentation</a
-              >
+              
             </li>
             <li>
               <strong>TypeScript ESLint</strong
@@ -1524,13 +1445,7 @@
               <pre
                 class="package-example"
               ><code>...tseslint.configs.recommended</code></pre>
-              <a
-                class="tool-resource"
-                href="https://typescript-eslint.io/"
-                target="_blank"
-                rel="noopener noreferrer"
-                >Documentation</a
-              >
+              
             </li>
             <li>
               <strong>Static asset build plugin</strong

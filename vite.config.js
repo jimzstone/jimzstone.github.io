@@ -14,6 +14,7 @@ export default defineConfig({
         for (const file of [
           'script.js',
           'inquiry.js',
+          'project-slideshow.js',
           'effects.json',
           'favicon.svg',
           '.nojekyll',
