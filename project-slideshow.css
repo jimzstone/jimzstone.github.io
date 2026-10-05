@@ -155,3 +155,55 @@
 @media (prefers-reduced-motion: reduce) {
   #work .projects.project-slideshow { transition: none; scroll-behavior: auto; }
 }
+
+/* Compact cards in the overview; a wide layout for category selections. */
+#work .project-slideshow[data-category="All projects"] {
+  max-width: 580px;
+  margin-inline: auto;
+}
+#work .project-slideshow[data-category="All projects"] > .project {
+  grid-template-columns: minmax(0, 1fr);
+}
+#work .project-slideshow[data-category="All projects"] .project-art {
+  height: 260px;
+  border-right: 0;
+  border-bottom: 1px solid var(--line);
+}
+#work .project-slideshow[data-category="All projects"] .project-info {
+  padding: 20px;
+}
+#work .deviantart-preview.deviantart-samples {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 10px;
+}
+#work .deviantart-samples figure {
+  position: relative;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  border-radius: 8px;
+}
+#work .deviantart-samples figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#work .deviantart-samples figcaption {
+  position: absolute;
+  bottom: 0;
+  inset-inline: 0;
+  padding: 16px 8px 8px;
+  background: linear-gradient(transparent, #000c);
+  color: #fff;
+  font-size: 11px;
+  line-height: 1.4;
+}
+@media(max-width:480px) {
+  #work .project-slideshow[data-category="All projects"] .project-art { height: 230px; }
+  #work .project-slideshow[data-category="All projects"] .project-info { padding: 16px; }
+  #work .deviantart-preview.deviantart-samples { gap: 6px; padding: 8px; }
+  #work .deviantart-samples figcaption { font-size: 10px; }
+}

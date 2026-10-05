@@ -14,6 +14,8 @@ function ProjectFilters() {
     (project) => selected === 'All projects' || project.dataset.platform === selected,
   ).length;
   useEffect(() => {
+    const slideshow = document.getElementById('project-slides');
+    if (slideshow) slideshow.dataset.category = selected;
     const activeAnimations: Animation[] = [];
     document.querySelectorAll<HTMLElement>('.project').forEach((project) => {
       const show =

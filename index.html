@@ -18,7 +18,7 @@
     <script src="script.js?v=52" defer></script>
     <script src="inquiry.js?v=4" defer></script>
     <script src="project-slideshow.js?v=2" defer></script>
-    <link rel="stylesheet" href="project-slideshow.css?v=3" />
+    <link rel="stylesheet" href="project-slideshow.css?v=4" />
     <script type="module" src="/src/main.tsx"></script>
   </head>
   <body>
@@ -599,7 +599,7 @@
           </p>
         </div>
         <div id="project-filters"></div>
-        <div class="projects" id="project-slides" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Selected projects">
+        <div class="projects" id="project-slides" data-category="All projects" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Selected projects">
           <article class="project" data-platform="Android">
             <div class="project-art safety">
               <span class="art-label">ANDROID / OFFLINE TOOLS</span>
@@ -755,13 +755,20 @@
             </div>
           </article>
           <article class="project" data-platform="Web">
-            <div class="project-art deviantart-preview">
-              <img src="assets/deviantart-preview.svg" alt="Jimzstone creative portfolio on DeviantArt" width="1000" height="700" loading="lazy" />
+            <div class="project-art deviantart-preview deviantart-samples">
+              <figure>
+                <img src="assets/deviantart-sample-fantasy.webp" alt="Generated fantasy concept sample: a traveler approaching a castle above the clouds" width="1024" height="1024" loading="lazy" />
+                <figcaption>Fantasy concept · Sample</figcaption>
+              </figure>
+              <figure>
+                <img src="assets/deviantart-sample-cyber.webp" alt="Generated science-fiction concept sample: an android traveler in a neon city" width="1024" height="1024" loading="lazy" />
+                <figcaption>Cyberpunk concept · Sample</figcaption>
+              </figure>
             </div>
             <div class="project-info">
               <div class="tags"><span>Creative portfolio</span><span>DeviantArt</span></div>
               <h3>Jimzstone / DeviantArt</h3>
-              <p>Explore the creative side of my work through my DeviantArt profile.</p>
+              <p>Explore the creative side of my work through my DeviantArt profile. The two generated concept previews are illustrative samples; visit my profile to see my actual gallery.</p>
               <a class="button button-outline" href="https://www.deviantart.com/jimzstone" target="_blank" rel="noopener noreferrer" aria-label="View Jimzstone on DeviantArt (opens in a new tab)">View DeviantArt portfolio</a>
             </div>
           </article>
