@@ -104,3 +104,11 @@
 }
 @media(max-width:359px) { .project-slide-dots button { width:36px; min-width:36px; } }
 @media(prefers-reduced-motion:reduce) { #work .projects.project-slideshow { transition:none; scroll-behavior:auto; } }
+
+#work .deviantart-preview.deviantart-actual { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:8px; padding:10px; }
+#work .deviantart-actual figure { position:relative; height:100%; min-width:0; margin:0; }
+#work .deviantart-actual figure > a { display:block; height:100%; }
+#work .deviantart-actual figure img { width:100%; height:100%; object-fit:contain; }
+#work .deviantart-actual figcaption { position:absolute; bottom:0; inset-inline:0; padding:8px; background:#000b; color:white; font-size:11px; text-align:center; line-height:1.4; }
+#work .deviantart-actual .artwork-links { padding:8px; }
+#work .deviantart-actual .artwork-links a { padding:10px; font-size:13px; }
