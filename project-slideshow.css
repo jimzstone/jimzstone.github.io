@@ -256,3 +256,52 @@
   #work #project-slides .latency { font-size:36px; }
   #work #project-slides .art-label { font-size:10px; }
 }
+
+/* Crisp centered arrow icons and contained mobile sample previews. */
+#work .project-slide-controls > button {
+  display:grid; place-items:center; padding:0; line-height:1;
+}
+#work .project-slide-controls > button svg {
+  display:block; width:20px; height:20px; flex:none;
+  fill:none; stroke:currentColor; stroke-width:2;
+  stroke-linecap:round; stroke-linejoin:round;
+}
+#work #project-slides .phone,
+#work #project-slides .project:hover .phone { transform:none !important; }
+#work #project-slides .deviantart-actual figure { overflow:hidden; }
+#work #project-slides .deviantart-actual figure > a {
+  display:flex; align-items:center; justify-content:center;
+}
+#work #project-slides .portfolio-service-preview img { object-fit:contain; }
+@media(max-width:480px) {
+  #work #project-slides .project-art { height:280px; }
+  #work #project-slides :is(.safety,.ping,.techlock) {
+    height:280px; gap:12px; padding:14px;
+  }
+  #work #project-slides .phone {
+    width:140px; height:210px; box-shadow:6px 6px 0 #d4dbc0;
+  }
+  #work #project-slides .monitor {
+    box-shadow:4px 4px 0 #c4d5d7; padding:10px;
+  }
+  #work #project-slides .monitor-head { font-size:10px; }
+  #work #project-slides .monitor-foot { font-size:7px; letter-spacing:.5px; overflow-wrap:anywhere; }
+  #work #project-slides .chart { gap:4px; }
+  #work #project-slides .dashboard {
+    box-shadow:4px 4px 0 #d1c8df; min-height:170px;
+  }
+  #work #project-slides .dash-side { width:28px; flex:0 0 28px; }
+  #work #project-slides .dash-main { padding:8px; }
+  #work #project-slides .dash-main > p { font-size:10px; }
+  #work #project-slides .dash-stats { flex-wrap:wrap; }
+  #work #project-slides .dash-stats > div { flex:1 1 40px; overflow-wrap:anywhere; }
+  #work #project-slides .dash-stats strong { font-size:9px; }
+  #work #project-slides .deviantart-actual {
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    height:260px; padding:8px; gap:6px;
+  }
+  #work #project-slides .deviantart-actual figcaption { font-size:10px; padding:6px; }
+  #work #project-slides .deviantart-actual .artwork-links p { font-size:10px; overflow-wrap:anywhere; }
+  #work #project-slides .portfolio-service-preview { height:auto; min-height:0; }
+  #work #project-slides .portfolio-service-preview img { height:auto; aspect-ratio:3/2; }
+}
