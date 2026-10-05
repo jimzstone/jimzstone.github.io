@@ -1,0 +1,29 @@
+/* One project per slide; native horizontal scrolling supports touch. */
+#work .projects.project-slideshow {
+  display:flex; gap:24px; overflow-x:auto; scroll-snap-type:x mandatory;
+  overscroll-behavior-x:contain; scrollbar-width:thin; padding:4px 0 18px;
+}
+#work .project-slideshow > .project {
+  flex:0 0 100%; min-width:0; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  scroll-snap-align:start; scroll-snap-stop:always; grid-column:auto;
+}
+#work .project-slideshow > .project[hidden] { display:none; }
+#work .project-slideshow .project-art { height:100%; min-height:360px; }
+#work .project-slideshow .project-info { min-width:0; }
+#work .project-slideshow .project-info > .reveal { opacity:1; transform:none; }
+.project-slide-controls { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:14px; margin-top:14px; }
+.project-slide-controls[hidden] { display:none; }
+.project-slide-controls button { min-width:44px; min-height:44px; border:1px solid var(--line); border-radius:50%; background:transparent; color:var(--ink); cursor:pointer; font:inherit; }
+.project-slide-controls button:focus-visible { outline:3px solid var(--green); outline-offset:4px; }
+.project-slide-controls button:disabled { opacity:.35; cursor:default; }
+.project-slide-dots { display:flex; gap:8px; }
+.project-slide-dots button { min-width:44px; font-size:12px; }
+.project-slide-dots button[aria-current="true"] { background:var(--ink); color:var(--paper,#f4f7ee); }
+.project-slide-status { font-size:12px; min-width:64px; text-align:center; }
+#work .deviantart-preview { padding:0; background:#122019; display:flex; align-items:center; }
+#work .deviantart-preview img { display:block; width:100%; height:auto; }
+@media(max-width:700px) {
+  #work .project-slideshow > .project { grid-template-columns:minmax(0,1fr); }
+  #work .project-slideshow .project-art { height:290px; min-height:290px; }
+  .project-slide-controls { gap:8px; }
+}

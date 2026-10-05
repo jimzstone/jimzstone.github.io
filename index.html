@@ -17,6 +17,8 @@
     <script src="assets/vendor/anime.umd.min.js" defer></script>
     <script src="script.js?v=52" defer></script>
     <script src="inquiry.js?v=4" defer></script>
+    <script src="project-slideshow.js?v=1" defer></script>
+    <link rel="stylesheet" href="project-slideshow.css?v=1" />
     <script type="module" src="/src/main.tsx"></script>
   </head>
   <body>
@@ -597,7 +599,7 @@
           </p>
         </div>
         <div id="project-filters"></div>
-        <div class="projects">
+        <div class="projects" id="project-slides" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Selected projects">
           <article class="project" data-platform="Android">
             <div class="project-art safety">
               <span class="art-label">ANDROID / OFFLINE TOOLS</span>
@@ -753,12 +755,8 @@
             </div>
           </article>
           <article class="project" data-platform="Web">
-            <div class="project-art ping">
-              <span class="art-label">CREATIVE / DEVIANTART PORTFOLIO</span>
-              <svg width="140" height="140" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M18.8 0h-4.1l-.4.4-2.1 4H6l-.5.5v4.2h4.3l.4.5-4.7 9.1V24h4.1l.4-.4 2.1-4h6.2l.5-.5v-4.2h-4.3l-.4-.5 4.7-9.1z" />
-              </svg>
-              <span class="project-number">04</span>
+            <div class="project-art deviantart-preview">
+              <img src="assets/deviantart-preview.svg" alt="Jimzstone creative portfolio on DeviantArt" width="1000" height="700" loading="lazy" />
             </div>
             <div class="project-info">
               <div class="tags"><span>Creative portfolio</span><span>DeviantArt</span></div>
@@ -767,6 +765,12 @@
               <a class="button button-outline" href="https://www.deviantart.com/jimzstone" target="_blank" rel="noopener noreferrer" aria-label="View Jimzstone on DeviantArt (opens in a new tab)">View DeviantArt portfolio</a>
             </div>
           </article>
+        </div>
+        <div class="project-slide-controls" hidden aria-label="Project slideshow controls">
+          <button type="button" data-slide-previous aria-label="Previous project" aria-controls="project-slides">←</button>
+          <div class="project-slide-dots" aria-label="Choose a project"></div>
+          <span class="project-slide-status" role="status" aria-live="polite" aria-atomic="true"></span>
+          <button type="button" data-slide-next aria-label="Next project" aria-controls="project-slides">→</button>
         </div>
       </section>
       <section id="skills" class="section skills">
