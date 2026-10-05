@@ -7,6 +7,7 @@
   const dots = controls.querySelector('.project-slide-dots');
   const status = controls.querySelector('.project-slide-status');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  let overview = true;
   let slides = [];
   let current = 0;
   let pendingFrame = 0;
@@ -17,7 +18,7 @@
       Math.abs(slides[best].getBoundingClientRect().left - left) ? index : best, 0);
   }
   function update() {
-    if (!slides.length) return;
+    if (!slides.length || !overview) return;
     current = nearest();
     const active = slides[current];
     track.style.height = Math.ceil(active.getBoundingClientRect().height + 24) + 'px';
@@ -29,6 +30,7 @@
       button.setAttribute('aria-current', String(index === current)));
   }
   function go(index, smooth = true) {
+    if (!overview) return;
     const slide = slides[Math.max(0, Math.min(index, slides.length - 1))];
     if (!slide) return;
     track.scrollTo({
@@ -37,6 +39,20 @@
     });
   }
   function rebuild() {
+    overview = !track.dataset.category || track.dataset.category === 'All projects';
+    track.classList.toggle('project-slideshow', overview);
+    track.classList.toggle('project-category-list', !overview);
+    track.setAttribute('aria-label', overview ? 'Selected projects slideshow' : track.dataset.category + ' projects');
+    if (overview) {
+      track.setAttribute('aria-roledescription', 'carousel');
+      track.setAttribute('tabindex', '0');
+    } else {
+      track.removeAttribute('aria-roledescription');
+      track.removeAttribute('tabindex');
+      track.style.removeProperty('height');
+      track.scrollLeft = 0;
+      track.querySelectorAll('.project').forEach(slide => { slide.inert = false; });
+    }
     const old = slides[current];
     slides = [...track.querySelectorAll('.project')].filter(slide => !slide.hidden);
     dots.replaceChildren();
@@ -49,7 +65,7 @@
       button.addEventListener('click', () => go(index));
       dots.append(button);
     });
-    controls.hidden = slides.length < 2;
+    controls.hidden = !overview || slides.length < 2;
     current = Math.max(0, slides.indexOf(old));
     go(current, false);
     update();
@@ -61,14 +77,14 @@
     pendingFrame = requestAnimationFrame(update);
   }, { passive: true });
   track.addEventListener('keydown', event => {
-    if (event.target !== track) return;
+    if (!overview || event.target !== track) return;
     if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
       event.preventDefault();
       go(current + (event.key === 'ArrowRight' ? 1 : -1));
     }
   });
   new MutationObserver(rebuild).observe(track, {
-    subtree: true, attributes: true, attributeFilter: ['hidden'],
+    subtree: true, attributes: true, attributeFilter: ['hidden', 'data-category'],
   });
   window.addEventListener('resize', () => { go(current, false); update(); });
   if (typeof ResizeObserver !== 'undefined') {
