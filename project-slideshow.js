@@ -47,13 +47,12 @@
     if (!overview || !slides.length) return;
     const target = ((index % slides.length) + slides.length) % slides.length;
     const slide = slides[target];
-    const wraps = index < 0 || index >= slides.length;
     current = target;
     track.scrollTo({
       left: track.scrollLeft + slide.getBoundingClientRect().left - track.getBoundingClientRect().left,
-      behavior: smooth && !reduced.matches && !wraps ? 'smooth' : 'instant',
+      behavior: smooth && !reduced.matches ? 'smooth' : 'instant',
     });
-    if (wraps || !smooth) update();
+    if (!smooth) update();
   }
   function rebuild() {
     overview = !track.dataset.category || track.dataset.category === 'All projects';
