@@ -19,6 +19,9 @@
   function update() {
     if (!slides.length) return;
     current = nearest();
+    const active = slides[current];
+    track.style.height = Math.ceil(active.getBoundingClientRect().height + 24) + 'px';
+    slides.forEach((slide, index) => { slide.inert = index !== current; });
     previous.disabled = current === 0;
     next.disabled = current === slides.length - 1;
     status.textContent = (current + 1) + ' / ' + slides.length;
@@ -68,6 +71,10 @@
     subtree: true, attributes: true, attributeFilter: ['hidden'],
   });
   window.addEventListener('resize', () => { go(current, false); update(); });
+  if (typeof ResizeObserver !== 'undefined') {
+    const sizeObserver = new ResizeObserver(update);
+    track.querySelectorAll('.project').forEach(slide => sizeObserver.observe(slide));
+  }
   track.classList.add('project-slideshow');
   rebuild();
 })();
