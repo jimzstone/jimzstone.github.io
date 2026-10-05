@@ -16,7 +16,6 @@
   let touching = false;
   const hovered = new Set();
   let keyboardFocus = false;
-  let loopAnimation;
   function schedule() {
     clearTimeout(autoplayTimer);
     if (!overview || slides.length < 2 || hovered.size || touching ||
@@ -44,29 +43,19 @@
     [...dots.children].forEach((button, index) =>
       button.setAttribute('aria-current', String(index === current)));
   }
-  async function go(index, smooth = true) {
-    if (!overview) return;
-    const slide = slides[((index % slides.length) + slides.length) % slides.length];
-    if (!slide) return;
-    loopAnimation?.cancel();
-    const wraps = smooth && !reduced.matches &&
-      ((current === slides.length - 1 && index >= slides.length) || (current === 0 && index < 0));
-    if (wraps && typeof track.animate === 'function') {
-      loopAnimation = track.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 180, fill: 'forwards', easing: 'ease-in' });
-      try { await loopAnimation.finished; } catch { return; }
-      if (!overview) return;
-    }
+  function go(index, smooth = true) {
+    if (!overview || !slides.length) return;
+    const target = ((index % slides.length) + slides.length) % slides.length;
+    const slide = slides[target];
+    const wraps = index < 0 || index >= slides.length;
+    current = target;
     track.scrollTo({
       left: track.scrollLeft + slide.getBoundingClientRect().left - track.getBoundingClientRect().left,
       behavior: smooth && !reduced.matches && !wraps ? 'smooth' : 'instant',
     });
-    if (wraps && typeof track.animate === 'function') {
-      loopAnimation.cancel();
-      loopAnimation = track.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 320, easing: 'ease-out' });
-    }
+    if (wraps || !smooth) update();
   }
   function rebuild() {
-    loopAnimation?.cancel();
     overview = !track.dataset.category || track.dataset.category === 'All projects';
     track.classList.toggle('project-slideshow', overview);
     track.classList.toggle('project-category-list', !overview);
