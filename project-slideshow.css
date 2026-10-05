@@ -160,3 +160,43 @@
   #work .deviantart-actual .artwork-links a { padding:8px; font-size:12px; overflow-wrap:anywhere; }
   #work .project-slide-controls { column-gap:4px; }
 }
+
+/* Keep navigation at the card corners and contain every preview. */
+#work .project-carousel { position:relative; min-width:0; width:100%; }
+#work .project-slide-controls {
+  position:absolute; inset:14px 12px auto; z-index:2;
+  width:auto; margin:0; display:flex; justify-content:space-between; pointer-events:none;
+}
+#work .project-slide-controls[hidden] { display:none; }
+#work .project-slide-controls .project-slide-dots,
+#work .project-slide-controls .project-slide-status { display:none; }
+#work .project-slide-controls > button {
+  pointer-events:auto; flex:0 0 44px; background:var(--bg,#f7f8f2);
+  border:1px solid #9eaf8a; box-shadow:0 2px 8px #20321c14;
+}
+#work .project-slide-controls > button:hover { background:var(--green); }
+#work #project-slides.project-slideshow .project-art { padding-top:66px; }
+#work #project-slides .phone {
+  top:68px; left:50%; scale:.85; transform:translateX(-50%) rotate(-7deg);
+  transform-origin:top center; height:280px; width:190px;
+}
+#work #project-slides .monitor { top:80px; }
+#work #project-slides .dashboard { top:78px; }
+#work #project-slides .project-number { display:none; }
+#work #project-slides .project-info { min-height:0; }
+#work #project-slides .project-art { height:350px; }
+@media(max-width:900px) {
+  #work #project-slides .project-art { height:290px; }
+  #work #project-slides .phone { scale:.72; top:70px; }
+  #work #project-slides .monitor { top:82px; left:16px; right:16px; }
+  #work #project-slides .dashboard { top:76px; left:14px; right:14px; }
+  #work #project-slides .art-label { font-size:10px; letter-spacing:1px; }
+}
+@media(max-width:480px) {
+  #work #project-slides .project-art { height:280px; }
+  #work #project-slides .dashboard { transform:none; }
+  #work #project-slides .dash-main { min-width:0; padding:10px; }
+  #work #project-slides .dash-main > p > span { float:none; display:block; width:max-content; margin-top:4px; }
+  #work #project-slides .dash-stats { gap:4px; }
+  #work #project-slides .dash-stats > div { padding:6px 3px; min-width:0; }
+}
