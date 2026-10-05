@@ -8,7 +8,7 @@
   display:flex; align-items:flex-start; gap:20px;
   overflow-x:auto; overflow-y:hidden;
   scroll-snap-type:x mandatory; overscroll-behavior-x:contain;
-  scrollbar-width:thin; padding:2px 0 18px; transition:height .35s ease;
+  scrollbar-width:none; padding:2px 0 18px; transition:height .35s ease;
 }
 #work .projects.project-category-list {
   display:grid; grid-template-columns:minmax(0,1fr); gap:20px;
@@ -112,3 +112,5 @@
 #work .deviantart-actual figcaption { position:absolute; bottom:0; inset-inline:0; padding:8px; background:#000b; color:white; font-size:11px; text-align:center; line-height:1.4; }
 #work .deviantart-actual .artwork-links { padding:8px; }
 #work .deviantart-actual .artwork-links a { padding:10px; font-size:13px; }
+
+#work .projects.project-slideshow::-webkit-scrollbar { display:none; }
