@@ -413,3 +413,19 @@
     padding-top: 18px;
   }
 }
+
+/* Shared responsive size for slideshow and filtered project cards. */
+#work #project-slides > :is(.project,.project-loop-copy) {
+  min-height:var(--project-card-height,0px);
+}
+@media (max-width:900px) {
+  #work #project-slides .project-art {
+    height:auto; min-height:350px;
+  }
+  #work #project-slides > :is(.project,.project-loop-copy) {
+    grid-template-rows:auto minmax(0,1fr);
+  }
+}
+@media (max-width:480px) {
+  #work #project-slides :is(.safety,.ping,.techlock) { min-height:350px; }
+}
