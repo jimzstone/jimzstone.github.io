@@ -398,3 +398,18 @@
   #work #project-slides .project-info,
   #work #project-slides :is(.safety,.ping,.techlock) { padding-inline:48px; }
 }
+
+/* Keep the phone preview at the same base height as the other project cards. */
+#work #project-slides.project-slideshow .project-art.safety {
+  padding-top: 24px;
+}
+@media (max-width: 900px) {
+  #work #project-slides.project-slideshow .project-art.safety {
+    padding-top: 20px;
+  }
+}
+@media (max-width: 480px) {
+  #work #project-slides.project-slideshow .project-art.safety {
+    padding-top: 18px;
+  }
+}
