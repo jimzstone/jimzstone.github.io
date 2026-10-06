@@ -5216,3 +5216,13 @@ footer {
   .hobby-card img, .hobby-drawn-icon { width: 44px; height: 44px; }
   .hobby-drawn-icon svg { width: 36px; height: 36px; }
 }
+
+/* Remote support shares existing icon sizes and card interactions. */
+#tools .remote-support-tools .tool-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (max-width: 620px) {
+  #tools .remote-support-tools .tool-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
