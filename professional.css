@@ -5142,3 +5142,77 @@ footer {
     border-top: 1px solid #adbf963d;
   }
 }
+
+/* Layout and icon refinements; existing motion rules remain untouched. */
+:is(.hero-copy, .about-copy, .section-heading > div, .skill-list,
+     .timeline-item > div, .hire-intro, .hire-reasons, .inquiry-field,
+     .tool-group-heading > div, .hobby-card > div) {
+  min-width: 0;
+}
+:is(.profile-label, .timeline-item h4, .tool-card h4, .project-info h3,
+     .hire-reasons h3, .inquiry-field label) {
+  overflow-wrap: anywhere;
+}
+#tools .tool-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+#tools .tool-card { align-items: flex-start; }
+#tools .tool-card .tool-icon { margin-top: 2px; }
+#tools .tool-card h4 { margin-top: 0; font-size: 1rem; line-height: 1.5; }
+#tools .tool-card p { font-size: 1rem; line-height: 1.7; }
+.location-note { display: inline-flex; align-items: center; gap: 7px; }
+.location-note svg { display: block; width: 16px; height: 16px; flex: 0 0 16px; }
+.gaming-platforms svg, .inquiry-send-icon { flex-shrink: 0; display: block; }
+.hobby-card img, .hobby-drawn-icon, .favorite-games img, .retro-game-icon {
+  flex-shrink: 0;
+}
+.favorite-games li { min-width: 0; }
+.favorite-games li > span:last-child { min-width: 0; overflow-wrap: anywhere; }
+.retro-game-icon svg { max-width: 100%; max-height: 100%; display: block; }
+.portrait-caption .portrait-gaming { align-items: center; }
+:is(.history, .training-details, .project details) > summary {
+  gap: 12px;
+  line-height: 1.5;
+}
+:is(.history, .training-details, .project details) > summary > span:last-child {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  line-height: 1;
+}
+:is(.about-copy, .hire-intro, .hire-reasons, .timeline-item, .skill-list,
+     .credential-column) p {
+  font-size: 1rem;
+  line-height: 1.75;
+}
+.inquiry-field input, .inquiry-field select, .inquiry-field textarea {
+  min-width: 0;
+  max-width: 100%;
+  font-size: 1rem;
+}
+.inquiry-platform-options { flex-wrap: wrap; }
+.inquiry-platform-options label { min-width: 0; }
+.inquiry-platform-options span { overflow-wrap: anywhere; }
+#tools .development-setup li { min-width: 0; }
+#tools .development-setup li > strong,
+#tools .development-setup li > span { overflow-wrap: anywhere; }
+#tools .development-setup .package-example { max-width: 100%; overflow-x: auto; }
+@media (max-width: 1000px) {
+  #tools .tool-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  #tools .tool-grid { grid-template-columns: minmax(0, 1fr); }
+  #tools .tool-card { padding: 20px; gap: 12px; }
+  .hero .actions { flex-wrap: wrap; }
+  .hobby-card { padding: 18px; gap: 12px; }
+  .profile-label { line-height: 1.6; }
+}
+@media (max-width: 360px) {
+  .favorite-games { grid-template-columns: minmax(0, 1fr); }
+  .inquiry-platform-options { grid-template-columns: minmax(0, 1fr); }
+  .hobby-card img, .hobby-drawn-icon { width: 44px; height: 44px; }
+  .hobby-drawn-icon svg { width: 36px; height: 36px; }
+}
