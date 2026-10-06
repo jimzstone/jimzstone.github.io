@@ -64,6 +64,12 @@
       schedule();
     }
   }
+  function matchCardSizes() {
+    track.style.removeProperty('--project-card-height');
+    const visible = [...track.querySelectorAll('.project')].filter(slide => !slide.hidden);
+    const height = Math.ceil(Math.max(0, ...visible.map(slide => slide.getBoundingClientRect().height)));
+    track.style.setProperty('--project-card-height', height + 'px');
+  }
   function rebuild() {
     clearTimeout(settleTimer);
     loopClone?.remove();
@@ -107,6 +113,7 @@
     });
     controls.hidden = !overview || slides.length < 2;
     current = Math.max(0, slides.indexOf(old));
+    matchCardSizes();
     go(current, false);
     update();
     schedule();
@@ -130,7 +137,8 @@
   new MutationObserver(rebuild).observe(track, {
     subtree: true, attributes: true, attributeFilter: ['hidden', 'data-category'],
   });
-  window.addEventListener('resize', () => { go(current, false); update(); });
+  window.addEventListener('resize', () => { matchCardSizes(); go(current, false); update(); });
+  document.fonts?.ready.then(() => { matchCardSizes(); update(); });
   if (typeof ResizeObserver !== 'undefined') {
     const sizeObserver = new ResizeObserver(update);
     track.querySelectorAll('.project').forEach(slide => sizeObserver.observe(slide));
