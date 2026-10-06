@@ -387,23 +387,14 @@
   #work #project-slides .art-label { font-size:11px; line-height:1.5; }
 }
 
-/* Center navigation inside the card at every viewport width. */
-#work .project-carousel > .project-slide-controls {
-  inset:50% 10px auto; width:auto; max-width:none;
-  transform:translateY(-50%);
-}
-#work .project-carousel > .project-slide-controls > button {
-  width:36px; min-width:36px; height:44px; flex:0 0 36px;
-  border-radius:10px; background:var(--bg,#f7f8f2);
-  box-shadow:0 2px 8px #20321c14;
-}
-#work #project-slides .project-info { padding-inline:56px; }
+/* Inside-card arrows retain clear space around project content. */
+#work .project-carousel > .project-slide-controls { inset:50% 10px auto; width:auto; max-width:none; transform:translateY(-50%); }
+#work .project-carousel > .project-slide-controls > button { width:36px; min-width:36px; height:44px; flex:0 0 36px; border-radius:10px; background:var(--bg,#f7f8f2); box-shadow:0 2px 8px #20321c14; }
+#work #project-slides .project-info,
 #work #project-slides :is(.safety,.ping,.techlock) { padding-inline:56px; }
 @media(max-width:900px) {
   #work .project-carousel > .project-slide-controls { inset-inline:8px; }
-  #work .project-carousel > .project-slide-controls > button {
-    width:32px; min-width:32px; flex-basis:32px;
-  }
-  #work #project-slides .project-info { padding-inline:18px; }
+  #work .project-carousel > .project-slide-controls > button { width:32px; min-width:32px; flex-basis:32px; }
+  #work #project-slides .project-info,
   #work #project-slides :is(.safety,.ping,.techlock) { padding-inline:48px; }
 }
