@@ -305,3 +305,23 @@
   #work #project-slides .portfolio-service-preview { height:auto; min-height:0; }
   #work #project-slides .portfolio-service-preview img { height:auto; aspect-ratio:3/2; }
 }
+
+/* Use the entire UX panel width; navigation stays in the outer gutters. */
+#work .project-carousel { padding-inline:0; }
+#work .project-slide-controls { inset:50% -38px auto; width:auto; }
+#work .project-slide-controls > button { width:32px; min-width:32px; flex-basis:32px; height:44px; }
+#work #project-slides .project { max-width:100%; }
+#work #project-slides .project-art { max-width:100%; overflow:hidden; }
+#work #project-slides .project-info { min-width:0; }
+#work #project-slides .deviantart-actual figure img { object-fit:contain; }
+@media(max-width:900px) {
+  #work .project-slide-controls { inset-inline:-24px; }
+  #work .project-slide-controls > button { width:24px; min-width:24px; flex-basis:24px; }
+}
+@media(max-width:480px) {
+  #work .project-slide-controls { inset-inline:-18px; }
+  #work .project-slide-controls > button { width:20px; min-width:20px; flex-basis:20px; height:44px; border-radius:6px; }
+  #work .project-slide-controls > button svg { width:16px; height:16px; }
+  #work #project-slides .project-info { padding:18px; }
+  #work #project-slides .deviantart-actual { height:280px; }
+}
