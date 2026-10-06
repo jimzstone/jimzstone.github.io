@@ -86,6 +86,9 @@
     slides = [...track.querySelectorAll('.project')].filter(slide => !slide.hidden);
     if (overview && slides.length > 1) {
       loopClone = slides[0].cloneNode(true);
+      loopClone.classList.remove('project');
+      loopClone.classList.add('project-loop-copy');
+      loopClone.removeAttribute('data-platform');
       loopClone.dataset.loopClone = 'true';
       loopClone.inert = true;
       loopClone.setAttribute('aria-hidden', 'true');
