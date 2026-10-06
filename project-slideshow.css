@@ -14,14 +14,14 @@
   display:grid; grid-template-columns:minmax(0,1fr); gap:20px;
   overflow:visible; padding:0; height:auto;
 }
-#work #project-slides > .project {
+#work #project-slides > :is(.project,.project-loop-copy) {
   flex:0 0 100%; width:100%; min-width:0; min-height:352px;
   box-sizing:border-box; display:grid;
   grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);
   align-items:stretch; grid-column:auto; scroll-snap-align:start;
   scroll-snap-stop:always; border-radius:14px; transform:none;
 }
-#work #project-slides > .project[hidden] { display:none; }
+#work #project-slides > :is(.project,.project-loop-copy)[hidden] { display:none; }
 #work #project-slides .project-art {
   height:350px; min-height:0; min-width:0; box-sizing:border-box;
   border:0; border-right:1px solid var(--line); align-self:center;
@@ -80,7 +80,7 @@
 .project-slide-status { grid-column:1 / -1; grid-row:2; font-size:12px; text-align:center; }
 .project-slide-controls [data-slide-next] { grid-column:3; grid-row:1; }
 @media(max-width:900px) {
-  #work #project-slides > .project { grid-template-columns:minmax(0,1fr); }
+  #work #project-slides > :is(.project,.project-loop-copy) { grid-template-columns:minmax(0,1fr); }
   #work #project-slides .project-art { height:270px; border-right:0; border-bottom:1px solid var(--line); }
   #work #project-slides .project-info { padding:20px; }
   #work #project-slides .phone { top:38px; }
@@ -89,7 +89,7 @@
 }
 @media(max-width:480px) {
   #work .projects.project-slideshow { gap:12px; }
-  #work #project-slides > .project { min-height:672px; }
+  #work #project-slides > :is(.project,.project-loop-copy) { min-height:672px; }
   #work #project-slides .project-art { height:230px; }
   #work #project-slides .project-info { padding:16px; min-height:440px; }
   #work #project-slides .project-info > h3 { font-size:20px; }
@@ -116,7 +116,7 @@
 #work .projects.project-slideshow::-webkit-scrollbar { display:none; }
 
 /* Responsive project sizing and consistently aligned disclosure controls. */
-#work #project-slides > .project { min-height:0; }
+#work #project-slides > :is(.project,.project-loop-copy) { min-height:0; }
 #work #project-slides .project-info {
   display:flex; flex-direction:column; min-height:350px;
 }
@@ -146,14 +146,14 @@
 #work .project-slide-controls > button { margin:0; }
 #work .project-slide-controls [data-slide-previous] { grid-column:1; grid-row:1; }
 #work .project-slide-controls .project-slide-dots { grid-column:2; grid-row:1; }
-#work #project-slides > .project:hover { transform:none !important; }
+#work #project-slides > :is(.project,.project-loop-copy):hover { transform:none !important; }
 @media(max-width:900px) {
   #work #project-slides .project-info { min-height:0; }
   #work #project-slides .project-info details { margin-top:8px; }
   #work #project-slides .project-info > .button { margin-top:12px; }
 }
 @media(max-width:480px) {
-  #work #project-slides > .project { min-height:0; }
+  #work #project-slides > :is(.project,.project-loop-copy) { min-height:0; }
   #work #project-slides .project-info { min-height:0; padding:16px; }
   #work #project-slides .project-art { width:100%; }
   #work .deviantart-actual .artwork-links { min-width:0; padding:4px; }
@@ -267,7 +267,7 @@
   stroke-linecap:round; stroke-linejoin:round;
 }
 #work #project-slides .phone,
-#work #project-slides .project:hover .phone { transform:none !important; }
+#work #project-slides :is(.project,.project-loop-copy):hover .phone { transform:none !important; }
 #work #project-slides .deviantart-actual figure { overflow:hidden; }
 #work #project-slides .deviantart-actual figure > a {
   display:flex; align-items:center; justify-content:center;
@@ -310,7 +310,7 @@
 #work .project-carousel { padding-inline:0; }
 #work .project-slide-controls { inset:50% -38px auto; width:auto; }
 #work .project-slide-controls > button { width:32px; min-width:32px; flex-basis:32px; height:44px; }
-#work #project-slides .project { max-width:100%; }
+#work #project-slides :is(.project,.project-loop-copy) { max-width:100%; }
 #work #project-slides .project-art { max-width:100%; overflow:hidden; }
 #work #project-slides .project-info { min-width:0; }
 #work #project-slides .deviantart-actual figure img { object-fit:contain; }
@@ -325,3 +325,5 @@
   #work #project-slides .project-info { padding:18px; }
   #work #project-slides .deviantart-actual { height:280px; }
 }
+
+#work #project-slides > .project-loop-copy { border:1px solid var(--line); background:#fff; overflow:hidden; }
