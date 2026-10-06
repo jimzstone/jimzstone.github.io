@@ -327,3 +327,62 @@
 }
 
 #work #project-slides > .project-loop-copy { border:1px solid var(--line); background:#fff; overflow:hidden; }
+
+/* Preview frames size around their contents, never crop internal controls. */
+#work #project-slides :is(.safety,.ping,.techlock) {
+  height:auto; min-height:350px; padding:24px;
+  justify-content:flex-start; gap:20px;
+}
+#work #project-slides .phone {
+  width:180px; max-width:100%; height:auto; min-height:0;
+  display:flex; flex-direction:column; gap:12px;
+  padding:14px; border:6px solid #263b31;
+  box-sizing:border-box; flex:none; overflow:hidden;
+  scale:1 !important; transform:none !important;
+}
+#work #project-slides .phone-notch {
+  width:50px; height:6px; flex:0 0 6px; margin:0 auto;
+}
+#work #project-slides .phone > p { margin:0; font-size:10px; line-height:1.4; }
+#work #project-slides .phone h3 {
+  margin:0; font-size:18px; line-height:1.35; letter-spacing:0;
+}
+#work #project-slides .phone-grid {
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px; width:100%; min-width:0;
+}
+#work #project-slides .phone-grid > span {
+  display:flex; flex-direction:column; justify-content:center;
+  align-items:flex-start; min-width:0; min-height:54px;
+  padding:8px; font-size:18px; line-height:1.2; gap:5px;
+}
+#work #project-slides .phone-grid small {
+  display:block; margin:0; max-width:100%; font-size:9px;
+  line-height:1.3; overflow-wrap:anywhere;
+}
+#work #project-slides :is(.phone,.monitor,.dashboard) {
+  scale:1 !important; transform:none !important; margin:auto;
+}
+#work #project-slides .art-label { margin:0; width:100%; flex:none; }
+#work #project-slides .monitor,
+#work #project-slides .dashboard { max-width:100%; flex:none; }
+#work .project-slide-controls {
+  max-width:none; box-sizing:border-box; overflow:visible;
+}
+#work .project-slide-controls > button {
+  background:var(--bg,#f7f8f2); color:var(--ink);
+}
+@media(max-width:900px) {
+  #work #project-slides :is(.safety,.ping,.techlock) {
+    min-height:350px; height:auto; padding:20px; gap:20px;
+  }
+}
+@media(max-width:480px) {
+  #work #project-slides :is(.safety,.ping,.techlock) {
+    min-height:340px; height:auto; padding:18px; gap:18px;
+  }
+  #work #project-slides .phone { width:170px; }
+  #work #project-slides .phone h3 { font-size:17px; }
+  #work #project-slides .phone-grid > span { min-height:52px; }
+  #work #project-slides .art-label { font-size:11px; line-height:1.5; }
+}
