@@ -12,6 +12,8 @@
   let slides = [];
   let current = 0;
   let pendingFrame = 0;
+  let loopClone;
+  let settleTimer;
   let autoplayTimer;
   let touching = false;
   const hovered = new Set();
@@ -34,7 +36,8 @@
   }
   function update() {
     if (!slides.length || !overview) return;
-    current = nearest();
+    const cloneVisible = loopClone && Math.abs(loopClone.getBoundingClientRect().left - track.getBoundingClientRect().left) < track.clientWidth / 2;
+    current = cloneVisible ? 0 : nearest();
     const active = slides[current];
     track.style.height = Math.ceil(active.getBoundingClientRect().height + 24) + 'px';
     slides.forEach((slide, index) => { slide.inert = index !== current; });
@@ -46,7 +49,7 @@
   function go(index, smooth = true) {
     if (!overview || !slides.length) return;
     const target = ((index % slides.length) + slides.length) % slides.length;
-    const slide = slides[target];
+    const slide = smooth && index >= slides.length && loopClone ? loopClone : slides[target];
     current = target;
     track.scrollTo({
       left: track.scrollLeft + slide.getBoundingClientRect().left - track.getBoundingClientRect().left,
@@ -54,7 +57,17 @@
     });
     if (!smooth) update();
   }
+  function settleLoop() {
+    if (!overview || !loopClone || touching) return;
+    if (Math.abs(loopClone.getBoundingClientRect().left - track.getBoundingClientRect().left) <= 2) {
+      go(0, false);
+      schedule();
+    }
+  }
   function rebuild() {
+    clearTimeout(settleTimer);
+    loopClone?.remove();
+    loopClone = undefined;
     overview = !track.dataset.category || track.dataset.category === 'All projects';
     track.classList.toggle('project-slideshow', overview);
     track.classList.toggle('project-category-list', !overview);
@@ -71,6 +84,14 @@
     }
     const old = slides[current];
     slides = [...track.querySelectorAll('.project')].filter(slide => !slide.hidden);
+    if (overview && slides.length > 1) {
+      loopClone = slides[0].cloneNode(true);
+      loopClone.dataset.loopClone = 'true';
+      loopClone.inert = true;
+      loopClone.setAttribute('aria-hidden', 'true');
+      loopClone.querySelectorAll('[id]').forEach(node => node.removeAttribute('id'));
+      track.append(loopClone);
+    }
     dots.replaceChildren();
     slides.forEach((slide, index) => {
       const button = document.createElement('button');
@@ -92,7 +113,10 @@
   track.addEventListener('scroll', () => {
     cancelAnimationFrame(pendingFrame);
     pendingFrame = requestAnimationFrame(update);
+    clearTimeout(settleTimer);
+    settleTimer = setTimeout(settleLoop, 180);
   }, { passive: true });
+  track.addEventListener('scrollend', settleLoop);
   track.addEventListener('keydown', event => {
     if (!overview || event.target !== track) return;
     if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
@@ -120,7 +144,7 @@
     element.addEventListener('focusout', () => setTimeout(schedule, 0));
     element.addEventListener('click', schedule);
   });
-  window.addEventListener('pointerup', () => { touching = false; schedule(); });
+  window.addEventListener('pointerup', () => { touching = false; settleLoop(); schedule(); });
   window.addEventListener('pointercancel', () => { touching = false; schedule(); });
   document.addEventListener('keydown', () => { keyboardFocus = true; schedule(); });
   window.addEventListener('blur', () => { touching = false; hovered.clear(); schedule(); });
