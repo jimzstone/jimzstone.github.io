@@ -429,3 +429,30 @@
 @media (max-width:480px) {
   #work #project-slides :is(.safety,.ping,.techlock) { min-height:350px; }
 }
+
+/* Windows applications share a preview size while preserving original artwork. */
+#work #project-slides .windows-app-preview {
+  display:flex; flex-direction:column; align-items:center;
+  justify-content:flex-start; min-height:350px; height:auto;
+  padding:24px 56px; gap:20px;
+}
+#work #project-slides .windows-preview-frame {
+  position:relative; inset:auto; flex:none; width:100%; max-width:460px;
+  height:230px; min-height:230px; margin:auto; box-sizing:border-box;
+}
+#work #project-slides .winimizer-preview { background:#eeedfc; }
+#work #project-slides .winimizer-image-frame {
+  display:flex; align-items:center; justify-content:center;
+  border-radius:12px; overflow:hidden; background:#eeedfc;
+  box-shadow:8px 8px 0 #d5d3ee;
+}
+#work #project-slides .winimizer-image-frame img {
+  display:block; width:100%; height:100%; object-fit:contain;
+}
+@media(max-width:900px) {
+  #work #project-slides .windows-app-preview { padding:20px 48px; }
+}
+@media(max-width:480px) {
+  #work #project-slides .windows-app-preview { padding:18px 24px; }
+  #work #project-slides .windows-preview-frame { height:210px; min-height:210px; }
+}
